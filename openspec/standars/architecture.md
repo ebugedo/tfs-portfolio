@@ -26,3 +26,10 @@ All source code and test projects must strictly adhere to the following director
 └── test/
     ├── UnitTests/                  # Domain & Application Unit Tests (xUnit + Moq + Bogus)
     └── IntegrationTests/           # API & Database Integration Tests
+```
+
+**Naming Conventions:** Project names, namespaces, and assembly names follow the conventions in `coding-standards.md`:
+- Root namespace: `Tfs.Portfolio`
+- Solution: `Tfs.Portfolio.slnx`
+- Projects: `Tfs.Portfolio.Domain`, `Tfs.Portfolio.Application`, `Tfs.Portfolio.Infrastructure.Persistence`, `Tfs.Portfolio.Api`, `Tfs.Portfolio.UnitTests`, `Tfs.Portfolio.IntegrationTests`
+- Namespaces mirror folder structure: `Tfs.Portfolio.Domain.<Aggregate>.<Concept>`, `Tfs.Portfolio.Application.<Aggregate>.<Command/Query>`, etc.
