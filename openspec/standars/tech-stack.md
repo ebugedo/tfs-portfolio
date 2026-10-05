@@ -32,3 +32,8 @@
 - **Production Code:** All production source code projects MUST be located exclusively under `src/`.
 - **Test Code:** All unit, integration, and functional test projects MUST be located exclusively under `test/`.
 - **Solution File:** Use `.slnx` (XML-based solution file) format. Do NOT use legacy `.sln` format.
+- **Naming Conventions:** Project names, namespaces, solution file, Docker image, and HTTP endpoints follow conventions defined in `coding-standards.md` (Project, Solution & Namespace Conventions; Docker & Container Conventions; HTTP API Endpoint Conventions).
+  - Solution: `Tfs.Portfolio.slnx`
+  - Root Namespace: `Tfs.Portfolio`
+  - Docker Image: `tfs/portfolio-api:<tag>`
+  - API Base: `/api/v1/<plural-resource>`
