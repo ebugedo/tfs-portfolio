@@ -1,0 +1,33 @@
+# Development stage with .NET SDK for hot reload
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS dev
+WORKDIR /app
+
+# Copy build configuration
+COPY Directory.Build.props .
+COPY Directory.Build.targets .
+COPY global.json .
+
+# Copy project files
+COPY src/Core/Domain/Tfs.Portfolio.Domain.csproj src/Core/Domain/
+COPY src/Core/Application/Tfs.Portfolio.Application.csproj src/Core/Application/
+COPY src/Infrastructure/Persistence/Tfs.Portfolio.Infrastructure.Persistence.csproj src/Infrastructure/Persistence/
+COPY src/Presentation/WebAPI/Tfs.Portfolio.Api.csproj src/Presentation/WebAPI/
+
+# Restore dependencies
+RUN dotnet restore src/Presentation/WebAPI/Tfs.Portfolio.Api.csproj
+
+# Copy source code
+COPY src/Core/Domain/ src/Core/Domain/
+COPY src/Core/Application/ src/Core/Application/
+COPY src/Infrastructure/Persistence/ src/Infrastructure/Persistence/
+COPY src/Presentation/WebAPI/ src/Presentation/WebAPI/
+
+# Expose port
+EXPOSE 8080
+
+# Set environment variables
+ENV ASPNETCORE_URLS=http://0.0.0.0:8080
+ENV ASPNETCORE_ENVIRONMENT=Development
+
+# Entry point with hot reload
+ENTRYPOINT ["dotnet", "watch", "run", "--no-launch-profile", "--urls", "http://0.0.0.0:8080", "--project", "src/Presentation/WebAPI/Tfs.Portfolio.Api.csproj"]

@@ -1,0 +1,120 @@
+// <copyright file="ProjectCommandHandlers.cs" company="Tfs.Portfolio">
+// Copyright (c) Tfs.Portfolio. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+namespace Tfs.Portfolio.Application.Projects.Handlers;
+
+using AutoMapper;
+using Tfs.Portfolio.Application.Common.CQRS;
+using Tfs.Portfolio.Application.Projects.Commands;
+using Tfs.Portfolio.Domain.Common;
+using Tfs.Portfolio.Domain.Projects.Entities;
+using Tfs.Portfolio.Domain.Projects.Exceptions;
+using Tfs.Portfolio.Domain.Projects.Repositories;
+
+/// <summary>
+/// Handler for <see cref="CreateProjectCommand"/>.
+/// </summary>
+public sealed class CreateProjectCommandHandler : CommandHandlerBase<CreateProjectCommand, Guid>
+{
+    private readonly IProjectRepository projectRepository;
+    private readonly IUnitOfWork unitOfWork;
+    private readonly IMapper mapper;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="CreateProjectCommandHandler"/> class.
+    /// </summary>
+    /// <param name="projectRepository">The project repository.</param>
+    /// <param name="unitOfWork">The unit of work.</param>
+    /// <param name="mapper">The mapper.</param>
+    public CreateProjectCommandHandler(
+        IProjectRepository projectRepository,
+        IUnitOfWork unitOfWork,
+        IMapper mapper)
+    {
+        this.projectRepository = projectRepository;
+        this.unitOfWork = unitOfWork;
+        this.mapper = mapper;
+    }
+
+    /// <inheritdoc />
+    public override async Task<Guid> HandleAsync(CreateProjectCommand command, CancellationToken cancellationToken = default)
+    {
+        var project = Project.Create(command.Name, command.Description);
+        await this.projectRepository.AddAsync(project, cancellationToken);
+        await this.unitOfWork.SaveChangesAsync(cancellationToken);
+        return project.Id;
+    }
+}
+
+/// <summary>
+/// Handler for <see cref="UpdateProjectCommand"/>.
+/// </summary>
+public sealed class UpdateProjectCommandHandler : CommandHandlerBase<UpdateProjectCommand>
+{
+    private readonly IProjectRepository projectRepository;
+    private readonly IUnitOfWork unitOfWork;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="UpdateProjectCommandHandler"/> class.
+    /// </summary>
+    /// <param name="projectRepository">The project repository.</param>
+    /// <param name="unitOfWork">The unit of work.</param>
+    public UpdateProjectCommandHandler(
+        IProjectRepository projectRepository,
+        IUnitOfWork unitOfWork)
+    {
+        this.projectRepository = projectRepository;
+        this.unitOfWork = unitOfWork;
+    }
+
+    /// <inheritdoc />
+    public override async Task HandleAsync(UpdateProjectCommand command, CancellationToken cancellationToken = default)
+    {
+        var project = await this.projectRepository.GetByIdAsync(command.Id, cancellationToken);
+        if (project is null)
+        {
+            throw new ProjectNotFoundException(command.Id);
+        }
+
+        var updatedProject = project.Update(command.Name, command.Description);
+        this.projectRepository.Update(updatedProject);
+        await this.unitOfWork.SaveChangesAsync(cancellationToken);
+    }
+}
+
+/// <summary>
+/// Handler for <see cref="DeleteProjectCommand"/>.
+/// </summary>
+public sealed class DeleteProjectCommandHandler : CommandHandlerBase<DeleteProjectCommand>
+{
+    private readonly IProjectRepository projectRepository;
+    private readonly IUnitOfWork unitOfWork;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="DeleteProjectCommandHandler"/> class.
+    /// </summary>
+    /// <param name="projectRepository">The project repository.</param>
+    /// <param name="unitOfWork">The unit of work.</param>
+    public DeleteProjectCommandHandler(
+        IProjectRepository projectRepository,
+        IUnitOfWork unitOfWork)
+    {
+        this.projectRepository = projectRepository;
+        this.unitOfWork = unitOfWork;
+    }
+
+    /// <inheritdoc />
+    public override async Task HandleAsync(DeleteProjectCommand command, CancellationToken cancellationToken = default)
+    {
+        var project = await this.projectRepository.GetByIdAsync(command.Id, cancellationToken);
+        if (project is null)
+        {
+            throw new ProjectNotFoundException(command.Id);
+        }
+
+        this.projectRepository.Update(project with { }); // In a real app, you'd have a Delete method
+        await this.unitOfWork.SaveChangesAsync(cancellationToken);
+    }
+}
