@@ -79,19 +79,21 @@ public class ProjectTests
     {
         // Arrange
         var project = this.projectFaker.Generate();
+        var originalId = project.Id;
+        var originalCreatedAt = project.CreatedAt;
         var newName = "Updated Project";
         var newDescription = "Updated Description";
 
         // Act
-        var updatedProject = project.Update(newName, newDescription);
+        project.Update(newName, newDescription);
 
         // Assert
-        updatedProject.Should().NotBeSameAs(project);
-        updatedProject.Id.Should().Be(project.Id);
-        updatedProject.Name.Should().Be(newName);
-        updatedProject.Description.Should().Be(newDescription);
-        updatedProject.UpdatedAt.Should().NotBeNull();
-        updatedProject.UpdatedAt.Should().BeCloseTo(DateTime.UtcNow, TimeSpan.FromSeconds(1));
+        project.Id.Should().Be(originalId);
+        project.Name.Should().Be(newName);
+        project.Description.Should().Be(newDescription);
+        project.CreatedAt.Should().Be(originalCreatedAt);
+        project.UpdatedAt.Should().NotBeNull();
+        project.UpdatedAt.Should().BeCloseTo(DateTime.UtcNow, TimeSpan.FromSeconds(1));
     }
 
     /// <summary>

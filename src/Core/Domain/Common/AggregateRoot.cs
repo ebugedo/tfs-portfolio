@@ -11,7 +11,7 @@ using System.Collections.Generic;
 /// Base class for aggregate roots that track domain events.
 /// </summary>
 /// <typeparam name="TId">The type of the identifier.</typeparam>
-public abstract record AggregateRoot<TId> : Entity<TId>
+public abstract class AggregateRoot<TId> : Entity<TId>
     where TId : notnull
 {
     private readonly List<IDomainEvent> domainEvents = new ();

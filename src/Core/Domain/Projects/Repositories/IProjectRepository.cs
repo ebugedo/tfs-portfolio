@@ -40,4 +40,10 @@ public interface IProjectRepository
     /// </summary>
     /// <param name="project">The project to update.</param>
     void Update(Project project);
+
+    /// <summary>
+    /// Deletes a project.
+    /// </summary>
+    /// <param name="project">The project to delete.</param>
+    void Delete(Project project);
 }

@@ -7,6 +7,7 @@ namespace Tfs.Portfolio.Api;
 
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using AutoMapper;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -23,6 +24,7 @@ using Tfs.Portfolio.Application.Projects.Commands;
 using Tfs.Portfolio.Application.Projects.Dtos;
 using Tfs.Portfolio.Application.Projects.Handlers;
 using Tfs.Portfolio.Application.Projects.Queries;
+using Tfs.Portfolio.Domain.Projects.Repositories;
 using Tfs.Portfolio.Infrastructure.Persistence;
 using Tfs.Portfolio.Infrastructure.Persistence.Modules;
 
@@ -145,7 +147,7 @@ public sealed class Program
         app.MapHealthChecks("/health/ready");
 
         // Test endpoint simple
-        app.MapGet("/test", () => Results.Ok(new { message = "API funcionando - Hot reload works!", timestamp = DateTime.UtcNow }));
+        app.MapGet("/test", () => Results.Ok(new { message = "API funcionando - Hot reload works! Updated!", timestamp = DateTime.UtcNow }));
 
         // Map versioned endpoints
         var v1 = app.MapGroup("/api/v1").WithTags("v1");
@@ -173,16 +175,22 @@ internal static class EndpointExtensions
         group.MapGet("/{id:guid}", async (Guid id, [FromServices] GetProjectByIdQueryHandler handler, CancellationToken ct) =>
         {
             var result = await handler.HandleAsync(new GetProjectByIdQuery(id), ct);
-            return result is not null ? Results.Ok(result) : Results.NotFound();
+            return result is not null ? Results.Ok(result) : Results.Problem(
+                title: "Not Found",
+                detail: $"Project with ID '{id}' was not found.",
+                statusCode: 404,
+                instance: $"/api/v1/projects/{id}");
         })
         .WithName("GetProjectById")
         .Produces<ProjectDto>()
         .Produces(404);
 
-        group.MapPost("/", async (CreateProjectCommand command, [FromServices] CreateProjectCommandHandler handler, CancellationToken ct) =>
+        group.MapPost("/", async (CreateProjectCommand command, [FromServices] CreateProjectCommandHandler handler, [FromServices] IMapper mapper, [FromServices] IProjectRepository projectRepository, CancellationToken ct) =>
         {
             var projectId = await handler.HandleAsync(command, ct);
-            return Results.Created($"/api/v1/projects/{projectId}", new { id = projectId });
+            var project = await projectRepository.GetByIdAsync(projectId, ct);
+            var projectDto = mapper.Map<ProjectDto>(project!);
+            return Results.Created($"/api/v1/projects/{projectId}", projectDto);
         })
         .WithName("CreateProject")
         .Accepts<CreateProjectCommand>("application/json")
