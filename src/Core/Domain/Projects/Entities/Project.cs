@@ -12,28 +12,8 @@ using Tfs.Portfolio.Domain.Projects.Exceptions;
 /// <summary>
 /// Represents a project aggregate root.
 /// </summary>
-public sealed record Project : AggregateRoot<Guid>
+public sealed class Project : AggregateRoot<Guid>
 {
-    /// <summary>
-    /// Gets the name of the project.
-    /// </summary>
-    public string Name { get; private init; } = default!;
-
-    /// <summary>
-    /// Gets the description of the project.
-    /// </summary>
-    public string? Description { get; private init; }
-
-    /// <summary>
-    /// Gets the date and time when the project was created.
-    /// </summary>
-    public DateTime CreatedAt { get; private init; }
-
-    /// <summary>
-    /// Gets the date and time when the project was last updated.
-    /// </summary>
-    public DateTime? UpdatedAt { get; private init; }
-
     /// <summary>
     /// Initializes a new instance of the <see cref="Project"/> class.
     /// </summary>
@@ -55,6 +35,26 @@ public sealed record Project : AggregateRoot<Guid>
         this.Description = description;
         this.CreatedAt = createdAt;
     }
+
+    /// <summary>
+    /// Gets the name of the project.
+    /// </summary>
+    public string Name { get; private set; } = default!;
+
+    /// <summary>
+    /// Gets the description of the project.
+    /// </summary>
+    public string? Description { get; private set; }
+
+    /// <summary>
+    /// Gets the date and time when the project was created.
+    /// </summary>
+    public DateTime CreatedAt { get; private set; }
+
+    /// <summary>
+    /// Gets the date and time when the project was last updated.
+    /// </summary>
+    public DateTime? UpdatedAt { get; private set; }
 
     /// <summary>
     /// Creates a new project.
@@ -80,20 +80,16 @@ public sealed record Project : AggregateRoot<Guid>
     /// </summary>
     /// <param name="name">The new name.</param>
     /// <param name="description">The new description.</param>
-    /// <returns>A new project instance with updated values.</returns>
     /// <exception cref="InvalidProjectStateException">Thrown when the name is empty.</exception>
-    public Project Update(string name, string? description)
+    public void Update(string name, string? description)
     {
         if (string.IsNullOrWhiteSpace(name))
         {
             throw new InvalidProjectStateException("Project name cannot be empty");
         }
 
-        return this with
-        {
-            Name = name.Trim(),
-            Description = description?.Trim(),
-            UpdatedAt = DateTime.UtcNow
-        };
+        this.Name = name.Trim();
+        this.Description = description?.Trim();
+        this.UpdatedAt = DateTime.UtcNow;
     }
 }

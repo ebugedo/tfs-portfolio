@@ -11,15 +11,9 @@ using System.ComponentModel.DataAnnotations;
 /// Base class for all entities with a typed identifier.
 /// </summary>
 /// <typeparam name="TId">The type of the identifier.</typeparam>
-public abstract record Entity<TId>
+public abstract class Entity<TId>
     where TId : notnull
 {
-    /// <summary>
-    /// Gets the unique identifier of the entity.
-    /// </summary>
-    [Key]
-    public TId Id { get; protected init; } = default!;
-
     /// <summary>
     /// Initializes a new instance of the <see cref="Entity{TId}"/> class.
     /// </summary>
@@ -35,6 +29,12 @@ public abstract record Entity<TId>
     {
         this.Id = id;
     }
+
+    /// <summary>
+    /// Gets the unique identifier of the entity.
+    /// </summary>
+    [Key]
+    public TId Id { get; protected set; } = default!;
 
     /// <inheritdoc />
     public override string ToString() => $"{this.GetType().Name} [Id={this.Id}]";

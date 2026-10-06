@@ -5,6 +5,7 @@
 
 namespace Tfs.Portfolio.IntegrationTests.Persistence;
 
+using Microsoft.EntityFrameworkCore;
 using Tfs.Portfolio.Domain.Projects.Entities;
 using Tfs.Portfolio.Domain.Projects.Repositories;
 using Tfs.Portfolio.Domain.Common;
@@ -111,13 +112,19 @@ public sealed class ProjectRepositoryTests : IntegrationTestBase
         await ProjectRepository.AddAsync(project);
         await UnitOfWork.SaveChangesAsync();
 
-        // Act
-        var updatedProject = project.Update("Updated Name", "Updated Description");
-        ProjectRepository.Update(updatedProject);
+        // Detach to simulate new request scope (production uses scoped DbContext per request)
+        this.DbContext.Entry(project).State = EntityState.Detached;
+
+        // Act - Get tracked entity, modify it, save
+        var trackedProject = await ProjectRepository.GetByIdAsync(project.Id);
+        trackedProject.Should().NotBeNull();
+        trackedProject!.Update("Updated Name", "Updated Description");
         await UnitOfWork.SaveChangesAsync();
 
-        // Assert
-        var retrieved = await ProjectRepository.GetByIdAsync(project.Id);
+        // Assert - read from clean context to verify persisted state
+        var retrieved = await this.DbContext.Projects
+            .AsNoTracking()
+            .FirstOrDefaultAsync(p => p.Id == project.Id);
         retrieved.Should().NotBeNull();
         retrieved!.Name.Should().Be("Updated Name");
         retrieved.Description.Should().Be("Updated Description");

@@ -78,8 +78,7 @@ public sealed class UpdateProjectCommandHandler : CommandHandlerBase<UpdateProje
             throw new ProjectNotFoundException(command.Id);
         }
 
-        var updatedProject = project.Update(command.Name, command.Description);
-        this.projectRepository.Update(updatedProject);
+        project.Update(command.Name, command.Description);
         await this.unitOfWork.SaveChangesAsync(cancellationToken);
     }
 }
@@ -114,7 +113,7 @@ public sealed class DeleteProjectCommandHandler : CommandHandlerBase<DeleteProje
             throw new ProjectNotFoundException(command.Id);
         }
 
-        this.projectRepository.Update(project with { }); // In a real app, you'd have a Delete method
+        this.projectRepository.Delete(project);
         await this.unitOfWork.SaveChangesAsync(cancellationToken);
     }
 }

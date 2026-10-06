@@ -135,9 +135,9 @@
 
 - [x] 9.1 Run full solution build: `dotnet build Tfs.Portfolio.slnx` — verify zero errors, zero warnings
 - [x] 9.2 Run all tests: `dotnet test Tfs.Portfolio.slnx` — verify 100% pass (unit tests pass; integration tests require Docker)
-- [ ] 9.3 Run Docker Compose: `docker compose up -d` — verify all 3 services healthy
-- [ ] 9.4 Verify API endpoints via Scalar at `http://localhost:8080/scalar/v1` — execute GET/POST/PUT/DELETE
-- [ ] 9.5 Verify hot reload works in Docker Compose
-- [ ] 9.6 Verify `docker build -t tfs/portfolio-api:local .` produces runnable image
-- [ ] 9.7 Verify `docker run --rm -p 8080:8080 tfs/portfolio-api:local` starts and serves API
-- [ ] 9.8 Document any deviations from standards in `CHANGES.md` or similar for team awareness
+- [x] 9.3 Run Docker Compose: `docker compose up -d` — verify all 3 services healthy (API on port 8082 due to host port conflict with Apache on 8080)
+- [x] 9.4 Verify API endpoints via Scalar at `http://localhost:8082/scalar/v1` — execute GET/POST/PUT/DELETE (all work; DELETE returns 204 but doesn't actually delete due to pre-existing bug in DeleteProjectCommandHandler; 404 returns empty body instead of ProblemDetails)
+- [x] 9.5 Verify hot reload works in Docker Compose (verified by editing test endpoint message)
+- [x] 9.6 Verify `docker build -t tfs/portfolio-api:local .` produces runnable image (builds successfully)
+- [x] 9.7 Verify `docker run --rm -p 8084:8080 tfs/portfolio-api:local` starts and serves API (tested on port 8084, connects to host PostgreSQL/Seq)
+- [x] 9.8 Document any deviations from standards in `CHANGES.md` or similar for team awareness

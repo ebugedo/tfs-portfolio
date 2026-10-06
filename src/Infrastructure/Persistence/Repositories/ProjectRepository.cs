@@ -29,7 +29,6 @@ public sealed class ProjectRepository : IProjectRepository
     public async Task<Project?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
         return await this.context.Projects
-            .AsNoTracking()
             .FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
     }
 
@@ -51,6 +50,18 @@ public sealed class ProjectRepository : IProjectRepository
     /// <inheritdoc />
     public void Update(Project project)
     {
-        this.context.Projects.Update(project);
+        var entry = this.context.Entry(project);
+        if (entry.State == EntityState.Detached)
+        {
+            this.context.Projects.Update(project);
+        }
+
+        // If already tracked, change tracker auto-detects modifications
+    }
+
+    /// <inheritdoc />
+    public void Delete(Project project)
+    {
+        this.context.Projects.Remove(project);
     }
 }

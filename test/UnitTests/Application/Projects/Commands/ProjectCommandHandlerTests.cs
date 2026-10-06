@@ -109,8 +109,16 @@ public class UpdateProjectCommandHandlerTests
 
         // Assert
         this.projectRepositoryMock.Verify(r => r.GetByIdAsync(project.Id, It.IsAny<CancellationToken>()), Times.Once);
-        this.projectRepositoryMock.Verify(r => r.Update(It.IsAny<Project>()), Times.Once);
+
+        // EF Core auto-detects changes on tracked entity, Update() not called
+        this.projectRepositoryMock.Verify(r => r.Update(It.IsAny<Project>()), Times.Never);
+
         this.unitOfWorkMock.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once);
+
+        // Verify the tracked entity was modified
+        project.Name.Should().Be(command.Name);
+        project.Description.Should().Be(command.Description);
+        project.UpdatedAt.Should().NotBeNull();
     }
 
     /// <summary>
@@ -174,7 +182,10 @@ public class DeleteProjectCommandHandlerTests
 
         // Assert
         this.projectRepositoryMock.Verify(r => r.GetByIdAsync(project.Id, It.IsAny<CancellationToken>()), Times.Once);
-        this.projectRepositoryMock.Verify(r => r.Update(It.IsAny<Project>()), Times.Once);
+
+        // Delete handler calls Delete to remove entity
+        this.projectRepositoryMock.Verify(r => r.Delete(It.Is<Project>(p => p.Id == project.Id)), Times.Once);
+
         this.unitOfWorkMock.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once);
     }
 }
