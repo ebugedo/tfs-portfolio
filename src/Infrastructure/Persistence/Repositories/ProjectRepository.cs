@@ -29,6 +29,7 @@ public sealed class ProjectRepository : IProjectRepository
     public async Task<Project?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
         return await this.context.Projects
+            .IgnoreQueryFilters()
             .FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
     }
 
@@ -37,6 +38,56 @@ public sealed class ProjectRepository : IProjectRepository
     {
         return await this.context.Projects
             .AsNoTracking()
+            .OrderBy(p => p.Name)
+            .ToListAsync(cancellationToken);
+    }
+
+    /// <inheritdoc />
+    public async Task<IReadOnlyList<Project>> GetActiveAsync(CancellationToken cancellationToken = default)
+    {
+        return await this.context.Projects
+            .AsNoTracking()
+            .Where(p => p.Status == ProjectStatus.Active)
+            .OrderBy(p => p.Name)
+            .ToListAsync(cancellationToken);
+    }
+
+    /// <inheritdoc />
+    public async Task<IReadOnlyList<Project>> GetByClientIdAsync(Guid clientId, CancellationToken cancellationToken = default)
+    {
+        return await this.context.Projects
+            .AsNoTracking()
+            .Where(p => p.ClientId == clientId)
+            .OrderBy(p => p.Name)
+            .ToListAsync(cancellationToken);
+    }
+
+    /// <inheritdoc />
+    public async Task<IReadOnlyList<Project>> GetBySectorIdAsync(Guid sectorId, CancellationToken cancellationToken = default)
+    {
+        return await this.context.Projects
+            .AsNoTracking()
+            .Where(p => p.SectorId == sectorId)
+            .OrderBy(p => p.Name)
+            .ToListAsync(cancellationToken);
+    }
+
+    /// <inheritdoc />
+    public async Task<IReadOnlyList<Project>> GetByTechnologyAsync(string technologyName, CancellationToken cancellationToken = default)
+    {
+        return await this.context.Projects
+            .AsNoTracking()
+            .Where(p => p.Technologies.Any(t => t.Name == technologyName))
+            .OrderBy(p => p.Name)
+            .ToListAsync(cancellationToken);
+    }
+
+    /// <inheritdoc />
+    public async Task<IReadOnlyList<Project>> GetByStatusAsync(ProjectStatus status, CancellationToken cancellationToken = default)
+    {
+        return await this.context.Projects
+            .AsNoTracking()
+            .Where(p => p.Status == status)
             .OrderBy(p => p.Name)
             .ToListAsync(cancellationToken);
     }

@@ -6,6 +6,7 @@
 namespace Tfs.Portfolio.UnitTests.Common;
 
 using Bogus;
+using Tfs.Portfolio.Domain.Common.ValueObjects;
 using Tfs.Portfolio.Domain.Projects.Entities;
 
 /// <summary>
@@ -20,6 +21,10 @@ public sealed class ProjectFaker : Faker<Project>
     {
         this.CustomInstantiator(f => Project.Create(
             f.Commerce.ProductName(),
-            f.Lorem.Paragraph()));
+            f.Lorem.Paragraph(),
+            YearMonth.Create(f.Random.Int(1, 12), f.Date.Past(5).Year),
+            f.Random.Int(1, 120),
+            Guid.NewGuid(),
+            Guid.NewGuid()));
     }
 }

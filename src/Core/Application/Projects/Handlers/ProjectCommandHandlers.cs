@@ -41,7 +41,7 @@ public sealed class CreateProjectCommandHandler : CommandHandlerBase<CreateProje
     /// <inheritdoc />
     public override async Task<Guid> HandleAsync(CreateProjectCommand command, CancellationToken cancellationToken = default)
     {
-        var project = Project.Create(command.Name, command.Description);
+        var project = Project.Create(command.Name, command.Description, command.StartDate, command.DurationMonths, command.ClientId, command.SectorId);
         await this.projectRepository.AddAsync(project, cancellationToken);
         await this.unitOfWork.SaveChangesAsync(cancellationToken);
         return project.Id;
@@ -78,7 +78,7 @@ public sealed class UpdateProjectCommandHandler : CommandHandlerBase<UpdateProje
             throw new ProjectNotFoundException(command.Id);
         }
 
-        project.Update(command.Name, command.Description);
+        project.Update(command.Name, command.Description, command.StartDate, command.DurationMonths, command.ClientId, command.SectorId);
         await this.unitOfWork.SaveChangesAsync(cancellationToken);
     }
 }
@@ -114,6 +114,111 @@ public sealed class DeleteProjectCommandHandler : CommandHandlerBase<DeleteProje
         }
 
         this.projectRepository.Delete(project);
+        await this.unitOfWork.SaveChangesAsync(cancellationToken);
+    }
+}
+
+/// <summary>
+/// Handler for <see cref="ChangeProjectStatusCommand"/>.
+/// </summary>
+public sealed class ChangeProjectStatusCommandHandler : CommandHandlerBase<ChangeProjectStatusCommand>
+{
+    private readonly IProjectRepository projectRepository;
+    private readonly IUnitOfWork unitOfWork;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ChangeProjectStatusCommandHandler"/> class.
+    /// </summary>
+    /// <param name="projectRepository">The project repository.</param>
+    /// <param name="unitOfWork">The unit of work.</param>
+    public ChangeProjectStatusCommandHandler(
+        IProjectRepository projectRepository,
+        IUnitOfWork unitOfWork)
+    {
+        this.projectRepository = projectRepository;
+        this.unitOfWork = unitOfWork;
+    }
+
+    /// <inheritdoc />
+    public override async Task HandleAsync(ChangeProjectStatusCommand command, CancellationToken cancellationToken = default)
+    {
+        var project = await this.projectRepository.GetByIdAsync(command.Id, cancellationToken);
+        if (project is null)
+        {
+            throw new ProjectNotFoundException(command.Id);
+        }
+
+        project.ChangeStatus(command.Status);
+        await this.unitOfWork.SaveChangesAsync(cancellationToken);
+    }
+}
+
+/// <summary>
+/// Handler for <see cref="AddProjectServiceCommand"/>.
+/// </summary>
+public sealed class AddProjectServiceCommandHandler : CommandHandlerBase<AddProjectServiceCommand>
+{
+    private readonly IProjectRepository projectRepository;
+    private readonly IUnitOfWork unitOfWork;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="AddProjectServiceCommandHandler"/> class.
+    /// </summary>
+    /// <param name="projectRepository">The project repository.</param>
+    /// <param name="unitOfWork">The unit of work.</param>
+    public AddProjectServiceCommandHandler(
+        IProjectRepository projectRepository,
+        IUnitOfWork unitOfWork)
+    {
+        this.projectRepository = projectRepository;
+        this.unitOfWork = unitOfWork;
+    }
+
+    /// <inheritdoc />
+    public override async Task HandleAsync(AddProjectServiceCommand command, CancellationToken cancellationToken = default)
+    {
+        var project = await this.projectRepository.GetByIdAsync(command.ProjectId, cancellationToken);
+        if (project is null)
+        {
+            throw new ProjectNotFoundException(command.ProjectId);
+        }
+
+        project.AddService(command.ServiceId);
+        await this.unitOfWork.SaveChangesAsync(cancellationToken);
+    }
+}
+
+/// <summary>
+/// Handler for <see cref="RemoveProjectServiceCommand"/>.
+/// </summary>
+public sealed class RemoveProjectServiceCommandHandler : CommandHandlerBase<RemoveProjectServiceCommand>
+{
+    private readonly IProjectRepository projectRepository;
+    private readonly IUnitOfWork unitOfWork;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="RemoveProjectServiceCommandHandler"/> class.
+    /// </summary>
+    /// <param name="projectRepository">The project repository.</param>
+    /// <param name="unitOfWork">The unit of work.</param>
+    public RemoveProjectServiceCommandHandler(
+        IProjectRepository projectRepository,
+        IUnitOfWork unitOfWork)
+    {
+        this.projectRepository = projectRepository;
+        this.unitOfWork = unitOfWork;
+    }
+
+    /// <inheritdoc />
+    public override async Task HandleAsync(RemoveProjectServiceCommand command, CancellationToken cancellationToken = default)
+    {
+        var project = await this.projectRepository.GetByIdAsync(command.ProjectId, cancellationToken);
+        if (project is null)
+        {
+            throw new ProjectNotFoundException(command.ProjectId);
+        }
+
+        project.RemoveService(command.ServiceId);
         await this.unitOfWork.SaveChangesAsync(cancellationToken);
     }
 }

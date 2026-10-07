@@ -15,15 +15,21 @@ using Microsoft.OpenApi.Models;
 using Scalar.AspNetCore;
 using Serilog;
 using Serilog.Events;
+using Tfs.Portfolio.Api.Endpoints;
 using Tfs.Portfolio.Api.Filters;
 using Tfs.Portfolio.Api.Middleware;
 using Tfs.Portfolio.Application.Common.CQRS;
 using Tfs.Portfolio.Application.Common.Modules;
 using Tfs.Portfolio.Application.Common.Services;
+using Tfs.Portfolio.Application.Clients.Commands;
+using Tfs.Portfolio.Application.Clients.Dtos;
+using Tfs.Portfolio.Application.Clients.Handlers;
+using Tfs.Portfolio.Application.Clients.Queries;
 using Tfs.Portfolio.Application.Projects.Commands;
 using Tfs.Portfolio.Application.Projects.Dtos;
 using Tfs.Portfolio.Application.Projects.Handlers;
 using Tfs.Portfolio.Application.Projects.Queries;
+using Tfs.Portfolio.Domain.Clients.Repositories;
 using Tfs.Portfolio.Domain.Projects.Repositories;
 using Tfs.Portfolio.Infrastructure.Persistence;
 using Tfs.Portfolio.Infrastructure.Persistence.Modules;
@@ -152,6 +158,7 @@ public sealed class Program
         // Map versioned endpoints
         var v1 = app.MapGroup("/api/v1").WithTags("v1");
         v1.MapProjectEndpoints();
+        v1.MapClientEndpoints();
 
         app.Run();
     }
@@ -160,6 +167,11 @@ public sealed class Program
 // Extension methods for endpoint mapping
 internal static class EndpointExtensions
 {
+    /// <summary>
+    /// Maps the project endpoints.
+    /// </summary>
+    /// <param name="endpoints">The endpoint route builder.</param>
+    /// <returns>The endpoint route builder.</returns>
     public static IEndpointRouteBuilder MapProjectEndpoints(this IEndpointRouteBuilder endpoints)
     {
         var group = endpoints.MapGroup("/projects").WithTags("Projects");

@@ -6,7 +6,12 @@
 namespace Tfs.Portfolio.Infrastructure.Persistence;
 
 using Microsoft.EntityFrameworkCore;
+using Tfs.Portfolio.Domain.Clients.Entities;
+using Tfs.Portfolio.Domain.CompanyProfile.Entities;
 using Tfs.Portfolio.Domain.Projects.Entities;
+using Tfs.Portfolio.Domain.Sectors.Entities;
+using Tfs.Portfolio.Domain.Services.Entities;
+using Tfs.Portfolio.Infrastructure.Persistence.Entities;
 
 /// <summary>
 /// Application database context.
@@ -23,9 +28,34 @@ public sealed class ApplicationDbContext : DbContext
     }
 
     /// <summary>
+    /// Gets or sets the clients.
+    /// </summary>
+    public DbSet<Client> Clients { get; set; } = default!;
+
+    /// <summary>
+    /// Gets or sets the sectors.
+    /// </summary>
+    public DbSet<Sector> Sectors { get; set; } = default!;
+
+    /// <summary>
+    /// Gets or sets the services.
+    /// </summary>
+    public DbSet<Service> Services { get; set; } = default!;
+
+    /// <summary>
+    /// Gets or sets the company profiles.
+    /// </summary>
+    public DbSet<CompanyProfileEntity> CompanyProfiles { get; set; } = default!;
+
+    /// <summary>
     /// Gets or sets the projects.
     /// </summary>
     public DbSet<Project> Projects { get; set; } = default!;
+
+    /// <summary>
+    /// Gets or sets the project-service associations.
+    /// </summary>
+    public DbSet<ProjectService> ProjectServices { get; set; } = default!;
 
     /// <inheritdoc />
     protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -7,8 +7,12 @@ namespace Tfs.Portfolio.Infrastructure.Persistence.Modules;
 
 using Autofac;
 using Microsoft.Extensions.Configuration;
+using Tfs.Portfolio.Domain.Clients.Repositories;
+using Tfs.Portfolio.Domain.CompanyProfile.Repositories;
 using Tfs.Portfolio.Domain.Common;
 using Tfs.Portfolio.Domain.Projects.Repositories;
+using Tfs.Portfolio.Domain.Sectors.Repositories;
+using Tfs.Portfolio.Domain.Services.Repositories;
 using Tfs.Portfolio.Infrastructure.Persistence.Repositories;
 
 /// <summary>
@@ -33,6 +37,22 @@ public sealed class PersistenceModule : Module
         // Register repositories
         builder.RegisterType<ProjectRepository>()
             .As<IProjectRepository>()
+            .InstancePerLifetimeScope();
+
+        builder.RegisterType<ClientRepository>()
+            .As<IClientRepository>()
+            .InstancePerLifetimeScope();
+
+        builder.RegisterType<SectorRepository>()
+            .As<ISectorRepository>()
+            .InstancePerLifetimeScope();
+
+        builder.RegisterType<ServiceRepository>()
+            .As<IServiceRepository>()
+            .InstancePerLifetimeScope();
+
+        builder.RegisterType<CompanyProfileRepository>()
+            .As<ICompanyProfileRepository>()
             .InstancePerLifetimeScope();
 
         // Register UnitOfWork

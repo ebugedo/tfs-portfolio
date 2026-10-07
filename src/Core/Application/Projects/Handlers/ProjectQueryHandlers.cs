@@ -69,3 +69,119 @@ public sealed class GetProjectsQueryHandler : QueryHandlerBase<GetProjectsQuery,
         return this.mapper.Map<IReadOnlyList<ProjectListItemDto>>(projects);
     }
 }
+
+/// <summary>
+/// Handler for <see cref="GetProjectsByClientQuery"/>.
+/// </summary>
+public sealed class GetProjectsByClientQueryHandler : QueryHandlerBase<GetProjectsByClientQuery, IReadOnlyList<ProjectListItemDto>>
+{
+    private readonly IProjectRepository projectRepository;
+    private readonly IMapper mapper;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="GetProjectsByClientQueryHandler"/> class.
+    /// </summary>
+    /// <param name="projectRepository">The project repository.</param>
+    /// <param name="mapper">The mapper.</param>
+    public GetProjectsByClientQueryHandler(
+        IProjectRepository projectRepository,
+        IMapper mapper)
+    {
+        this.projectRepository = projectRepository;
+        this.mapper = mapper;
+    }
+
+    /// <inheritdoc />
+    public override async Task<IReadOnlyList<ProjectListItemDto>> HandleAsync(GetProjectsByClientQuery query, CancellationToken cancellationToken = default)
+    {
+        var projects = await this.projectRepository.GetByClientIdAsync(query.ClientId, cancellationToken);
+        return this.mapper.Map<IReadOnlyList<ProjectListItemDto>>(projects);
+    }
+}
+
+/// <summary>
+/// Handler for <see cref="GetProjectsBySectorQuery"/>.
+/// </summary>
+public sealed class GetProjectsBySectorQueryHandler : QueryHandlerBase<GetProjectsBySectorQuery, IReadOnlyList<ProjectListItemDto>>
+{
+    private readonly IProjectRepository projectRepository;
+    private readonly IMapper mapper;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="GetProjectsBySectorQueryHandler"/> class.
+    /// </summary>
+    /// <param name="projectRepository">The project repository.</param>
+    /// <param name="mapper">The mapper.</param>
+    public GetProjectsBySectorQueryHandler(
+        IProjectRepository projectRepository,
+        IMapper mapper)
+    {
+        this.projectRepository = projectRepository;
+        this.mapper = mapper;
+    }
+
+    /// <inheritdoc />
+    public override async Task<IReadOnlyList<ProjectListItemDto>> HandleAsync(GetProjectsBySectorQuery query, CancellationToken cancellationToken = default)
+    {
+        var projects = await this.projectRepository.GetBySectorIdAsync(query.SectorId, cancellationToken);
+        return this.mapper.Map<IReadOnlyList<ProjectListItemDto>>(projects);
+    }
+}
+
+/// <summary>
+/// Handler for <see cref="GetProjectsByTechnologyQuery"/>.
+/// </summary>
+public sealed class GetProjectsByTechnologyQueryHandler : QueryHandlerBase<GetProjectsByTechnologyQuery, IReadOnlyList<ProjectListItemDto>>
+{
+    private readonly IProjectRepository projectRepository;
+    private readonly IMapper mapper;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="GetProjectsByTechnologyQueryHandler"/> class.
+    /// </summary>
+    /// <param name="projectRepository">The project repository.</param>
+    /// <param name="mapper">The mapper.</param>
+    public GetProjectsByTechnologyQueryHandler(
+        IProjectRepository projectRepository,
+        IMapper mapper)
+    {
+        this.projectRepository = projectRepository;
+        this.mapper = mapper;
+    }
+
+    /// <inheritdoc />
+    public override async Task<IReadOnlyList<ProjectListItemDto>> HandleAsync(GetProjectsByTechnologyQuery query, CancellationToken cancellationToken = default)
+    {
+        var projects = await this.projectRepository.GetByTechnologyAsync(query.TechnologyName, cancellationToken);
+        return this.mapper.Map<IReadOnlyList<ProjectListItemDto>>(projects);
+    }
+}
+
+/// <summary>
+/// Handler for <see cref="GetProjectsByStatusQuery"/>.
+/// </summary>
+public sealed class GetProjectsByStatusQueryHandler : QueryHandlerBase<GetProjectsByStatusQuery, IReadOnlyList<ProjectListItemDto>>
+{
+    private readonly IProjectRepository projectRepository;
+    private readonly IMapper mapper;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="GetProjectsByStatusQueryHandler"/> class.
+    /// </summary>
+    /// <param name="projectRepository">The project repository.</param>
+    /// <param name="mapper">The mapper.</param>
+    public GetProjectsByStatusQueryHandler(
+        IProjectRepository projectRepository,
+        IMapper mapper)
+    {
+        this.projectRepository = projectRepository;
+        this.mapper = mapper;
+    }
+
+    /// <inheritdoc />
+    public override async Task<IReadOnlyList<ProjectListItemDto>> HandleAsync(GetProjectsByStatusQuery query, CancellationToken cancellationToken = default)
+    {
+        var projects = await this.projectRepository.GetByStatusAsync(query.Status, cancellationToken);
+        return this.mapper.Map<IReadOnlyList<ProjectListItemDto>>(projects);
+    }
+}
