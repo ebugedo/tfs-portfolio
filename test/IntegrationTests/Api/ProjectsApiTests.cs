@@ -11,6 +11,7 @@ using System.Net.Http.Json;
 using System.Text.Json;
 using Tfs.Portfolio.Application.Projects.Commands;
 using Tfs.Portfolio.Application.Projects.Dtos;
+using Tfs.Portfolio.Domain.Common.ValueObjects;
 using Tfs.Portfolio.IntegrationTests;
 using Xunit;
 using FluentAssertions;
@@ -21,6 +22,8 @@ using FluentAssertions;
 public sealed class ProjectsApiTests : IntegrationTestBase
 {
     private const string BaseUrl = "/api/v1/projects";
+    private readonly Guid _testClientId = Guid.NewGuid();
+    private readonly Guid _testSectorId = Guid.NewGuid();
 
     /// <summary>
     /// Tests that GET /api/v1/projects returns 200 with empty array initially.
@@ -45,7 +48,13 @@ public sealed class ProjectsApiTests : IntegrationTestBase
     public async Task CreateProject_WithValidBody_ReturnsCreatedWithLocationAndDto()
     {
         // Arrange
-        var request = new CreateProjectCommand("Test Project", "Test Description");
+        var request = new CreateProjectCommand(
+            "Test Project",
+            "Test Description",
+            YearMonth.Create(6, 2024),
+            6,
+            _testClientId,
+            _testSectorId);
 
         // Act
         var response = await Client.PostAsJsonAsync(BaseUrl, request);
@@ -70,12 +79,19 @@ public sealed class ProjectsApiTests : IntegrationTestBase
     public async Task GetProjectById_WhenExists_ReturnsProjectDto()
     {
         // Arrange - create a project first
-        var createRequest = new CreateProjectCommand("Get By ID Test", "Description");
+        var createRequest = new CreateProjectCommand(
+            "Get By ID Test",
+            "Description",
+            YearMonth.Create(6, 2024),
+            6,
+            _testClientId,
+            _testSectorId);
         var createResponse = await Client.PostAsJsonAsync(BaseUrl, createRequest);
         var createdProject = await createResponse.Content.ReadFromJsonAsync<ProjectDto>();
 
         // Act
-        var response = await Client.GetAsync(new Uri($"{BaseUrl}/{createdProject!.Id}", UriKind.Relative));
+        var response = await Client.GetAsync(
+            new Uri($"{BaseUrl}/{createdProject!.Id}", UriKind.Relative));
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -92,19 +108,35 @@ public sealed class ProjectsApiTests : IntegrationTestBase
     public async Task UpdateProject_WhenExists_ReturnsNoContent()
     {
         // Arrange - create a project first
-        var createRequest = new CreateProjectCommand("Update Test", "Original Description");
+        var createRequest = new CreateProjectCommand(
+            "Update Test",
+            "Original Description",
+            YearMonth.Create(6, 2024),
+            6,
+            _testClientId,
+            _testSectorId);
         var createResponse = await Client.PostAsJsonAsync(BaseUrl, createRequest);
         var createdProject = await createResponse.Content.ReadFromJsonAsync<ProjectDto>();
 
         // Act - update the project
-        var updateRequest = new UpdateProjectCommand(createdProject!.Id, "Updated Name", "Updated Description");
-        var response = await Client.PutAsJsonAsync($"{BaseUrl}/{createdProject.Id}", updateRequest);
+        var updateRequest = new UpdateProjectCommand(
+            createdProject!.Id,
+            "Updated Name",
+            "Updated Description",
+            YearMonth.Create(7, 2024),
+            8,
+            _testClientId,
+            _testSectorId);
+        var response = await Client.PutAsJsonAsync(
+            $"{BaseUrl}/{createdProject.Id}",
+            updateRequest);
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.NoContent);
 
         // Verify the update
-        var getResponse = await Client.GetAsync(new Uri($"{BaseUrl}/{createdProject.Id}", UriKind.Relative));
+        var getResponse = await Client.GetAsync(
+            new Uri($"{BaseUrl}/{createdProject.Id}", UriKind.Relative));
         var updatedProject = await getResponse.Content.ReadFromJsonAsync<ProjectDto>();
         updatedProject!.Name.Should().Be("Updated Name");
         updatedProject.Description.Should().Be("Updated Description");
@@ -117,18 +149,26 @@ public sealed class ProjectsApiTests : IntegrationTestBase
     public async Task DeleteProject_WhenExists_ReturnsNoContent()
     {
         // Arrange - create a project first
-        var createRequest = new CreateProjectCommand("Delete Test", "To be deleted");
+        var createRequest = new CreateProjectCommand(
+            "Delete Test",
+            "To be deleted",
+            YearMonth.Create(6, 2024),
+            6,
+            _testClientId,
+            _testSectorId);
         var createResponse = await Client.PostAsJsonAsync(BaseUrl, createRequest);
         var createdProject = await createResponse.Content.ReadFromJsonAsync<ProjectDto>();
 
         // Act
-        var response = await Client.DeleteAsync(new Uri($"{BaseUrl}/{createdProject!.Id}", UriKind.Relative));
+        var response = await Client.DeleteAsync(
+            new Uri($"{BaseUrl}/{createdProject!.Id}", UriKind.Relative));
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.NoContent);
 
         // Verify deletion
-        var getResponse = await Client.GetAsync(new Uri($"{BaseUrl}/{createdProject.Id}", UriKind.Relative));
+        var getResponse = await Client.GetAsync(
+            new Uri($"{BaseUrl}/{createdProject.Id}", UriKind.Relative));
         getResponse.StatusCode.Should().Be(HttpStatusCode.NotFound);
     }
 
@@ -139,7 +179,13 @@ public sealed class ProjectsApiTests : IntegrationTestBase
     public async Task CreateProject_WithInvalidBody_ReturnsBadRequestWithProblemDetails()
     {
         // Arrange - empty name should fail validation
-        var request = new CreateProjectCommand(string.Empty, "Test Description");
+        var request = new CreateProjectCommand(
+            string.Empty,
+            "Test Description",
+            YearMonth.Create(6, 2024),
+            6,
+            _testClientId,
+            _testSectorId);
 
         // Act
         var response = await Client.PostAsJsonAsync(BaseUrl, request);
@@ -159,7 +205,8 @@ public sealed class ProjectsApiTests : IntegrationTestBase
     public async Task GetProjectById_WhenNotFound_ReturnsNotFoundWithProblemDetails()
     {
         // Act
-        var response = await Client.GetAsync(new Uri($"{BaseUrl}/{Guid.NewGuid()}", UriKind.Relative));
+        var response = await Client.GetAsync(
+            new Uri($"{BaseUrl}/{Guid.NewGuid()}", UriKind.Relative));
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.NotFound);
@@ -175,13 +222,28 @@ public sealed class ProjectsApiTests : IntegrationTestBase
     public async Task UpdateProject_WithMismatchedId_ReturnsBadRequest()
     {
         // Arrange
-        var createRequest = new CreateProjectCommand("Mismatch Test", "Test");
+        var createRequest = new CreateProjectCommand(
+            "Mismatch Test",
+            "Test",
+            YearMonth.Create(6, 2024),
+            6,
+            _testClientId,
+            _testSectorId);
         var createResponse = await Client.PostAsJsonAsync(BaseUrl, createRequest);
         var createdProject = await createResponse.Content.ReadFromJsonAsync<ProjectDto>();
 
         // Act - update with different ID
-        var updateRequest = new UpdateProjectCommand(Guid.NewGuid(), "Updated", "Test");
-        var response = await Client.PutAsJsonAsync($"{BaseUrl}/{createdProject!.Id}", updateRequest);
+        var updateRequest = new UpdateProjectCommand(
+            Guid.NewGuid(),
+            "Updated",
+            "Test",
+            YearMonth.Create(6, 2024),
+            6,
+            _testClientId,
+            _testSectorId);
+        var response = await Client.PutAsJsonAsync(
+            $"{BaseUrl}/{createdProject!.Id}",
+            updateRequest);
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
@@ -194,8 +256,24 @@ public sealed class ProjectsApiTests : IntegrationTestBase
     public async Task GetProjects_WhenMultipleExist_ReturnsAll()
     {
         // Arrange - create multiple projects
-        var project1 = await Client.PostAsJsonAsync(BaseUrl, new CreateProjectCommand("Project 1", "Desc 1"));
-        var project2 = await Client.PostAsJsonAsync(BaseUrl, new CreateProjectCommand("Project 2", "Desc 2"));
+        var project1 = await Client.PostAsJsonAsync(
+            BaseUrl,
+            new CreateProjectCommand(
+                "Project 1",
+                "Desc 1",
+                YearMonth.Create(6, 2024),
+                6,
+                _testClientId,
+                _testSectorId));
+        var project2 = await Client.PostAsJsonAsync(
+            BaseUrl,
+            new CreateProjectCommand(
+                "Project 2",
+                "Desc 2",
+                YearMonth.Create(7, 2024),
+                8,
+                _testClientId,
+                _testSectorId));
 
         var p1 = await project1.Content.ReadFromJsonAsync<ProjectDto>();
         var p2 = await project2.Content.ReadFromJsonAsync<ProjectDto>();

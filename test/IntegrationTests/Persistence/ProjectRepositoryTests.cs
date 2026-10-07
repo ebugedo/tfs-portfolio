@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Tfs.Portfolio.Domain.Projects.Entities;
 using Tfs.Portfolio.Domain.Projects.Repositories;
 using Tfs.Portfolio.Domain.Common;
+using Tfs.Portfolio.Domain.Common.ValueObjects;
 using Tfs.Portfolio.IntegrationTests;
 using Xunit;
 using FluentAssertions;
@@ -18,6 +19,9 @@ using FluentAssertions;
 /// </summary>
 public sealed class ProjectRepositoryTests : IntegrationTestBase
 {
+    private readonly Guid _testClientId = Guid.NewGuid();
+    private readonly Guid _testSectorId = Guid.NewGuid();
+
     /// <summary>
     /// Tests that AddAsync persists a project to the database.
     /// </summary>
@@ -25,7 +29,13 @@ public sealed class ProjectRepositoryTests : IntegrationTestBase
     public async Task AddAsync_PersistsProjectToDatabase()
     {
         // Arrange
-        var project = Project.Create("Persistence Test", "Test Description");
+        var project = Project.Create(
+            "Persistence Test",
+            "Test Description",
+            YearMonth.Create(6, 2024),
+            6,
+            _testClientId,
+            _testSectorId);
 
         // Act
         await ProjectRepository.AddAsync(project);
@@ -47,7 +57,13 @@ public sealed class ProjectRepositoryTests : IntegrationTestBase
     public async Task GetByIdAsync_ReturnsCorrectEntity()
     {
         // Arrange
-        var project = Project.Create("GetById Test", "Test Description");
+        var project = Project.Create(
+            "GetById Test",
+            "Test Description",
+            YearMonth.Create(6, 2024),
+            6,
+            _testClientId,
+            _testSectorId);
         await ProjectRepository.AddAsync(project);
         await UnitOfWork.SaveChangesAsync();
 
@@ -81,9 +97,27 @@ public sealed class ProjectRepositoryTests : IntegrationTestBase
     public async Task GetAllAsync_ReturnsAllProjects()
     {
         // Arrange
-        var project1 = Project.Create("Project 1", "Description 1");
-        var project2 = Project.Create("Project 2", "Description 2");
-        var project3 = Project.Create("Project 3", "Description 3");
+        var project1 = Project.Create(
+            "Project 1",
+            "Description 1",
+            YearMonth.Create(6, 2024),
+            6,
+            _testClientId,
+            _testSectorId);
+        var project2 = Project.Create(
+            "Project 2",
+            "Description 2",
+            YearMonth.Create(7, 2024),
+            8,
+            _testClientId,
+            _testSectorId);
+        var project3 = Project.Create(
+            "Project 3",
+            "Description 3",
+            YearMonth.Create(8, 2024),
+            10,
+            _testClientId,
+            _testSectorId);
 
         await ProjectRepository.AddAsync(project1);
         await ProjectRepository.AddAsync(project2);
@@ -108,7 +142,13 @@ public sealed class ProjectRepositoryTests : IntegrationTestBase
     public async Task Update_UpdatesExistingProject()
     {
         // Arrange
-        var project = Project.Create("Original Name", "Original Description");
+        var project = Project.Create(
+            "Original Name",
+            "Original Description",
+            YearMonth.Create(6, 2024),
+            6,
+            _testClientId,
+            _testSectorId);
         await ProjectRepository.AddAsync(project);
         await UnitOfWork.SaveChangesAsync();
 
@@ -118,7 +158,13 @@ public sealed class ProjectRepositoryTests : IntegrationTestBase
         // Act - Get tracked entity, modify it, save
         var trackedProject = await ProjectRepository.GetByIdAsync(project.Id);
         trackedProject.Should().NotBeNull();
-        trackedProject!.Update("Updated Name", "Updated Description");
+        trackedProject!.Update(
+            "Updated Name",
+            "Updated Description",
+            YearMonth.Create(7, 2024),
+            8,
+            _testClientId,
+            _testSectorId);
         await UnitOfWork.SaveChangesAsync();
 
         // Assert - read from clean context to verify persisted state
@@ -139,7 +185,13 @@ public sealed class ProjectRepositoryTests : IntegrationTestBase
     public async Task UnitOfWork_SaveChangesAsync_CommitsTransaction()
     {
         // Arrange
-        var project = Project.Create("Transaction Test", "Test Description");
+        var project = Project.Create(
+            "Transaction Test",
+            "Test Description",
+            YearMonth.Create(6, 2024),
+            6,
+            _testClientId,
+            _testSectorId);
         await ProjectRepository.AddAsync(project);
 
         // Act
@@ -161,8 +213,20 @@ public sealed class ProjectRepositoryTests : IntegrationTestBase
     public async Task UnitOfWork_MultipleOperations_AreAtomic()
     {
         // Arrange
-        var project1 = Project.Create("Atomic Test 1", "Description 1");
-        var project2 = Project.Create("Atomic Test 2", "Description 2");
+        var project1 = Project.Create(
+            "Atomic Test 1",
+            "Description 1",
+            YearMonth.Create(6, 2024),
+            6,
+            _testClientId,
+            _testSectorId);
+        var project2 = Project.Create(
+            "Atomic Test 2",
+            "Description 2",
+            YearMonth.Create(7, 2024),
+            8,
+            _testClientId,
+            _testSectorId);
 
         // Act - add both but only save once
         await ProjectRepository.AddAsync(project1);

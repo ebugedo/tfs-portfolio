@@ -6,13 +6,19 @@
 namespace Tfs.Portfolio.Application.Projects.Commands;
 
 using Tfs.Portfolio.Application.Common.CQRS;
+using Tfs.Portfolio.Domain.Common.ValueObjects;
+using Tfs.Portfolio.Domain.Projects.Entities;
 
 /// <summary>
 /// Command to create a new project.
 /// </summary>
 public sealed record CreateProjectCommand(
     string Name,
-    string? Description
+    string? Description,
+    YearMonth StartDate,
+    int DurationMonths,
+    Guid ClientId,
+    Guid SectorId
 ) : ICommand<Guid>;
 
 /// <summary>
@@ -21,7 +27,11 @@ public sealed record CreateProjectCommand(
 public sealed record UpdateProjectCommand(
     Guid Id,
     string Name,
-    string? Description
+    string? Description,
+    YearMonth StartDate,
+    int DurationMonths,
+    Guid ClientId,
+    Guid SectorId
 ) : ICommand;
 
 /// <summary>
@@ -29,4 +39,28 @@ public sealed record UpdateProjectCommand(
 /// </summary>
 public sealed record DeleteProjectCommand(
     Guid Id
+) : ICommand;
+
+/// <summary>
+/// Command to change a project's status.
+/// </summary>
+public sealed record ChangeProjectStatusCommand(
+    Guid Id,
+    ProjectStatus Status
+) : ICommand;
+
+/// <summary>
+/// Command to add a service to a project.
+/// </summary>
+public sealed record AddProjectServiceCommand(
+    Guid ProjectId,
+    Guid ServiceId
+) : ICommand;
+
+/// <summary>
+/// Command to remove a service from a project.
+/// </summary>
+public sealed record RemoveProjectServiceCommand(
+    Guid ProjectId,
+    Guid ServiceId
 ) : ICommand;

@@ -5,6 +5,9 @@
 
 namespace Tfs.Portfolio.Application.Projects.Dtos;
 
+using Tfs.Portfolio.Domain.Common.ValueObjects;
+using Tfs.Portfolio.Domain.Projects.Entities;
+
 /// <summary>
 /// Data transfer object for a project.
 /// </summary>
@@ -12,6 +15,14 @@ public sealed record ProjectDto(
     Guid Id,
     string Name,
     string? Description,
+    YearMonth StartDate,
+    int DurationMonths,
+    YearMonth EndDate,
+    Guid ClientId,
+    Guid SectorId,
+    ProjectStatus Status,
+    IReadOnlyList<string> Technologies,
+    IReadOnlyList<Guid> ServiceIds,
     DateTime CreatedAt,
     DateTime? UpdatedAt
 );
@@ -23,6 +34,12 @@ public sealed record ProjectListItemDto(
     Guid Id,
     string Name,
     string? Description,
+    YearMonth StartDate,
+    int DurationMonths,
+    YearMonth EndDate,
+    Guid ClientId,
+    Guid SectorId,
+    ProjectStatus Status,
     DateTime CreatedAt
 );
 
@@ -31,7 +48,11 @@ public sealed record ProjectListItemDto(
 /// </summary>
 public sealed record CreateProjectRequest(
     string Name,
-    string? Description
+    string? Description,
+    YearMonth StartDate,
+    int DurationMonths,
+    Guid ClientId,
+    Guid SectorId
 );
 
 /// <summary>
@@ -39,5 +60,9 @@ public sealed record CreateProjectRequest(
 /// </summary>
 public sealed record UpdateProjectRequest(
     string Name,
-    string? Description
+    string? Description,
+    YearMonth StartDate,
+    int DurationMonths,
+    Guid ClientId,
+    Guid SectorId
 );
