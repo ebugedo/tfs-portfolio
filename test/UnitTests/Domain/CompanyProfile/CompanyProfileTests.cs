@@ -36,17 +36,17 @@ public sealed class CompanyProfileTests
             "Tfs Portfolio",
             "contact@tfsportfolio.com",
             "+1234567890",
-            Url.Create("https://tfsportfolio.com"),
+            TfsWebUrl.Create("https://tfsportfolio.com"),
             "123 Main St",
             "A software consulting company",
-            Url.Create("https://tfsportfolio.com/logo.png"));
+            TfsWebUrl.Create("https://tfsportfolio.com/logo.png"));
 
         // Assert
         Assert.NotEqual(Guid.Empty, profile.Id);
         Assert.Equal("Tfs Portfolio", profile.CompanyName);
         Assert.Equal("contact@tfsportfolio.com", profile.ContactEmail);
         Assert.Equal("+1234567890", profile.ContactPhone);
-        Assert.Equal("https://tfsportfolio.com", profile.WebUrl?.Value);
+        Assert.Equal("https://tfsportfolio.com", profile.TfsWebUrl?.Value);
         Assert.Equal("123 Main St", profile.Address);
         Assert.Equal("A software consulting company", profile.Description);
         Assert.Equal("https://tfsportfolio.com/logo.png", profile.LogoUrl?.Value);
@@ -74,7 +74,7 @@ public sealed class CompanyProfileTests
         Assert.Equal("Tfs Portfolio", profile.CompanyName);
         Assert.Equal("contact@tfsportfolio.com", profile.ContactEmail);
         Assert.Null(profile.ContactPhone);
-        Assert.Null(profile.WebUrl);
+        Assert.Null(profile.TfsWebUrl);
         Assert.Null(profile.Address);
         Assert.Null(profile.Description);
         Assert.Null(profile.LogoUrl);
@@ -168,11 +168,11 @@ public sealed class CompanyProfileTests
     /// Tests that CompanyProfile creation fails with invalid web URL.
     /// </summary>
     [Fact]
-    public void Create_WithInvalidWebUrl_ThrowsArgumentException()
+    public void Create_WithInvalidTfsWebUrl_ThrowsArgumentException()
     {
         // Act & Assert
         var exception = Assert.Throws<ArgumentException>(
-            () => CompanyProfileEntity.Create("Tfs Portfolio", "contact@tfsportfolio.com", webUrl: Url.Create("not-a-url")));
+            () => CompanyProfileEntity.Create("Tfs Portfolio", "contact@tfsportfolio.com", webUrl: TfsWebUrl.Create("not-a-url")));
 
         Assert.Contains("Invalid URL format", exception.Message, StringComparison.Ordinal);
     }
@@ -185,7 +185,7 @@ public sealed class CompanyProfileTests
     {
         // Act & Assert
         var exception = Assert.Throws<ArgumentException>(
-            () => CompanyProfileEntity.Create("Tfs Portfolio", "contact@tfsportfolio.com", logoUrl: Url.Create("not-a-url")));
+            () => CompanyProfileEntity.Create("Tfs Portfolio", "contact@tfsportfolio.com", logoUrl: TfsWebUrl.Create("not-a-url")));
 
         Assert.Contains("Invalid URL format", exception.Message, StringComparison.Ordinal);
     }
@@ -218,16 +218,16 @@ public sealed class CompanyProfileTests
             "Tfs Portfolio Updated",
             "updated@tfsportfolio.com",
             "+9876543210",
-            Url.Create("https://updated.com"),
+            TfsWebUrl.Create("https://updated.com"),
             "456 Updated Ave",
             "Updated description",
-            Url.Create("https://updated.com/new-logo.png"));
+            TfsWebUrl.Create("https://updated.com/new-logo.png"));
 
         // Assert
         Assert.Equal("Tfs Portfolio Updated", profile.CompanyName);
         Assert.Equal("updated@tfsportfolio.com", profile.ContactEmail);
         Assert.Equal("+9876543210", profile.ContactPhone);
-        Assert.Equal("https://updated.com", profile.WebUrl?.Value);
+        Assert.Equal("https://updated.com", profile.TfsWebUrl?.Value);
         Assert.Equal("456 Updated Ave", profile.Address);
         Assert.Equal("Updated description", profile.Description);
         Assert.Equal("https://updated.com/new-logo.png", profile.LogoUrl?.Value);
@@ -311,14 +311,14 @@ public sealed class CompanyProfileTests
     /// Tests that CompanyProfile update fails with invalid web URL.
     /// </summary>
     [Fact]
-    public void Update_WithInvalidWebUrl_ThrowsArgumentException()
+    public void Update_WithInvalidTfsWebUrl_ThrowsArgumentException()
     {
         // Arrange
         var profile = CompanyProfileEntity.Create("Tfs Portfolio", "contact@tfsportfolio.com");
 
         // Act & Assert
         var exception = Assert.Throws<ArgumentException>(
-            () => profile.Update("Tfs Portfolio", "contact@tfsportfolio.com", webUrl: Url.Create("not-a-url")));
+            () => profile.Update("Tfs Portfolio", "contact@tfsportfolio.com", webUrl: TfsWebUrl.Create("not-a-url")));
 
         Assert.Contains("Invalid URL format", exception.Message, StringComparison.Ordinal);
     }
@@ -334,7 +334,7 @@ public sealed class CompanyProfileTests
 
         // Act & Assert
         var exception = Assert.Throws<ArgumentException>(
-            () => profile.Update("Tfs Portfolio", "contact@tfsportfolio.com", logoUrl: Url.Create("not-a-url")));
+            () => profile.Update("Tfs Portfolio", "contact@tfsportfolio.com", logoUrl: TfsWebUrl.Create("not-a-url")));
 
         Assert.Contains("Invalid URL format", exception.Message, StringComparison.Ordinal);
     }
@@ -353,10 +353,10 @@ public sealed class CompanyProfileTests
             "  Tfs Portfolio Updated  ",
             "  updated@tfsportfolio.com  ",
             "  +9876543210  ",
-            Url.Create("https://updated.com"),
+            TfsWebUrl.Create("https://updated.com"),
             "  456 Updated Ave  ",
             "  Updated description  ",
-            Url.Create("https://updated.com/new-logo.png"));
+            TfsWebUrl.Create("https://updated.com/new-logo.png"));
 
         // Assert
         Assert.Equal("Tfs Portfolio Updated", profile.CompanyName);

@@ -65,7 +65,12 @@ public sealed class GetProjectsQueryHandler : QueryHandlerBase<GetProjectsQuery,
     /// <inheritdoc />
     public override async Task<IReadOnlyList<ProjectListItemDto>> HandleAsync(GetProjectsQuery query, CancellationToken cancellationToken = default)
     {
-        var projects = await this.projectRepository.GetAllAsync(cancellationToken);
+        var projects = await this.projectRepository.GetFilteredAsync(
+            query.ClientId,
+            query.SectorId,
+            query.Technology,
+            query.Status,
+            cancellationToken);
         return this.mapper.Map<IReadOnlyList<ProjectListItemDto>>(projects);
     }
 }

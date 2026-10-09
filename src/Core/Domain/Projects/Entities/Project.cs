@@ -119,9 +119,10 @@ public sealed class Project : AggregateRoot<Guid>
     /// <param name="durationMonths">The project duration in months (1-120).</param>
     /// <param name="clientId">The client identifier.</param>
     /// <param name="sectorId">The sector identifier.</param>
+    /// <param name="technologies">Optional list of technology names.</param>
     /// <returns>A new project instance.</returns>
     /// <exception cref="InvalidProjectStateException">Thrown when validation fails.</exception>
-    public static Project Create(string name, string? description, YearMonth startDate, int durationMonths, Guid clientId, Guid sectorId)
+    public static Project Create(string name, string? description, YearMonth startDate, int durationMonths, Guid clientId, Guid sectorId, IReadOnlyList<string>? technologies = null)
     {
         if (string.IsNullOrWhiteSpace(name))
         {
@@ -144,6 +145,18 @@ public sealed class Project : AggregateRoot<Guid>
         }
 
         var project = new Project(Guid.NewGuid(), name.Trim(), description?.Trim(), startDate, durationMonths, clientId, sectorId, DateTime.UtcNow);
+
+        if (technologies is not null && technologies.Count > 0)
+        {
+            foreach (var techName in technologies.Distinct(StringComparer.OrdinalIgnoreCase))
+            {
+                if (!string.IsNullOrWhiteSpace(techName))
+                {
+                    project.AddTechnology(Technology.Create(techName.Trim(), TechnologyCategory.Tools, ProficiencyLevel.Intermediate));
+                }
+            }
+        }
+
         project.AddDomainEvent(new ProjectCreatedEvent(project.Id, project.Name));
         return project;
     }

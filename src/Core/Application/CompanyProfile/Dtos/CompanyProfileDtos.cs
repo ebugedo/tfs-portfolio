@@ -15,10 +15,10 @@ public sealed record CompanyProfileDto(
     string CompanyName,
     string ContactEmail,
     string? ContactPhone,
-    Url? WebUrl,
+    TfsWebUrl? TfsWebUrl,
     string? Address,
     string? Description,
-    Url? LogoUrl,
+    TfsWebUrl? LogoUrl,
     DateTime CreatedAt,
     DateTime? UpdatedAt
 );
@@ -30,8 +30,8 @@ public sealed record UpdateCompanyProfileRequest(
     string CompanyName,
     string ContactEmail,
     string? ContactPhone,
-    Url? WebUrl,
+    TfsWebUrl? TfsWebUrl,
     string? Address,
     string? Description,
-    Url? LogoUrl
+    TfsWebUrl? LogoUrl
 );

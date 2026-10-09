@@ -22,23 +22,27 @@ public sealed class ClientMappingProfile : Profile
     public ClientMappingProfile()
     {
         this.CreateMap<Client, ClientDto>()
-            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
-            .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
-            .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
-            .ForMember(dest => dest.LogoUrl, opt => opt.MapFrom(src => src.LogoUrl))
-            .ForMember(dest => dest.Phone, opt => opt.MapFrom(src => src.Phone))
-            .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.Address))
-            .ForMember(dest => dest.IsActive, opt => opt.MapFrom(src => src.IsActive))
-            .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(src => src.CreatedAt))
-            .ForMember(dest => dest.UpdatedAt, opt => opt.MapFrom(src => src.UpdatedAt));
+            .ConstructUsing(src => new ClientDto(
+                src.Id,
+                src.Name,
+                src.Email,
+                src.LogoUrl,
+                src.Phone,
+                src.Address,
+                src.IsActive,
+                src.CreatedAt,
+                src.UpdatedAt))
+            .ForMember(dest => dest.LogoUrl, opt => opt.MapFrom(src => src.LogoUrl));
 
         this.CreateMap<Client, ClientListItemDto>()
-            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
-            .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
-            .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
-            .ForMember(dest => dest.LogoUrl, opt => opt.MapFrom(src => src.LogoUrl))
-            .ForMember(dest => dest.IsActive, opt => opt.MapFrom(src => src.IsActive))
-            .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(src => src.CreatedAt));
+            .ConstructUsing(src => new ClientListItemDto(
+                src.Id,
+                src.Name,
+                src.Email,
+                src.LogoUrl,
+                src.IsActive,
+                src.CreatedAt))
+            .ForMember(dest => dest.LogoUrl, opt => opt.MapFrom(src => src.LogoUrl));
 
         this.CreateMap<CreateClientCommand, Client>()
             .ConstructUsing(cmd => Client.Create(cmd.Name, cmd.Email, cmd.LogoUrl, cmd.Phone, cmd.Address));

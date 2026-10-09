@@ -25,11 +25,23 @@ using Tfs.Portfolio.Application.Clients.Commands;
 using Tfs.Portfolio.Application.Clients.Dtos;
 using Tfs.Portfolio.Application.Clients.Handlers;
 using Tfs.Portfolio.Application.Clients.Queries;
+using Tfs.Portfolio.Application.Sectors.Commands;
+using Tfs.Portfolio.Application.Sectors.Handlers;
+using Tfs.Portfolio.Application.Sectors.Queries;
+using Tfs.Portfolio.Application.Services.Commands;
+using Tfs.Portfolio.Application.Services.Handlers;
+using Tfs.Portfolio.Application.Services.Queries;
+using Tfs.Portfolio.Application.CompanyProfile.Commands;
+using Tfs.Portfolio.Application.CompanyProfile.Handlers;
+using Tfs.Portfolio.Application.CompanyProfile.Queries;
 using Tfs.Portfolio.Application.Projects.Commands;
 using Tfs.Portfolio.Application.Projects.Dtos;
 using Tfs.Portfolio.Application.Projects.Handlers;
 using Tfs.Portfolio.Application.Projects.Queries;
 using Tfs.Portfolio.Domain.Clients.Repositories;
+using Tfs.Portfolio.Domain.Sectors.Repositories;
+using Tfs.Portfolio.Domain.Services.Repositories;
+using Tfs.Portfolio.Domain.CompanyProfile.Repositories;
 using Tfs.Portfolio.Domain.Projects.Repositories;
 using Tfs.Portfolio.Infrastructure.Persistence;
 using Tfs.Portfolio.Infrastructure.Persistence.Modules;
@@ -159,6 +171,9 @@ public sealed class Program
         var v1 = app.MapGroup("/api/v1").WithTags("v1");
         v1.MapProjectEndpoints();
         v1.MapClientEndpoints();
+        v1.MapSectorEndpoints();
+        v1.MapServiceEndpoints();
+        v1.MapCompanyProfileEndpoints();
 
         app.Run();
     }
@@ -167,74 +182,4 @@ public sealed class Program
 // Extension methods for endpoint mapping
 internal static class EndpointExtensions
 {
-    /// <summary>
-    /// Maps the project endpoints.
-    /// </summary>
-    /// <param name="endpoints">The endpoint route builder.</param>
-    /// <returns>The endpoint route builder.</returns>
-    public static IEndpointRouteBuilder MapProjectEndpoints(this IEndpointRouteBuilder endpoints)
-    {
-        var group = endpoints.MapGroup("/projects").WithTags("Projects");
-
-        group.MapGet("/", async ([FromServices] GetProjectsQueryHandler handler, CancellationToken ct) =>
-        {
-            var result = await handler.HandleAsync(new GetProjectsQuery(), ct);
-            return Results.Ok(result);
-        })
-        .WithName("GetProjects")
-        .Produces<IReadOnlyList<ProjectListItemDto>>();
-
-        group.MapGet("/{id:guid}", async (Guid id, [FromServices] GetProjectByIdQueryHandler handler, CancellationToken ct) =>
-        {
-            var result = await handler.HandleAsync(new GetProjectByIdQuery(id), ct);
-            return result is not null ? Results.Ok(result) : Results.Problem(
-                title: "Not Found",
-                detail: $"Project with ID '{id}' was not found.",
-                statusCode: 404,
-                instance: $"/api/v1/projects/{id}");
-        })
-        .WithName("GetProjectById")
-        .Produces<ProjectDto>()
-        .Produces(404);
-
-        group.MapPost("/", async (CreateProjectCommand command, [FromServices] CreateProjectCommandHandler handler, [FromServices] IMapper mapper, [FromServices] IProjectRepository projectRepository, CancellationToken ct) =>
-        {
-            var projectId = await handler.HandleAsync(command, ct);
-            var project = await projectRepository.GetByIdAsync(projectId, ct);
-            var projectDto = mapper.Map<ProjectDto>(project!);
-            return Results.Created($"/api/v1/projects/{projectId}", projectDto);
-        })
-        .WithName("CreateProject")
-        .Accepts<CreateProjectCommand>("application/json")
-        .Produces(201)
-        .Produces<ProblemDetails>(400)
-        .AddEndpointFilter<ValidationFilter<CreateProjectCommand>>();
-
-        group.MapPut("/{id:guid}", async (Guid id, UpdateProjectCommand command, [FromServices] UpdateProjectCommandHandler handler, CancellationToken ct) =>
-        {
-            if (id != command.Id)
-            {
-                return Results.BadRequest(new ProblemDetails { Title = "ID mismatch", Detail = "Route ID does not match command ID." });
-            }
-            await handler.HandleAsync(command, ct);
-            return Results.NoContent();
-        })
-        .WithName("UpdateProject")
-        .Accepts<UpdateProjectCommand>("application/json")
-        .Produces(204)
-        .Produces<ProblemDetails>(400)
-        .Produces(404)
-        .AddEndpointFilter<ValidationFilter<UpdateProjectCommand>>();
-
-        group.MapDelete("/{id:guid}", async (Guid id, [FromServices] DeleteProjectCommandHandler handler, CancellationToken ct) =>
-        {
-            await handler.HandleAsync(new DeleteProjectCommand(id), ct);
-            return Results.NoContent();
-        })
-        .WithName("DeleteProject")
-        .Produces(204)
-        .Produces(404);
-
-        return endpoints;
-    }
 }

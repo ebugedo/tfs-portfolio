@@ -6,6 +6,7 @@
 namespace Tfs.Portfolio.Infrastructure.Persistence.Repositories;
 
 using Microsoft.EntityFrameworkCore;
+using Npgsql;
 using Tfs.Portfolio.Domain.Projects.Entities;
 using Tfs.Portfolio.Domain.Projects.Repositories;
 
@@ -75,10 +76,17 @@ public sealed class ProjectRepository : IProjectRepository
     /// <inheritdoc />
     public async Task<IReadOnlyList<Project>> GetByTechnologyAsync(string technologyName, CancellationToken cancellationToken = default)
     {
+        var sql = @"
+            SELECT p.* FROM ""Projects"" p
+            WHERE EXISTS (
+                SELECT 1 FROM jsonb_array_elements(p.""Technologies"") AS tech
+                WHERE LOWER(tech->>'Name') = LOWER(@technologyName)
+            )
+            ORDER BY p.""Name""";
+
         return await this.context.Projects
+            .FromSqlRaw(sql, new NpgsqlParameter("technologyName", technologyName))
             .AsNoTracking()
-            .Where(p => p.Technologies.Any(t => t.Name == technologyName))
-            .OrderBy(p => p.Name)
             .ToListAsync(cancellationToken);
     }
 
@@ -90,6 +98,42 @@ public sealed class ProjectRepository : IProjectRepository
             .Where(p => p.Status == status)
             .OrderBy(p => p.Name)
             .ToListAsync(cancellationToken);
+    }
+
+    /// <inheritdoc />
+    public async Task<IReadOnlyList<Project>> GetFilteredAsync(
+        Guid? clientId = null,
+        Guid? sectorId = null,
+        string? technologyName = null,
+        ProjectStatus? status = null,
+        CancellationToken cancellationToken = default)
+    {
+        var query = this.context.Projects.AsNoTracking();
+
+        if (clientId.HasValue)
+        {
+            query = query.Where(p => p.ClientId == clientId.Value);
+        }
+
+        if (sectorId.HasValue)
+        {
+            query = query.Where(p => p.SectorId == sectorId.Value);
+        }
+
+        if (status.HasValue)
+        {
+            query = query.Where(p => p.Status == status.Value);
+        }
+
+        var projects = await query.OrderBy(p => p.Name).ToListAsync(cancellationToken);
+
+        if (!string.IsNullOrWhiteSpace(technologyName))
+        {
+            // Filter by technology name in memory since JSONB array filtering is not translatable
+            projects = projects.Where(p => p.Technologies.Any(t => t.Name.Equals(technologyName, StringComparison.OrdinalIgnoreCase))).ToList();
+        }
+
+        return projects;
     }
 
     /// <inheritdoc />

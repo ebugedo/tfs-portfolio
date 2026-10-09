@@ -14,7 +14,7 @@ public sealed record ClientDto(
     Guid Id,
     string Name,
     string Email,
-    Url? LogoUrl,
+    TfsWebUrl? LogoUrl,
     string? Phone,
     string? Address,
     bool IsActive,
@@ -29,7 +29,7 @@ public sealed record ClientListItemDto(
     Guid Id,
     string Name,
     string Email,
-    Url? LogoUrl,
+    TfsWebUrl? LogoUrl,
     bool IsActive,
     DateTime CreatedAt
 );
@@ -40,7 +40,7 @@ public sealed record ClientListItemDto(
 public sealed record CreateClientRequest(
     string Name,
     string Email,
-    Url? LogoUrl,
+    TfsWebUrl? LogoUrl,
     string? Phone,
     string? Address
 );
@@ -51,7 +51,7 @@ public sealed record CreateClientRequest(
 public sealed record UpdateClientRequest(
     string Name,
     string Email,
-    Url? LogoUrl,
+    TfsWebUrl? LogoUrl,
     string? Phone,
     string? Address,
     bool? IsActive

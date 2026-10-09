@@ -179,3 +179,56 @@ The system SHALL provide persistence integration tests for ClientRepository, Sec
 - **THEN** verifies entity saved and retrievable
 - **WHEN** running `ProjectRepository_GetByClientIdAsync_ReturnsFiltered`
 - **THEN** verifies query filters by ClientId correctly
+
+### Requirement: Integration tests verify value object JSONB persistence
+The system SHALL include integration tests that verify nullable `TfsWebUrl` value objects persist and load correctly through EF Core JSONB columns.
+
+#### Scenario: Client with LogoUrl persists and loads correctly
+- **WHEN** a `Client` entity with a non-null `LogoUrl` is added via `ClientRepository.AddAsync` and saved
+- **THEN** the entity is retrieved via `ClientRepository.GetByIdAsync` with the same `LogoUrl` value
+- **THEN** `LogoUrl.IsValid` returns `true` and `LogoUrl.Value` matches the original URL
+
+#### Scenario: Client with null LogoUrl persists and loads correctly
+- **WHEN** a `Client` entity with `null` `LogoUrl` is added via `ClientRepository.AddAsync` and saved
+- **THEN** the entity is retrieved via `ClientRepository.GetByIdAsync` with `LogoUrl` being `null`
+
+#### Scenario: CompanyProfile with TfsWebUrl and LogoUrl persists and loads correctly
+- **WHEN** a `CompanyProfileEntity` with non-null `TfsWebUrl` and `LogoUrl` is added via `CompanyProfileRepository.AddAsync` and saved
+- **THEN** the entity is retrieved via `CompanyProfileRepository.GetAsync` with both URLs correctly populated
+- **THEN** both URLs have `IsValid = true` and correct values
+
+#### Scenario: CompanyProfile with null URLs persists and loads correctly
+- **WHEN** a `CompanyProfileEntity` with `null` `TfsWebUrl` and `LogoUrl` is added and saved
+- **THEN** the entity is retrieved with both URL properties being `null`
+
+### Requirement: Integration tests use valid test data with proper FK relationships
+The system SHALL ensure all integration tests that create entities with foreign key relationships (e.g., Projects with ClientId, SectorId) first create the referenced entities (Clients, Sectors) to satisfy database constraints.
+
+#### Scenario: Project integration tests create required Client and Sector entities first
+- **WHEN** an integration test creates a `Project` entity with `ClientId` and `SectorId`
+- **THEN** the test first creates and persists valid `Client` and `Sector` entities
+- **THEN** the `Project` references the created entities' IDs
+- **THEN** no PostgreSQL foreign key constraint violation (23503) occurs
+
+#### Scenario: Test fixtures provide helper methods for creating valid entity graphs
+- **WHEN** integration tests need to create Projects with relationships
+- **THEN** test fixtures or base classes provide helper methods like `CreateTestClientAsync()`, `CreateTestSectorAsync()`, `CreateTestProjectAsync(clientId, sectorId)`
+- **THEN** these helpers ensure all FK references are valid before saving
+
+### Requirement: Integration test projects build and pass code analysis with zero errors
+The system SHALL ensure all integration test projects compile and pass code analysis (StyleCop, Roslyn analyzers) with zero errors and zero warnings.
+
+#### Scenario: Integration test projects pass StyleCop and Roslyn analyzers
+- **WHEN** building the solution with `dotnet build Tfs.Portfolio.slnx`
+- **THEN** all projects compile with zero errors and zero warnings
+- **THEN** StyleCop rules (SA1028, SA1137, SA1202, SA1611) pass
+- **THEN** Roslyn analyzers (CA1002, CA1823, CS0108) pass
+- **THEN** no CS0103 undefined variable errors
+- **THEN** no CS1503 argument type mismatch errors
+- **THEN** no CS0108 member hiding without `new` keyword
+
+#### Scenario: Integration test projects have no unused code
+- **WHEN** running code analysis
+- **THEN** no CA1823 unused field warnings
+- **THEN** no CA1849 async blocking warnings
+- **THEN** no CS0618 obsolete member usage warnings

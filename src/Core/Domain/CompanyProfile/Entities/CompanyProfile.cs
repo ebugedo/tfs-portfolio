@@ -37,13 +37,13 @@ public sealed class CompanyProfileEntity : AggregateRoot<Guid>
     /// <param name="description">The company description.</param>
     /// <param name="logoUrl">The company logo URL.</param>
     /// <param name="createdAt">The creation date.</param>
-    private CompanyProfileEntity(Guid id, string companyName, string contactEmail, string? contactPhone, Url? webUrl, string? address, string? description, Url? logoUrl, DateTime createdAt)
+    private CompanyProfileEntity(Guid id, string companyName, string contactEmail, string? contactPhone, TfsWebUrl? webUrl, string? address, string? description, TfsWebUrl? logoUrl, DateTime createdAt)
         : base(id)
     {
         this.CompanyName = companyName;
         this.ContactEmail = contactEmail;
         this.ContactPhone = contactPhone;
-        this.WebUrl = webUrl;
+        this.TfsWebUrl = webUrl;
         this.Address = address;
         this.Description = description;
         this.LogoUrl = logoUrl;
@@ -73,7 +73,7 @@ public sealed class CompanyProfileEntity : AggregateRoot<Guid>
     /// <summary>
     /// Gets the company web URL.
     /// </summary>
-    public Url? WebUrl { get; private set; }
+    public TfsWebUrl? TfsWebUrl { get; private set; }
 
     /// <summary>
     /// Gets the company address.
@@ -88,7 +88,7 @@ public sealed class CompanyProfileEntity : AggregateRoot<Guid>
     /// <summary>
     /// Gets the company logo URL.
     /// </summary>
-    public Url? LogoUrl { get; private set; }
+    public TfsWebUrl? LogoUrl { get; private set; }
 
     /// <summary>
     /// Gets the date and time when the profile was created.
@@ -113,7 +113,7 @@ public sealed class CompanyProfileEntity : AggregateRoot<Guid>
     /// <returns>A new company profile instance.</returns>
     /// <exception cref="CompanyProfileAlreadyExistsException">Thrown when a profile already exists.</exception>
     /// <exception cref="InvalidCompanyProfileStateException">Thrown when validation fails.</exception>
-    public static CompanyProfileEntity Create(string companyName, string contactEmail, string? contactPhone = null, Url? webUrl = null, string? address = null, string? description = null, Url? logoUrl = null)
+    public static CompanyProfileEntity Create(string companyName, string contactEmail, string? contactPhone = null, TfsWebUrl? webUrl = null, string? address = null, string? description = null, TfsWebUrl? logoUrl = null)
     {
         if (_instance != null)
         {
@@ -166,6 +166,8 @@ public sealed class CompanyProfileEntity : AggregateRoot<Guid>
     /// <summary>
     /// Resets the singleton instance (for testing purposes only).
     /// </summary>
+    public static void ResetInstance() => _instance = null;
+
     /// <summary>
     /// Creates a new company profile (singleton).
     /// </summary>
@@ -177,7 +179,7 @@ public sealed class CompanyProfileEntity : AggregateRoot<Guid>
     /// <param name="description">The new description.</param>
     /// <param name="logoUrl">The new logo URL.</param>
     /// <exception cref="InvalidCompanyProfileStateException">Thrown when validation fails.</exception>
-    public void Update(string companyName, string contactEmail, string? contactPhone = null, Url? webUrl = null, string? address = null, string? description = null, Url? logoUrl = null)
+    public void Update(string companyName, string contactEmail, string? contactPhone = null, TfsWebUrl? webUrl = null, string? address = null, string? description = null, TfsWebUrl? logoUrl = null)
     {
         if (string.IsNullOrWhiteSpace(companyName))
         {
@@ -209,18 +211,13 @@ public sealed class CompanyProfileEntity : AggregateRoot<Guid>
         this.CompanyName = companyName.Trim();
         this.ContactEmail = contactEmail.Trim();
         this.ContactPhone = contactPhone?.Trim();
-        this.WebUrl = webUrl;
+        this.TfsWebUrl = webUrl;
         this.Address = address?.Trim();
         this.Description = description?.Trim();
         this.LogoUrl = logoUrl;
         this.UpdatedAt = DateTime.UtcNow;
         this.AddDomainEvent(new CompanyProfileUpdatedEvent(this.Id));
     }
-
-    /// <summary>
-    /// Resets the singleton instance (for testing purposes only).
-    /// </summary>
-    internal static void ResetInstance() => _instance = null;
 
     private static bool IsValidEmail(string email)
     {

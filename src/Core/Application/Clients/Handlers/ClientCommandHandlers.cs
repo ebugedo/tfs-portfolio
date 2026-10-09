@@ -37,7 +37,8 @@ public sealed class CreateClientCommandHandler : CommandHandlerBase<CreateClient
     /// <inheritdoc />
     public override async Task<Guid> HandleAsync(CreateClientCommand command, CancellationToken cancellationToken = default)
     {
-        var client = Client.Create(command.Name, command.Email, command.LogoUrl, command.Phone, command.Address);
+        var logoUrl = string.IsNullOrWhiteSpace(command.LogoUrl) ? null : TfsWebUrl.Create(command.LogoUrl);
+        var client = Client.Create(command.Name, command.Email, logoUrl, command.Phone, command.Address);
         await this.clientRepository.AddAsync(client, cancellationToken);
         await this.unitOfWork.SaveChangesAsync(cancellationToken);
         return client.Id;
@@ -74,7 +75,8 @@ public sealed class UpdateClientCommandHandler : CommandHandlerBase<UpdateClient
             throw new ClientNotFoundException(command.Id);
         }
 
-        client.Update(command.Name, command.Email, command.LogoUrl, command.Phone, command.Address);
+        var logoUrl = string.IsNullOrWhiteSpace(command.LogoUrl) ? null : TfsWebUrl.Create(command.LogoUrl);
+        client.Update(command.Name, command.Email, logoUrl, command.Phone, command.Address);
 
         if (command.IsActive.HasValue)
         {

@@ -41,7 +41,7 @@ namespace Tfs.Portfolio.Infrastructure.Persistence.Migrations
                     CompanyName = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: false),
                     ContactEmail = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false),
                     ContactPhone = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true),
-                    WebUrl = table.Column<Url>(type: "jsonb", nullable: true),
+                    TfsWebUrl = table.Column<Url>(type: "jsonb", nullable: true),
                     Address = table.Column<string>(type: "text", nullable: true),
                     Description = table.Column<string>(type: "text", nullable: true),
                     LogoUrl = table.Column<Url>(type: "jsonb", nullable: true),

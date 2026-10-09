@@ -15,8 +15,8 @@ public sealed record UpdateCompanyProfileCommand(
     string CompanyName,
     string ContactEmail,
     string? ContactPhone,
-    Url? WebUrl,
+    TfsWebUrl? TfsWebUrl,
     string? Address,
     string? Description,
-    Url? LogoUrl
+    TfsWebUrl? LogoUrl
 ) : ICommand;

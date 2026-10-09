@@ -26,7 +26,8 @@ public static class ApplicationFakers
             YearMonth.Create(f.Random.Int(1, 12), f.Date.Past(5).Year),
             f.Random.Int(1, 120),
             Guid.NewGuid(),
-            Guid.NewGuid()));
+            Guid.NewGuid(),
+            new List<string> { "C#", ".NET", "Azure" }));
 
     private static readonly Faker<UpdateProjectCommand> UpdateProjectCommandFaker = new Faker<UpdateProjectCommand>()
         .CustomInstantiator(f => new UpdateProjectCommand(
@@ -36,7 +37,9 @@ public static class ApplicationFakers
             YearMonth.Create(f.Random.Int(1, 12), f.Date.Past(5).Year),
             f.Random.Int(1, 120),
             Guid.NewGuid(),
-            Guid.NewGuid()));
+            Guid.NewGuid(),
+            new List<string> { "C#", ".NET", "Azure" },
+            ProjectStatus.Draft));
 
     private static readonly Faker<DeleteProjectCommand> DeleteProjectCommandFaker = new Faker<DeleteProjectCommand>()
         .CustomInstantiator(f => new DeleteProjectCommand(f.Random.Guid()));
@@ -75,7 +78,7 @@ public static class ApplicationFakers
         .CustomInstantiator(f => new CreateClientCommand(
             f.Company.CompanyName(),
             f.Internet.Email(),
-            Url.Create($"https://{f.Internet.DomainName()}/logo.png"),
+            TfsWebUrl.Create($"https://{f.Internet.DomainName()}/logo.png"),
             f.Phone.PhoneNumber(),
             f.Address.FullAddress()));
 
@@ -84,7 +87,7 @@ public static class ApplicationFakers
             f.Random.Guid(),
             f.Company.CompanyName(),
             f.Internet.Email(),
-            Url.Create($"https://{f.Internet.DomainName()}/logo.png"),
+            TfsWebUrl.Create($"https://{f.Internet.DomainName()}/logo.png"),
             f.Phone.PhoneNumber(),
             f.Address.FullAddress(),
             f.Random.Bool()));
@@ -97,7 +100,7 @@ public static class ApplicationFakers
             f.Random.Guid(),
             f.Company.CompanyName(),
             f.Internet.Email(),
-            Url.Create($"https://{f.Internet.DomainName()}/logo.png"),
+            TfsWebUrl.Create($"https://{f.Internet.DomainName()}/logo.png"),
             f.Phone.PhoneNumber(),
             f.Address.FullAddress(),
             true,
@@ -109,7 +112,7 @@ public static class ApplicationFakers
             f.Random.Guid(),
             f.Company.CompanyName(),
             f.Internet.Email(),
-            Url.Create($"https://{f.Internet.DomainName()}/logo.png"),
+            TfsWebUrl.Create($"https://{f.Internet.DomainName()}/logo.png"),
             true,
             f.Date.Recent()));
 

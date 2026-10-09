@@ -5,16 +5,20 @@
 
 namespace Tfs.Portfolio.Application.Clients.Commands;
 
+using System.Diagnostics.CodeAnalysis;
 using Tfs.Portfolio.Application.Common.CQRS;
 using Tfs.Portfolio.Domain.Common.ValueObjects;
+using Newtonsoft.Json;
 
 /// <summary>
 /// Command to create a new client.
 /// </summary>
+[SuppressMessage("Design", "CA1054:Uri parameters should not be strings", Justification = "URL is validated and converted to TfsWebUrl in handler")]
+[SuppressMessage("Design", "CA1056:Uri properties should not be strings", Justification = "URL is validated and converted to TfsWebUrl in handler")]
 public sealed record CreateClientCommand(
     string Name,
     string Email,
-    Url? LogoUrl,
+    string? LogoUrl,
     string? Phone,
     string? Address
 ) : ICommand<Guid>;
@@ -22,11 +26,13 @@ public sealed record CreateClientCommand(
 /// <summary>
 /// Command to update an existing client.
 /// </summary>
+[SuppressMessage("Design", "CA1054:Uri parameters should not be strings", Justification = "URL is validated and converted to TfsWebUrl in handler")]
+[SuppressMessage("Design", "CA1056:Uri properties should not be strings", Justification = "URL is validated and converted to TfsWebUrl in handler")]
 public sealed record UpdateClientCommand(
     Guid Id,
     string Name,
     string Email,
-    Url? LogoUrl,
+    string? LogoUrl,
     string? Phone,
     string? Address,
     bool? IsActive

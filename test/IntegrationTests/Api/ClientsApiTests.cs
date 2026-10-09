@@ -57,26 +57,34 @@ public sealed class ClientsApiTests : IntegrationTestBase
 
     /// <summary>
     /// Tests that POST /api/v1/clients with valid body returns 201 with Location header and ClientDto.
-    /// </summary>
+/// </summary>
     [Fact]
     public async Task CreateClient_WithValidBody_ReturnsCreatedWithLocationAndDto()
     {
         // Arrange
-        var request = new CreateClientCommand("Test Client", "test@client.com", Url.Create("https://client.com/logo.png"), "+1234567890", "123 Client St");
+        var request = new CreateClientCommand("Test Client", "test@example.com", "https://example.com/logo.png", "+1234567890", "123 Client St");
+
+        // Debug: serialize request to see JSON
+        var json = System.Text.Json.JsonSerializer.Serialize(request);
+        System.Console.WriteLine($"Request JSON: {json}");
 
         // Act
         var response = await Client.PostAsJsonAsync(BaseUrl, request);
 
+        // Debug: read response content for debugging
+        var responseContent = await response.Content.ReadAsStringAsync();
+        System.Console.WriteLine($"Response content: {responseContent}");
+
         // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.Created);
+        response.StatusCode.Should().Be(HttpStatusCode.Created, because: $"Response content: {responseContent}");
         response.Headers.Location.Should().NotBeNull();
         response.Headers.Location!.ToString().Should().StartWith($"{BaseUrl}/");
 
         var client = await response.Content.ReadFromJsonAsync<ClientDto>();
         client.Should().NotBeNull();
         client!.Name.Should().Be("Test Client");
-        client.Email.Should().Be("test@client.com");
-        client.LogoUrl!.Value.Should().Be("https://client.com/logo.png");
+        client.Email.Should().Be("test@example.com");
+        client.LogoUrl!.Value.Should().Be("https://example.com/logo.png");
         client.Phone.Should().Be("+1234567890");
         client.Address.Should().Be("123 Client St");
         client.IsActive.Should().BeTrue();
@@ -114,7 +122,7 @@ public sealed class ClientsApiTests : IntegrationTestBase
     public async Task GetClientById_WhenExists_ReturnsClientDto()
     {
         // Arrange - create a client first
-        var createRequest = new CreateClientCommand("Get By ID Client", "getbyid@client.com", Url.Create("https://client.com/logo.png"), "+1987654321", "456 Client Ave");
+        var createRequest = new CreateClientCommand("Get By ID Client", "getbyid@client.com", TfsWebUrl.Create("https://client.com/logo.png"), "+1987654321", "456 Client Ave");
         var createResponse = await Client.PostAsJsonAsync(BaseUrl, createRequest);
         var createdClient = await createResponse.Content.ReadFromJsonAsync<ClientDto>();
 
@@ -142,7 +150,7 @@ public sealed class ClientsApiTests : IntegrationTestBase
         var createdClient = await createResponse.Content.ReadFromJsonAsync<ClientDto>();
 
         // Act - update the client
-        var updateRequest = new UpdateClientCommand(createdClient!.Id, "Updated Client", "updated@client.com", Url.Create("https://updated.com/logo.png"), "+1112223333", "789 Updated Blvd", null);
+        var updateRequest = new UpdateClientCommand(createdClient!.Id, "Updated Client", "updated@client.com", TfsWebUrl.Create("https://updated.com/logo.png"), "+1112223333", "789 Updated Blvd", null);
         var response = await Client.PutAsJsonAsync($"{BaseUrl}/{createdClient.Id}", updateRequest);
 
         // Assert

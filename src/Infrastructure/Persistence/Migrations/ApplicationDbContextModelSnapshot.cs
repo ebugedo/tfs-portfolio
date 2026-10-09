@@ -51,7 +51,7 @@ namespace Tfs.Portfolio.Infrastructure.Persistence.Migrations
                         .HasDefaultValue(true)
                         .HasColumnName("IsActive");
 
-                    b.Property<Url?>("LogoUrl")
+                    b.Property<TfsWebUrl?>("LogoUrl")
                         .HasColumnType("jsonb")
                         .HasColumnName("LogoUrl");
 
@@ -116,17 +116,17 @@ namespace Tfs.Portfolio.Infrastructure.Persistence.Migrations
                         .HasColumnType("text")
                         .HasColumnName("Description");
 
-                    b.Property<Url?>("LogoUrl")
+                    b.Property<TfsWebUrl?>("LogoUrl")
                         .HasColumnType("jsonb")
                         .HasColumnName("LogoUrl");
+
+                    b.Property<TfsWebUrl?>("TfsWebUrl")
+                        .HasColumnType("jsonb")
+                        .HasColumnName("TfsWebUrl");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("UpdatedAt");
-
-                    b.Property<Url?>("WebUrl")
-                        .HasColumnType("jsonb")
-                        .HasColumnName("WebUrl");
 
                     b.HasKey("Id");
 

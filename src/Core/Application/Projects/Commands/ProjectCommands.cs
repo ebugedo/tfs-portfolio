@@ -18,7 +18,8 @@ public sealed record CreateProjectCommand(
     YearMonth StartDate,
     int DurationMonths,
     Guid ClientId,
-    Guid SectorId
+    Guid SectorId,
+    IReadOnlyList<string> Technologies
 ) : ICommand<Guid>;
 
 /// <summary>
@@ -31,7 +32,9 @@ public sealed record UpdateProjectCommand(
     YearMonth StartDate,
     int DurationMonths,
     Guid ClientId,
-    Guid SectorId
+    Guid SectorId,
+    IReadOnlyList<string> Technologies,
+    ProjectStatus Status
 ) : ICommand;
 
 /// <summary>

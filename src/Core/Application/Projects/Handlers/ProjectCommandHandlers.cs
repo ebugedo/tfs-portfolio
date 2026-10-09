@@ -9,6 +9,7 @@ using AutoMapper;
 using Tfs.Portfolio.Application.Common.CQRS;
 using Tfs.Portfolio.Application.Projects.Commands;
 using Tfs.Portfolio.Domain.Common;
+using Tfs.Portfolio.Domain.Common.ValueObjects;
 using Tfs.Portfolio.Domain.Projects.Entities;
 using Tfs.Portfolio.Domain.Projects.Exceptions;
 using Tfs.Portfolio.Domain.Projects.Repositories;
@@ -41,7 +42,7 @@ public sealed class CreateProjectCommandHandler : CommandHandlerBase<CreateProje
     /// <inheritdoc />
     public override async Task<Guid> HandleAsync(CreateProjectCommand command, CancellationToken cancellationToken = default)
     {
-        var project = Project.Create(command.Name, command.Description, command.StartDate, command.DurationMonths, command.ClientId, command.SectorId);
+        var project = Project.Create(command.Name, command.Description, command.StartDate, command.DurationMonths, command.ClientId, command.SectorId, command.Technologies);
         await this.projectRepository.AddAsync(project, cancellationToken);
         await this.unitOfWork.SaveChangesAsync(cancellationToken);
         return project.Id;
@@ -78,7 +79,34 @@ public sealed class UpdateProjectCommandHandler : CommandHandlerBase<UpdateProje
             throw new ProjectNotFoundException(command.Id);
         }
 
+        // Update basic properties
         project.Update(command.Name, command.Description, command.StartDate, command.DurationMonths, command.ClientId, command.SectorId);
+
+        // Update technologies - clear and re-add
+        var currentTechnologies = project.Technologies.Select(t => t.Name).ToHashSet(StringComparer.OrdinalIgnoreCase);
+        var newTechnologies = command.Technologies?.ToHashSet(StringComparer.OrdinalIgnoreCase) ?? new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+
+        // Remove technologies not in new list
+        foreach (var tech in currentTechnologies.Except(newTechnologies))
+        {
+            project.RemoveTechnology(project.Technologies.First(t => t.Name.Equals(tech, StringComparison.OrdinalIgnoreCase)));
+        }
+
+        // Add new technologies
+        foreach (var techName in newTechnologies.Except(currentTechnologies))
+        {
+            if (!string.IsNullOrWhiteSpace(techName))
+            {
+                project.AddTechnology(Technology.Create(techName.Trim(), TechnologyCategory.Tools, ProficiencyLevel.Intermediate));
+            }
+        }
+
+        // Update status if changed
+        if (project.Status != command.Status)
+        {
+            project.ChangeStatus(command.Status);
+        }
+
         await this.unitOfWork.SaveChangesAsync(cancellationToken);
     }
 }

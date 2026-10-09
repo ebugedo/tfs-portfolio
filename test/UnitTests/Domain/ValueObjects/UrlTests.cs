@@ -1,4 +1,4 @@
-// <copyright file="UrlTests.cs" company="Tfs.Portfolio">
+// <copyright file="TfsWebUrlTests.cs" company="Tfs.Portfolio">
 // Copyright (c) Tfs.Portfolio. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -9,18 +9,18 @@ using Tfs.Portfolio.Domain.Common.ValueObjects;
 using Xunit;
 
 /// <summary>
-/// Unit tests for <see cref="Url"/> value object.
+/// Unit tests for <see cref="TfsWebUrl"/> value object.
 /// </summary>
-public sealed class UrlTests
+public sealed class TfsWebUrlTests
 {
     /// <summary>
-    /// Tests that Url can be created with valid HTTP URL.
+    /// Tests that TfsWebUrl can be created with valid HTTP URL.
     /// </summary>
     [Fact]
     public void Create_WithValidHttpUrl_ReturnsUrl()
     {
         // Act
-        var url = Url.Create("http://example.com/logo.png");
+        var url = TfsWebUrl.Create("http://example.com/logo.png");
 
         // Assert
         Assert.Equal("http://example.com/logo.png", url.Value);
@@ -28,13 +28,13 @@ public sealed class UrlTests
     }
 
     /// <summary>
-    /// Tests that Url can be created with valid HTTPS URL.
+    /// Tests that TfsWebUrl can be created with valid HTTPS URL.
     /// </summary>
     [Fact]
     public void Create_WithValidHttpsUrl_ReturnsUrl()
     {
         // Act
-        var url = Url.Create("https://example.com/logo.png");
+        var url = TfsWebUrl.Create("https://example.com/logo.png");
 
         // Assert
         Assert.Equal("https://example.com/logo.png", url.Value);
@@ -42,35 +42,35 @@ public sealed class UrlTests
     }
 
     /// <summary>
-    /// Tests that Url creation fails with invalid URL format.
+    /// Tests that TfsWebUrl creation fails with invalid URL format.
     /// </summary>
     [Fact]
     public void Create_WithInvalidUrl_ThrowsArgumentException()
     {
         // Act & Assert
-        var exception = Assert.Throws<ArgumentException>(() => Url.Create("not-a-url"));
+        var exception = Assert.Throws<ArgumentException>(() => TfsWebUrl.Create("not-a-url"));
         Assert.Contains("Invalid URL format", exception.Message, StringComparison.Ordinal);
     }
 
     /// <summary>
-    /// Tests that Url creation fails with FTP URL (not HTTP/HTTPS).
+    /// Tests that TfsWebUrl creation fails with FTP URL (not HTTP/HTTPS).
     /// </summary>
     [Fact]
     public void Create_WithFtpUrl_ThrowsArgumentException()
     {
         // Act & Assert
-        var exception = Assert.Throws<ArgumentException>(() => Url.Create("ftp://example.com/file.txt"));
+        var exception = Assert.Throws<ArgumentException>(() => TfsWebUrl.Create("ftp://example.com/file.txt"));
         Assert.Contains("Invalid URL format", exception.Message, StringComparison.Ordinal);
     }
 
     /// <summary>
-    /// Tests that Url handles null gracefully.
+    /// Tests that TfsWebUrl handles null gracefully.
     /// </summary>
     [Fact]
     public void Create_WithNull_ReturnsInvalidUrl()
     {
         // Act
-        var url = Url.Create(null);
+        var url = TfsWebUrl.Create(null);
 
         // Assert
         Assert.Null(url.Value);
@@ -78,13 +78,13 @@ public sealed class UrlTests
     }
 
     /// <summary>
-    /// Tests that Url handles empty string gracefully.
+    /// Tests that TfsWebUrl handles empty string gracefully.
     /// </summary>
     [Fact]
     public void Create_WithEmptyString_ReturnsInvalidUrl()
     {
         // Act
-        var url = Url.Create(string.Empty);
+        var url = TfsWebUrl.Create(string.Empty);
 
         // Assert
         Assert.Null(url.Value);
@@ -92,13 +92,13 @@ public sealed class UrlTests
     }
 
     /// <summary>
-    /// Tests that Url handles whitespace gracefully.
+    /// Tests that TfsWebUrl handles whitespace gracefully.
     /// </summary>
     [Fact]
     public void Create_WithWhitespace_ReturnsInvalidUrl()
     {
         // Act
-        var url = Url.Create("   ");
+        var url = TfsWebUrl.Create("   ");
 
         // Assert
         Assert.Null(url.Value);
@@ -112,7 +112,7 @@ public sealed class UrlTests
     public void ImplicitConversion_FromString_Works()
     {
         // Act
-        Url url = "https://example.com";
+        TfsWebUrl url = "https://example.com";
 
         // Assert
         Assert.Equal("https://example.com", url.Value);
@@ -126,7 +126,7 @@ public sealed class UrlTests
     public void ImplicitConversion_ToString_Works()
     {
         // Arrange
-        var url = Url.Create("https://example.com");
+        var url = TfsWebUrl.Create("https://example.com");
 
         // Act
         string? result = url;
@@ -142,7 +142,7 @@ public sealed class UrlTests
     public void ToString_ReturnsUrlValue()
     {
         // Arrange
-        var url = Url.Create("https://example.com/logo.png");
+        var url = TfsWebUrl.Create("https://example.com/logo.png");
 
         // Act
         var result = url.ToString();
@@ -158,7 +158,7 @@ public sealed class UrlTests
     public void ToString_ForInvalidUrl_ReturnsEmptyString()
     {
         // Arrange
-        var url = Url.Create(null);
+        var url = TfsWebUrl.Create(null);
 
         // Act
         var result = url.ToString();

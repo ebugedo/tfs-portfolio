@@ -127,9 +127,9 @@ namespace Tfs.Portfolio.Infrastructure.Persistence.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("UpdatedAt");
 
-                    b.Property<Url?>("WebUrl")
+                    b.Property<Url?>("TfsWebUrl")
                         .HasColumnType("jsonb")
-                        .HasColumnName("WebUrl");
+                        .HasColumnName("TfsWebUrl");
 
                     b.HasKey("Id");
 
