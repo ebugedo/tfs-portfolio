@@ -67,6 +67,22 @@ public interface IProjectRepository
     Task<IReadOnlyList<Project>> GetActiveAsync(CancellationToken cancellationToken = default);
 
     /// <summary>
+    /// Gets projects with combined filters.
+    /// </summary>
+    /// <param name="clientId">Optional client identifier filter.</param>
+    /// <param name="sectorId">Optional sector identifier filter.</param>
+    /// <param name="technologyName">Optional technology name filter.</param>
+    /// <param name="status">Optional project status filter.</param>
+    /// <param name="cancellationToken">A token to cancel the operation.</param>
+    /// <returns>A read-only list of projects matching all specified filters.</returns>
+    Task<IReadOnlyList<Project>> GetFilteredAsync(
+        Guid? clientId = null,
+        Guid? sectorId = null,
+        string? technologyName = null,
+        ProjectStatus? status = null,
+        CancellationToken cancellationToken = default);
+
+    /// <summary>
     /// Adds a new project.
     /// </summary>
     /// <param name="project">The project to add.</param>

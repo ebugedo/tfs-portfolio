@@ -52,7 +52,8 @@ public sealed record CreateProjectRequest(
     YearMonth StartDate,
     int DurationMonths,
     Guid ClientId,
-    Guid SectorId
+    Guid SectorId,
+    IReadOnlyList<string> Technologies
 );
 
 /// <summary>
@@ -64,5 +65,7 @@ public sealed record UpdateProjectRequest(
     YearMonth StartDate,
     int DurationMonths,
     Guid ClientId,
-    Guid SectorId
+    Guid SectorId,
+    IReadOnlyList<string> Technologies,
+    ProjectStatus Status
 );

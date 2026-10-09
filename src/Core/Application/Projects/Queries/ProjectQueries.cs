@@ -17,10 +17,14 @@ public sealed record GetProjectByIdQuery(
 ) : IQuery<ProjectDto>;
 
 /// <summary>
-/// Query to get all projects.
+/// Query to get all projects with optional filters.
 /// </summary>
-public sealed record GetProjectsQuery
-    : IQuery<IReadOnlyList<ProjectListItemDto>>;
+public sealed record GetProjectsQuery(
+    Guid? ClientId = null,
+    Guid? SectorId = null,
+    string? Technology = null,
+    ProjectStatus? Status = null
+) : IQuery<IReadOnlyList<ProjectListItemDto>>;
 
 /// <summary>
 /// Query to get projects by client identifier.

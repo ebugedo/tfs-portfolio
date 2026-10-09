@@ -27,9 +27,9 @@ public sealed class UpdateCompanyProfileCommandValidator : AbstractValidator<Upd
             .NotEmpty().WithMessage("Contact email is required")
             .EmailAddress().WithMessage("Invalid contact email format");
 
-        this.RuleFor(x => x.WebUrl)
+        this.RuleFor(x => x.TfsWebUrl)
             .Must(url => !url.HasValue || url.Value.IsValid).WithMessage("Invalid web URL format")
-            .When(x => x.WebUrl.HasValue);
+            .When(x => x.TfsWebUrl.HasValue);
 
         this.RuleFor(x => x.LogoUrl)
             .Must(url => !url.HasValue || url.Value.IsValid).WithMessage("Invalid logo URL format")

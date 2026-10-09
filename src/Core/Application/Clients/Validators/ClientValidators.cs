@@ -29,8 +29,8 @@ public sealed class CreateClientCommandValidator : AbstractValidator<CreateClien
             .EmailAddress().WithMessage("Invalid email format");
 
         this.RuleFor(x => x.LogoUrl)
-            .Must(url => !url.HasValue || url.Value.IsValid).WithMessage("Invalid logo URL format")
-            .When(x => x.LogoUrl.HasValue);
+            .Must(url => string.IsNullOrWhiteSpace(url) || TfsWebUrl.Create(url).IsValid).WithMessage("Invalid logo URL format")
+            .When(x => !string.IsNullOrWhiteSpace(x.LogoUrl));
     }
 }
 
@@ -56,8 +56,8 @@ public sealed class UpdateClientCommandValidator : AbstractValidator<UpdateClien
             .EmailAddress().WithMessage("Invalid email format");
 
         this.RuleFor(x => x.LogoUrl)
-            .Must(url => !url.HasValue || url.Value.IsValid).WithMessage("Invalid logo URL format")
-            .When(x => x.LogoUrl.HasValue);
+            .Must(url => string.IsNullOrWhiteSpace(url) || TfsWebUrl.Create(url).IsValid).WithMessage("Invalid logo URL format")
+            .When(x => !string.IsNullOrWhiteSpace(x.LogoUrl));
     }
 }
 

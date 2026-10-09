@@ -33,7 +33,7 @@ public sealed class Client : AggregateRoot<Guid>
     /// <param name="address">The client address.</param>
     /// <param name="isActive">The active status.</param>
     /// <param name="createdAt">The creation date.</param>
-    private Client(Guid id, string name, Url? logoUrl, string email, string? phone, string? address, bool isActive, DateTime createdAt)
+    private Client(Guid id, string name, TfsWebUrl? logoUrl, string email, string? phone, string? address, bool isActive, DateTime createdAt)
         : base(id)
     {
         this.Name = name;
@@ -53,7 +53,7 @@ public sealed class Client : AggregateRoot<Guid>
     /// <summary>
     /// Gets the logo URL of the client.
     /// </summary>
-    public Url? LogoUrl { get; private set; }
+    public TfsWebUrl? LogoUrl { get; private set; }
 
     /// <summary>
     /// Gets the email of the client.
@@ -95,7 +95,7 @@ public sealed class Client : AggregateRoot<Guid>
     /// <param name="address">The client address.</param>
     /// <returns>A new client instance.</returns>
     /// <exception cref="InvalidClientStateException">Thrown when the name is empty or email is invalid.</exception>
-    public static Client Create(string name, string email, Url? logoUrl = null, string? phone = null, string? address = null)
+    public static Client Create(string name, string email, TfsWebUrl? logoUrl = null, string? phone = null, string? address = null)
     {
         if (string.IsNullOrWhiteSpace(name))
         {
@@ -122,7 +122,7 @@ public sealed class Client : AggregateRoot<Guid>
     /// <param name="phone">The new phone number.</param>
     /// <param name="address">The new address.</param>
     /// <exception cref="InvalidClientStateException">Thrown when the name is empty or email is invalid.</exception>
-    public void Update(string name, string email, Url? logoUrl = null, string? phone = null, string? address = null)
+    public void Update(string name, string email, TfsWebUrl? logoUrl = null, string? phone = null, string? address = null)
     {
         if (string.IsNullOrWhiteSpace(name))
         {

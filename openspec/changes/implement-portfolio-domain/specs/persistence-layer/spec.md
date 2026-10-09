@@ -60,11 +60,22 @@ The system SHALL implement soft delete via global query filters (`HasQueryFilter
 - **THEN** only non-deleted clients return; deleted ones require explicit `IgnoreQueryFilters()`
 
 ### Requirement: PostgreSQL-specific types are used appropriately
-The system SHALL use `Npgsql` types (e.g., `uuid`, `jsonb`, `timestamp with time zone`) via Fluent API for optimal PostgreSQL storage.
+The system SHALL use `Npgsql` types (e.g., `uuid`, `jsonb`, `timestamp with time zone`) via Fluent API for optimal PostgreSQL storage, including correct serialization of nullable value objects to JSONB columns.
 
 #### Scenario: Entity uses PostgreSQL-native types
 - **WHEN** inspecting migration for `Client` entity
 - **THEN** `Id` is `uuid`, `CreatedAt` is `timestamp with time zone`, `LogoUrl` uses `jsonb`
+
+#### Scenario: Nullable TfsWebUrl serializes correctly to JSONB
+- **WHEN** an entity with a nullable `TfsWebUrl` property (e.g., `Client.LogoUrl`, `CompanyProfile.TfsWebUrl`, `CompanyProfile.LogoUrl`) is persisted to a JSONB column
+- **THEN** the value is stored as a valid JSON string when present, or `null` when the property is null
+- **THEN** no PostgreSQL error `22P02: invalid input syntax for type json` occurs
+
+#### Scenario: Nullable TfsWebUrl deserializes correctly from JSONB
+- **WHEN** an entity with a nullable `TfsWebUrl` property is loaded from a JSONB column containing a valid URL string
+- **THEN** the property is populated with a valid `TfsWebUrl` instance with `IsValid = true`
+- **WHEN** the JSONB column contains `null`
+- **THEN** the property is `null` (default for nullable struct)
 
 ### Requirement: Persistence layer compiles independently
 The system SHALL ensure `dotnet build` on `Tfs.Portfolio.Infrastructure.Persistence` succeeds with Domain and Application references.

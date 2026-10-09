@@ -45,12 +45,12 @@ public sealed class CompanyProfileConfiguration : IEntityTypeConfiguration<Compa
             .HasColumnType("varchar(50)")
             .HasMaxLength(50);
 
-        builder.Property(c => c.WebUrl)
-            .HasColumnName("WebUrl")
+        builder.Property(c => c.TfsWebUrl)
+            .HasColumnName("TfsWebUrl")
             .HasColumnType("jsonb")
             .HasConversion(
-                v => v != null ? v.Value : null,
-                v => v != null ? Url.Create(v) : null);
+                v => v != null ? System.Text.Json.JsonSerializer.Serialize(v.Value.Value) : null,
+                v => string.IsNullOrEmpty(v) ? default : TfsWebUrl.FromString(System.Text.Json.JsonSerializer.Deserialize<string>(v)));
 
         builder.Property(c => c.Address)
             .HasColumnName("Address")
@@ -64,8 +64,8 @@ public sealed class CompanyProfileConfiguration : IEntityTypeConfiguration<Compa
             .HasColumnName("LogoUrl")
             .HasColumnType("jsonb")
             .HasConversion(
-                v => v != null ? v.Value : null,
-                v => v != null ? Url.Create(v) : null);
+                v => v != null ? System.Text.Json.JsonSerializer.Serialize(v.Value.Value) : null,
+                v => string.IsNullOrEmpty(v) ? default : TfsWebUrl.FromString(System.Text.Json.JsonSerializer.Deserialize<string>(v)));
 
         builder.Property(c => c.CreatedAt)
             .HasColumnName("CreatedAt")

@@ -122,7 +122,7 @@ public class GetProjectsQueryHandlerTests
         var query = new GetProjectsQuery();
 
         this.projectRepositoryMock
-            .Setup(r => r.GetAllAsync(It.IsAny<CancellationToken>()))
+            .Setup(r => r.GetFilteredAsync(null, null, null, null, It.IsAny<CancellationToken>()))
             .ReturnsAsync(projects);
 
         // Act

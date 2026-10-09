@@ -8,6 +8,8 @@ namespace Tfs.Portfolio.IntegrationTests.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Tfs.Portfolio.Domain.Projects.Entities;
 using Tfs.Portfolio.Domain.Projects.Repositories;
+using Tfs.Portfolio.Domain.Clients.Entities;
+using Tfs.Portfolio.Domain.Sectors.Entities;
 using Tfs.Portfolio.Domain.Common;
 using Tfs.Portfolio.Domain.Common.ValueObjects;
 using Tfs.Portfolio.IntegrationTests;
@@ -19,8 +21,27 @@ using FluentAssertions;
 /// </summary>
 public sealed class ProjectRepositoryTests : IntegrationTestBase
 {
-    private readonly Guid _testClientId = Guid.NewGuid();
-    private readonly Guid _testSectorId = Guid.NewGuid();
+    /// <summary>
+    /// Creates a test client via repository and returns its ID.
+    /// </summary>
+    private new async Task<Guid> CreateTestClientAsync(string name = "Test Client", string email = "test@client.com")
+    {
+        var client = Tfs.Portfolio.Domain.Clients.Entities.Client.Create(name, email);
+        await ClientRepository.AddAsync(client);
+        await UnitOfWork.SaveChangesAsync();
+        return client.Id;
+    }
+
+    /// <summary>
+    /// Creates a test sector via repository and returns its ID.
+    /// </summary>
+    private new async Task<Guid> CreateTestSectorAsync(string name = "Technology", string description = "Test sector")
+    {
+        var sector = Tfs.Portfolio.Domain.Sectors.Entities.Sector.Create(name, description);
+        await SectorRepository.AddAsync(sector);
+        await UnitOfWork.SaveChangesAsync();
+        return sector.Id;
+    }
 
     /// <summary>
     /// Tests that AddAsync persists a project to the database.
@@ -28,14 +49,17 @@ public sealed class ProjectRepositoryTests : IntegrationTestBase
     [Fact]
     public async Task AddAsync_PersistsProjectToDatabase()
     {
-        // Arrange
+        // Arrange - create client and sector via repositories
+        var clientId = await CreateTestClientAsync();
+        var sectorId = await CreateTestSectorAsync();
+        
         var project = Project.Create(
             "Persistence Test",
             "Test Description",
             YearMonth.Create(6, 2024),
             6,
-            _testClientId,
-            _testSectorId);
+            clientId,
+            sectorId);
 
         // Act
         await ProjectRepository.AddAsync(project);
@@ -56,14 +80,17 @@ public sealed class ProjectRepositoryTests : IntegrationTestBase
     [Fact]
     public async Task GetByIdAsync_ReturnsCorrectEntity()
     {
-        // Arrange
+        // Arrange - create client and sector via repositories
+        var clientId = await CreateTestClientAsync();
+        var sectorId = await CreateTestSectorAsync();
+        
         var project = Project.Create(
             "GetById Test",
             "Test Description",
             YearMonth.Create(6, 2024),
             6,
-            _testClientId,
-            _testSectorId);
+            clientId,
+            sectorId);
         await ProjectRepository.AddAsync(project);
         await UnitOfWork.SaveChangesAsync();
 
@@ -96,28 +123,31 @@ public sealed class ProjectRepositoryTests : IntegrationTestBase
     [Fact]
     public async Task GetAllAsync_ReturnsAllProjects()
     {
-        // Arrange
+        // Arrange - create client and sector via repositories
+        var clientId = await CreateTestClientAsync();
+        var sectorId = await CreateTestSectorAsync();
+        
         var project1 = Project.Create(
             "Project 1",
             "Description 1",
             YearMonth.Create(6, 2024),
             6,
-            _testClientId,
-            _testSectorId);
+            clientId,
+            sectorId);
         var project2 = Project.Create(
             "Project 2",
             "Description 2",
             YearMonth.Create(7, 2024),
             8,
-            _testClientId,
-            _testSectorId);
+            clientId,
+            sectorId);
         var project3 = Project.Create(
             "Project 3",
             "Description 3",
             YearMonth.Create(8, 2024),
             10,
-            _testClientId,
-            _testSectorId);
+            clientId,
+            sectorId);
 
         await ProjectRepository.AddAsync(project1);
         await ProjectRepository.AddAsync(project2);
@@ -141,14 +171,17 @@ public sealed class ProjectRepositoryTests : IntegrationTestBase
     [Fact]
     public async Task Update_UpdatesExistingProject()
     {
-        // Arrange
+        // Arrange - create client and sector via repositories
+        var clientId = await CreateTestClientAsync();
+        var sectorId = await CreateTestSectorAsync();
+        
         var project = Project.Create(
             "Original Name",
             "Original Description",
             YearMonth.Create(6, 2024),
             6,
-            _testClientId,
-            _testSectorId);
+            clientId,
+            sectorId);
         await ProjectRepository.AddAsync(project);
         await UnitOfWork.SaveChangesAsync();
 
@@ -163,8 +196,8 @@ public sealed class ProjectRepositoryTests : IntegrationTestBase
             "Updated Description",
             YearMonth.Create(7, 2024),
             8,
-            _testClientId,
-            _testSectorId);
+            clientId,
+            sectorId);
         await UnitOfWork.SaveChangesAsync();
 
         // Assert - read from clean context to verify persisted state
@@ -184,14 +217,17 @@ public sealed class ProjectRepositoryTests : IntegrationTestBase
     [Fact]
     public async Task UnitOfWork_SaveChangesAsync_CommitsTransaction()
     {
-        // Arrange
+        // Arrange - create client and sector via repositories
+        var clientId = await CreateTestClientAsync();
+        var sectorId = await CreateTestSectorAsync();
+        
         var project = Project.Create(
             "Transaction Test",
             "Test Description",
             YearMonth.Create(6, 2024),
             6,
-            _testClientId,
-            _testSectorId);
+            clientId,
+            sectorId);
         await ProjectRepository.AddAsync(project);
 
         // Act
@@ -212,21 +248,24 @@ public sealed class ProjectRepositoryTests : IntegrationTestBase
     [Fact]
     public async Task UnitOfWork_MultipleOperations_AreAtomic()
     {
-        // Arrange
+        // Arrange - create client and sector via repositories
+        var clientId = await CreateTestClientAsync();
+        var sectorId = await CreateTestSectorAsync();
+        
         var project1 = Project.Create(
             "Atomic Test 1",
             "Description 1",
             YearMonth.Create(6, 2024),
             6,
-            _testClientId,
-            _testSectorId);
+            clientId,
+            sectorId);
         var project2 = Project.Create(
             "Atomic Test 2",
             "Description 2",
             YearMonth.Create(7, 2024),
             8,
-            _testClientId,
-            _testSectorId);
+            clientId,
+            sectorId);
 
         // Act - add both but only save once
         await ProjectRepository.AddAsync(project1);

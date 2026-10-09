@@ -23,7 +23,7 @@ public sealed class ClientTests
     public void Create_WithValidData_RaisesClientCreatedEvent()
     {
         // Act
-        var client = Client.Create("Acme Corp", "contact@acme.com", Url.Create("https://acme.com/logo.png"), "+1234567890", "123 Street");
+        var client = Client.Create("Acme Corp", "contact@acme.com", TfsWebUrl.Create("https://acme.com/logo.png"), "+1234567890", "123 Street");
 
         // Assert
         Assert.NotEqual(Guid.Empty, client.Id);
@@ -104,7 +104,7 @@ public sealed class ClientTests
         var originalCreatedAt = client.CreatedAt;
 
         // Act
-        client.Update("Acme Updated", "updated@acme.com", Url.Create("https://acme.com/new-logo.png"), "+1987654321", "456 Avenue");
+        client.Update("Acme Updated", "updated@acme.com", TfsWebUrl.Create("https://acme.com/new-logo.png"), "+1987654321", "456 Avenue");
 
         // Assert
         Assert.Equal("Acme Updated", client.Name);

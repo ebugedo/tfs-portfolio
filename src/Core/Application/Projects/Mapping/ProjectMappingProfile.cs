@@ -8,6 +8,7 @@ namespace Tfs.Portfolio.Application.Projects.Mapping;
 using AutoMapper;
 using Tfs.Portfolio.Application.Projects.Commands;
 using Tfs.Portfolio.Application.Projects.Dtos;
+using Tfs.Portfolio.Domain.Common.ValueObjects;
 using Tfs.Portfolio.Domain.Projects.Entities;
 
 /// <summary>
@@ -48,6 +49,10 @@ public sealed class ProjectMappingProfile : Profile
             .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(src => src.CreatedAt));
 
         this.CreateMap<CreateProjectCommand, Project>()
-            .ConstructUsing(cmd => Project.Create(cmd.Name, cmd.Description, cmd.StartDate, cmd.DurationMonths, cmd.ClientId, cmd.SectorId));
+            .ConstructUsing(cmd => Project.Create(cmd.Name, cmd.Description, cmd.StartDate, cmd.DurationMonths, cmd.ClientId, cmd.SectorId, cmd.Technologies));
+
+        this.CreateMap<CreateProjectRequest, CreateProjectCommand>();
+
+        this.CreateMap<UpdateProjectRequest, UpdateProjectCommand>();
     }
 }

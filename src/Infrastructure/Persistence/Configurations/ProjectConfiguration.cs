@@ -72,7 +72,7 @@ public sealed class ProjectConfiguration : IEntityTypeConfiguration<Project>
             .HasColumnName("Technologies")
             .HasColumnType("jsonb")
             .HasConversion(
-                v => v.Select(t => new { t.Name, Category = t.Category.ToString(), Proficiency = t.Proficiency.ToString() }).ToList(),
+                v => v.Select(t => new { Name = t.Name, Category = t.Category.ToString(), Proficiency = t.Proficiency.ToString() }).ToList(),
                 v => v.Select(t => Technology.Create(t.Name, Enum.Parse<TechnologyCategory>(t.Category), Enum.Parse<ProficiencyLevel>(t.Proficiency))).ToList())
             .Metadata.SetValueComparer(new Microsoft.EntityFrameworkCore.ChangeTracking.ValueComparer<IReadOnlyList<Technology>>(
                 (c1, c2) => (c1 ?? new List<Technology>()).SequenceEqual(c2 ?? new List<Technology>()),

@@ -129,3 +129,22 @@ See `proposal.md` for motivation. This change implements the complete portfolio 
 2. **Technology categorization extensibility**: Category enum is fixed. Should we make it a lookup table for user-defined categories?
 3. **Project timeline precision**: `DurationMonths` is integer. Do we need partial months (e.g., 3.5 months)?
 4. **CompanyProfile multilingual support**: Description/WebUrl might need localization. Defer to future i18n work.
+
+## Known Build Issues (Pre-existing)
+
+The following StyleCop and code analysis issues were discovered during implementation. These are pre-existing code quality issues unrelated to the FK constraint fix and need to be addressed in a separate refactoring effort:
+
+| Issue | Location | Count | Fix |
+|-------|----------|-------|-----|
+| SA1137 (indentation) | `ProjectsApiTests.cs` | 50+ | Fix indentation consistency |
+| SA1028 (trailing whitespace) | Multiple test files | 15+ | Remove trailing whitespace |
+| SA1202 (member ordering) | `ProjectRepositoryTests.cs`, `ExtendedProjectRepositoryTests.cs` | 2 | Move public methods before private helpers |
+| CS0108 (hiding members) | `ProjectRepositoryTests`, `ExtendedProjectRepositoryTests`, `ProjectsApiTests` | 4 | Add `new` keyword or rename |
+| CA1823 (unused fields) | `ProjectsApiTests.cs` | 3 | Remove unused `ClientsBaseUrl`, `SectorsBaseUrl`, `ServicesBaseUrl` |
+| CA1002 (List<T> parameter) | `IntegrationTestBase.CreateTestProjectAsync` | 1 | Use `IReadOnlyList<T>` or `IEnumerable<T>` |
+| CA1823 (unused fields) | Various | Multiple | Remove unused fields |
+| SA1611 (missing param docs) | `IntegrationTestFakers.cs` | 2 | Add XML documentation |
+| CS0103 (undefined variable) | `ExtendedProjectRepositoryTests.cs` lines 378-380 | 1 | Fix undefined `projects` variable |
+| CS1503 (argument type mismatch) | `ProjectsApiTests.cs` | 6 | Fix `ServiceCategory` enum usage |
+
+**Mitigation**: These issues are pre-existing and do not block the FK constraint fix. They will be addressed in a dedicated refactoring sprint (Section 26 tasks).

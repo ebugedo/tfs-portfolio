@@ -42,7 +42,7 @@ public sealed class UpdateCompanyProfileCommandHandler : CommandHandlerBase<Upda
             throw new CompanyProfileNotFoundException();
         }
 
-        profile.Update(command.CompanyName, command.ContactEmail, command.ContactPhone, command.WebUrl, command.Address, command.Description, command.LogoUrl);
+        profile.Update(command.CompanyName, command.ContactEmail, command.ContactPhone, command.TfsWebUrl, command.Address, command.Description, command.LogoUrl);
         await this.unitOfWork.SaveChangesAsync(cancellationToken);
     }
 }

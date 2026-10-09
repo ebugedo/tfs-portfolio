@@ -26,7 +26,7 @@ public sealed class CompanyProfileMappingProfile : Profile
             .ForMember(dest => dest.CompanyName, opt => opt.MapFrom(src => src.CompanyName))
             .ForMember(dest => dest.ContactEmail, opt => opt.MapFrom(src => src.ContactEmail))
             .ForMember(dest => dest.ContactPhone, opt => opt.MapFrom(src => src.ContactPhone))
-            .ForMember(dest => dest.WebUrl, opt => opt.MapFrom(src => src.WebUrl))
+            .ForMember(dest => dest.TfsWebUrl, opt => opt.MapFrom(src => src.TfsWebUrl))
             .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.Address))
             .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
             .ForMember(dest => dest.LogoUrl, opt => opt.MapFrom(src => src.LogoUrl))

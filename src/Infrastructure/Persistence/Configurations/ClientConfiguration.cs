@@ -44,8 +44,8 @@ public sealed class ClientConfiguration : IEntityTypeConfiguration<Client>
             .HasColumnName("LogoUrl")
             .HasColumnType("jsonb")
             .HasConversion(
-                v => v != null ? v.Value : null,
-                v => v != null ? Url.Create(v) : null);
+                v => v != null ? System.Text.Json.JsonSerializer.Serialize(v.Value.Value) : null,
+                v => string.IsNullOrEmpty(v) ? default : TfsWebUrl.FromString(System.Text.Json.JsonSerializer.Deserialize<string>(v)));
 
         builder.Property(c => c.Phone)
             .HasColumnName("Phone")
