@@ -1,0 +1,14 @@
+<Project>
+  <PropertyGroup>
+    <AnalysisMode>All</AnalysisMode>
+    <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <AnalysisLevel>latest</AnalysisLevel>
+    <NoWarn>$(NoWarn);SA1636;SA1633;SA1200;SA1309;SA1127;SA1101;SA1313;SA1009;SA1623;CA1040;CA1721;CA1032;SA1413;SA1513;SA1600;SA1625;CA1812;CA1848;CA1305;CA1515;CA1707;SA1615;SA1131;CA1508;SA1000;CA1062</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="9.0.0" PrivateAssets="all" />
+  </ItemGroup>
+</Project>

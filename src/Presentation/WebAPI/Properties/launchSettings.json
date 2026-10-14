@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "Tfs.Portfolio.Api": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:58741;http://localhost:58742"
+    }
+  }
+}

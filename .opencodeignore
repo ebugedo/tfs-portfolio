@@ -1,0 +1,17 @@
+# Directorios de compilación de .NET
+**/bin/
+**/obj/
+
+# Archivos de caché y estado de IDEs / Visual Studio / Rider
+**/.vs/
+**/.idea/
+*.user
+*.userosscache
+*.suo
+
+# Artefactos de pruebas y cobertura
+**/TestResults/
+**/coverage/
+
+# Paquetes NuGet locales (si aplican)
+**/packages/

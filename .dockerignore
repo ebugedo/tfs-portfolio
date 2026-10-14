@@ -1,0 +1,39 @@
+# Build artifacts
+**/bin/
+**/obj/
+
+# Git
+.git/
+.gitignore
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Docker
+docker-compose.override.yml
+docker-compose.*.yml
+
+# IDE
+.vscode/
+.idea/
+*.user
+*.slnx.user
+
+# Test results
+**/TestResults/
+**/coverage/
+
+# Logs
+logs/
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# NuGet
+packages/
+*.nupkg
+*.snupkg

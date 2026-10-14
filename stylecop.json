@@ -1,0 +1,22 @@
+{
+  "$schema": "https://raw.githubusercontent.com/DotNetAnalyzers/StyleCopAnalyzers/master/StyleCop.Analyzers/StyleCop.Analyzers/Settings/stylecop.schema.json",
+  "settings": {
+    "documentationRules": {
+      "companyName": "Tfs.Portfolio",
+      "copyrightText": "Copyright (c) Tfs.Portfolio. All rights reserved.\nLicensed under the MIT license. See LICENSE file in the project root for full license information.",
+      "documentInternalElements": false,
+      "xmlHeader": false
+    },
+    "layoutRules": {
+      "newlineAtEndOfFile": "require"
+    },
+    "namingRules": {
+      "allowCommonHungarianPrefixes": true,
+      "allowedHungarianPrefixes": ["i", "id", "ui", "ui", "io", "ip", "on", "db", "api", "dto", "html", "css", "js", "ts", "sql", "xml", "json", "yaml", "gui", "cli", "sdk", "ide", "os", "cpu", "gpu", "ram", "ssd", "hdd", "url", "uri", "http", "https", "tcp", "udp", "dns", "dhcp", "ftp", "ssh", "ssl", "tls", "api", "rest", "grpc", "crud", "acl", "jwt", "oidc", "saml", "rsa", "aes", "sha", "md5", "crc", "utf", "ascii", "iso", "ansi", "unicode"]
+    },
+    "orderingRules": {
+      "systemUsingDirectivesFirst": true,
+      "usingDirectivesPlacement": "outsideNamespace"
+    }
+  }
+}
