@@ -1,0 +1,32 @@
+2026-10-14 23:26:36.130 +02:00 [WRN] Failed to determine the https port for redirect.
+2026-10-14 23:26:36.132 +02:00 [WRN] Failed to determine the https port for redirect.
+2026-10-14 23:26:36.144 +02:00 [INF] HTTP POST /api/v1/clients responded 400 in 12.0449 ms
+2026-10-14 23:26:36.153 +02:00 [ERR] HTTP PUT /api/v1/sectors/f5302471-e66a-4152-94e1-bfd19a79a5df responded 500 in 23.5837 ms
+Tfs.Portfolio.Domain.Sectors.Exceptions.SectorNotFoundException: Sector with ID 'f5302471-e66a-4152-94e1-bfd19a79a5df' was not found
+   at Tfs.Portfolio.Application.Sectors.Handlers.UpdateSectorCommandHandler.HandleAsync(UpdateSectorCommand command, CancellationToken cancellationToken) in D:\dev\Tfs\Portfolio\tfs-portfolio\src\Core\Application\Sectors\Handlers\SectorCommandHandlers.cs:line 73
+   at Tfs.Portfolio.Api.Controllers.SectorsController.UpdateSector(Guid id, UpdateSectorCommand command, UpdateSectorCommandHandler handler, IValidator`1 validator, CancellationToken ct) in D:\dev\Tfs\Portfolio\tfs-portfolio\src\Presentation\WebAPI\Controllers\SectorsController.cs:line 166
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2026-10-14 23:26:36.154 +02:00 [ERR] An unhandled exception occurred
+Tfs.Portfolio.Domain.Sectors.Exceptions.SectorNotFoundException: Sector with ID 'f5302471-e66a-4152-94e1-bfd19a79a5df' was not found
+   at Tfs.Portfolio.Application.Sectors.Handlers.UpdateSectorCommandHandler.HandleAsync(UpdateSectorCommand command, CancellationToken cancellationToken) in D:\dev\Tfs\Portfolio\tfs-portfolio\src\Core\Application\Sectors\Handlers\SectorCommandHandlers.cs:line 73
+   at Tfs.Portfolio.Api.Controllers.SectorsController.UpdateSector(Guid id, UpdateSectorCommand command, UpdateSectorCommandHandler handler, IValidator`1 validator, CancellationToken ct) in D:\dev\Tfs\Portfolio\tfs-portfolio\src\Presentation\WebAPI\Controllers\SectorsController.cs:line 166
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at Tfs.Portfolio.Api.Middleware.ErrorHandlingMiddleware.InvokeAsync(HttpContext context) in D:\dev\Tfs\Portfolio\tfs-portfolio\src\Presentation\WebAPI\Middleware\ErrorHandlingMiddleware.cs:line 46

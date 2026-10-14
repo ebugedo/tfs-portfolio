@@ -1,0 +1,1 @@
+2026-10-14 23:25:52.998 +02:00 [INF] HTTP POST /api/v1/services responded 201 in 124.7348 ms

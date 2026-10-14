@@ -1,0 +1,33 @@
+2026-10-14 23:27:30.694 +02:00 [WRN] Failed to determine the https port for redirect.
+2026-10-14 23:27:30.737 +02:00 [INF] HTTP POST /api/v1/clients responded 201 in 43.2329 ms
+2026-10-14 23:27:30.802 +02:00 [INF] HTTP POST /api/v1/sectors responded 201 in 63.5663 ms
+2026-10-14 23:27:30.871 +02:00 [INF] HTTP POST /api/v1/projects responded 201 in 68.7476 ms
+2026-10-14 23:27:30.881 +02:00 [ERR] HTTP POST /api/v1/projects/4a578b36-fcf5-4d12-a344-bdbd75b5fbba/services/17109617-68d3-456a-9be1-4af58054cdc7 responded 500 in 10.6148 ms
+Tfs.Portfolio.Domain.Services.Exceptions.ServiceNotFoundException: Service with ID '17109617-68d3-456a-9be1-4af58054cdc7' was not found
+   at Tfs.Portfolio.Application.Projects.Handlers.AddProjectServiceCommandHandler.HandleAsync(AddProjectServiceCommand command, CancellationToken cancellationToken) in D:\dev\Tfs\Portfolio\tfs-portfolio\src\Core\Application\Projects\Handlers\ProjectCommandHandlers.cs:line 250
+   at Tfs.Portfolio.Api.Controllers.ProjectsController.AddProjectService(Guid projectId, Guid serviceId, AddProjectServiceCommandHandler handler, IValidator`1 validator, CancellationToken ct) in D:\dev\Tfs\Portfolio\tfs-portfolio\src\Presentation\WebAPI\Controllers\ProjectsController.cs:line 244
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2026-10-14 23:27:30.884 +02:00 [ERR] An unhandled exception occurred
+Tfs.Portfolio.Domain.Services.Exceptions.ServiceNotFoundException: Service with ID '17109617-68d3-456a-9be1-4af58054cdc7' was not found
+   at Tfs.Portfolio.Application.Projects.Handlers.AddProjectServiceCommandHandler.HandleAsync(AddProjectServiceCommand command, CancellationToken cancellationToken) in D:\dev\Tfs\Portfolio\tfs-portfolio\src\Core\Application\Projects\Handlers\ProjectCommandHandlers.cs:line 250
+   at Tfs.Portfolio.Api.Controllers.ProjectsController.AddProjectService(Guid projectId, Guid serviceId, AddProjectServiceCommandHandler handler, IValidator`1 validator, CancellationToken ct) in D:\dev\Tfs\Portfolio\tfs-portfolio\src\Presentation\WebAPI\Controllers\ProjectsController.cs:line 244
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at Tfs.Portfolio.Api.Middleware.ErrorHandlingMiddleware.InvokeAsync(HttpContext context) in D:\dev\Tfs\Portfolio\tfs-portfolio\src\Presentation\WebAPI\Middleware\ErrorHandlingMiddleware.cs:line 46

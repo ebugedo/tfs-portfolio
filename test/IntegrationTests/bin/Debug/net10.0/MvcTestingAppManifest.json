@@ -1,0 +1,6 @@
+{
+  "Tfs.Portfolio.Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "D:\\dev\\Tfs\\Portfolio\\tfs-portfolio\\src\\Presentation\\WebAPI",
+  "Tfs.Portfolio.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "D:\\dev\\Tfs\\Portfolio\\tfs-portfolio\\src\\Core\\Application",
+  "Tfs.Portfolio.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "D:\\dev\\Tfs\\Portfolio\\tfs-portfolio\\src\\Core\\Domain",
+  "Tfs.Portfolio.Infrastructure.Persistence, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "D:\\dev\\Tfs\\Portfolio\\tfs-portfolio\\src\\Infrastructure\\Persistence"
+}

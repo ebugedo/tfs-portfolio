@@ -1,0 +1,11 @@
+2026-10-14 23:27:26.698 +02:00 [WRN] Failed to determine the https port for redirect.
+2026-10-14 23:27:26.764 +02:00 [INF] HTTP POST /api/v1/clients responded 201 in 65.7526 ms
+2026-10-14 23:27:26.820 +02:00 [INF] HTTP POST /api/v1/clients responded 201 in 55.0307 ms
+2026-10-14 23:27:26.857 +02:00 [INF] HTTP POST /api/v1/sectors responded 201 in 36.7732 ms
+2026-10-14 23:27:26.901 +02:00 [INF] HTTP POST /api/v1/projects responded 201 in 43.0118 ms
+2026-10-14 23:27:26.905 +02:00 [INF] HTTP POST /api/v1/projects responded 201 in 4.5567 ms
+2026-10-14 23:27:26.910 +02:00 [INF] HTTP POST /api/v1/projects responded 201 in 3.8345 ms
+2026-10-14 23:27:26.913 +02:00 [INF] HTTP POST /api/v1/projects responded 201 in 3.0967 ms
+2026-10-14 23:27:26.924 +02:00 [INF] HTTP PATCH /api/v1/projects/210cb5c5-fbac-4bb3-a878-fdfd7296dba3/status responded 204 in 10.4214 ms
+2026-10-14 23:27:26.927 +02:00 [INF] HTTP PATCH /api/v1/projects/7113c8b2-5ae4-4841-937a-c452378c4b70/status responded 204 in 2.9277 ms
+2026-10-14 23:27:26.939 +02:00 [INF] HTTP GET /api/v1/projects responded 200 in 12.0569 ms

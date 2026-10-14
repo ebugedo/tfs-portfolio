@@ -1,0 +1,1433 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Tfs.Portfolio.Application</name>
+    </assembly>
+    <members>
+        <member name="T:Tfs.Portfolio.Application.Clients.Commands.CreateClientCommand">
+            <summary>
+            Command to create a new client.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Clients.Commands.CreateClientCommand.#ctor(System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Command to create a new client.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Clients.Commands.UpdateClientCommand">
+            <summary>
+            Command to update an existing client.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Clients.Commands.UpdateClientCommand.#ctor(System.Guid,System.String,System.String,System.String,System.String,System.String,System.Nullable{System.Boolean})">
+            <summary>
+            Command to update an existing client.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Clients.Commands.DeactivateClientCommand">
+            <summary>
+            Command to deactivate a client.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Clients.Commands.DeactivateClientCommand.#ctor(System.Guid)">
+            <summary>
+            Command to deactivate a client.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Clients.Commands.DeleteClientCommand">
+            <summary>
+            Command to delete a client.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Clients.Commands.DeleteClientCommand.#ctor(System.Guid)">
+            <summary>
+            Command to delete a client.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Clients.Dtos.ClientDto">
+            <summary>
+            Data transfer object for a client.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Clients.Dtos.ClientDto.#ctor(System.Guid,System.String,System.String,System.Nullable{Tfs.Portfolio.Domain.Common.ValueObjects.TfsWebUrl},System.String,System.String,System.Boolean,System.DateTime,System.Nullable{System.DateTime})">
+            <summary>
+            Data transfer object for a client.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Clients.Dtos.ClientListItemDto">
+            <summary>
+            Data transfer object for a client list item.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Clients.Dtos.ClientListItemDto.#ctor(System.Guid,System.String,System.String,System.Nullable{Tfs.Portfolio.Domain.Common.ValueObjects.TfsWebUrl},System.Boolean,System.DateTime)">
+            <summary>
+            Data transfer object for a client list item.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Clients.Dtos.CreateClientRequest">
+            <summary>
+            Request to create a new client.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Clients.Dtos.CreateClientRequest.#ctor(System.String,System.String,System.Nullable{Tfs.Portfolio.Domain.Common.ValueObjects.TfsWebUrl},System.String,System.String)">
+            <summary>
+            Request to create a new client.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Clients.Dtos.UpdateClientRequest">
+            <summary>
+            Request to update an existing client.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Clients.Dtos.UpdateClientRequest.#ctor(System.String,System.String,System.Nullable{Tfs.Portfolio.Domain.Common.ValueObjects.TfsWebUrl},System.String,System.String,System.Nullable{System.Boolean})">
+            <summary>
+            Request to update an existing client.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Clients.Handlers.CreateClientCommandHandler">
+            <summary>
+            Handler for <see cref="T:Tfs.Portfolio.Application.Clients.Commands.CreateClientCommand"/>.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Clients.Handlers.CreateClientCommandHandler.#ctor(Tfs.Portfolio.Domain.Clients.Repositories.IClientRepository,Tfs.Portfolio.Domain.Common.IUnitOfWork)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Application.Clients.Handlers.CreateClientCommandHandler"/> class.
+            </summary>
+            <param name="clientRepository">The client repository.</param>
+            <param name="unitOfWork">The unit of work.</param>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Clients.Handlers.CreateClientCommandHandler.HandleAsync(Tfs.Portfolio.Application.Clients.Commands.CreateClientCommand,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Clients.Handlers.UpdateClientCommandHandler">
+            <summary>
+            Handler for <see cref="T:Tfs.Portfolio.Application.Clients.Commands.UpdateClientCommand"/>.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Clients.Handlers.UpdateClientCommandHandler.#ctor(Tfs.Portfolio.Domain.Clients.Repositories.IClientRepository,Tfs.Portfolio.Domain.Common.IUnitOfWork)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Application.Clients.Handlers.UpdateClientCommandHandler"/> class.
+            </summary>
+            <param name="clientRepository">The client repository.</param>
+            <param name="unitOfWork">The unit of work.</param>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Clients.Handlers.UpdateClientCommandHandler.HandleAsync(Tfs.Portfolio.Application.Clients.Commands.UpdateClientCommand,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Clients.Handlers.DeactivateClientCommandHandler">
+            <summary>
+            Handler for <see cref="T:Tfs.Portfolio.Application.Clients.Commands.DeactivateClientCommand"/>.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Clients.Handlers.DeactivateClientCommandHandler.#ctor(Tfs.Portfolio.Domain.Clients.Repositories.IClientRepository,Tfs.Portfolio.Domain.Common.IUnitOfWork)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Application.Clients.Handlers.DeactivateClientCommandHandler"/> class.
+            </summary>
+            <param name="clientRepository">The client repository.</param>
+            <param name="unitOfWork">The unit of work.</param>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Clients.Handlers.DeactivateClientCommandHandler.HandleAsync(Tfs.Portfolio.Application.Clients.Commands.DeactivateClientCommand,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Clients.Handlers.DeleteClientCommandHandler">
+            <summary>
+            Handler for <see cref="T:Tfs.Portfolio.Application.Clients.Commands.DeleteClientCommand"/>.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Clients.Handlers.DeleteClientCommandHandler.#ctor(Tfs.Portfolio.Domain.Clients.Repositories.IClientRepository,Tfs.Portfolio.Domain.Common.IUnitOfWork)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Application.Clients.Handlers.DeleteClientCommandHandler"/> class.
+            </summary>
+            <param name="clientRepository">The client repository.</param>
+            <param name="unitOfWork">The unit of work.</param>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Clients.Handlers.DeleteClientCommandHandler.HandleAsync(Tfs.Portfolio.Application.Clients.Commands.DeleteClientCommand,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Clients.Handlers.GetClientByIdQueryHandler">
+            <summary>
+            Handler for <see cref="T:Tfs.Portfolio.Application.Clients.Queries.GetClientByIdQuery"/>.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Clients.Handlers.GetClientByIdQueryHandler.#ctor(Tfs.Portfolio.Domain.Clients.Repositories.IClientRepository,AutoMapper.IMapper)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Application.Clients.Handlers.GetClientByIdQueryHandler"/> class.
+            </summary>
+            <param name="clientRepository">The client repository.</param>
+            <param name="mapper">The mapper.</param>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Clients.Handlers.GetClientByIdQueryHandler.HandleAsync(Tfs.Portfolio.Application.Clients.Queries.GetClientByIdQuery,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Clients.Handlers.GetClientsQueryHandler">
+            <summary>
+            Handler for <see cref="T:Tfs.Portfolio.Application.Clients.Queries.GetClientsQuery"/>.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Clients.Handlers.GetClientsQueryHandler.#ctor(Tfs.Portfolio.Domain.Clients.Repositories.IClientRepository,AutoMapper.IMapper)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Application.Clients.Handlers.GetClientsQueryHandler"/> class.
+            </summary>
+            <param name="clientRepository">The client repository.</param>
+            <param name="mapper">The mapper.</param>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Clients.Handlers.GetClientsQueryHandler.HandleAsync(Tfs.Portfolio.Application.Clients.Queries.GetClientsQuery,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Clients.Handlers.GetActiveClientsQueryHandler">
+            <summary>
+            Handler for <see cref="T:Tfs.Portfolio.Application.Clients.Queries.GetActiveClientsQuery"/>.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Clients.Handlers.GetActiveClientsQueryHandler.#ctor(Tfs.Portfolio.Domain.Clients.Repositories.IClientRepository,AutoMapper.IMapper)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Application.Clients.Handlers.GetActiveClientsQueryHandler"/> class.
+            </summary>
+            <param name="clientRepository">The client repository.</param>
+            <param name="mapper">The mapper.</param>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Clients.Handlers.GetActiveClientsQueryHandler.HandleAsync(Tfs.Portfolio.Application.Clients.Queries.GetActiveClientsQuery,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Clients.Mapping.ClientMappingProfile">
+            <summary>
+            AutoMapper profile for client mappings.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Clients.Mapping.ClientMappingProfile.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Application.Clients.Mapping.ClientMappingProfile"/> class.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Clients.Queries.GetClientByIdQuery">
+            <summary>
+            Query to get a client by its identifier.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Clients.Queries.GetClientByIdQuery.#ctor(System.Guid)">
+            <summary>
+            Query to get a client by its identifier.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Clients.Queries.GetClientsQuery">
+            <summary>
+            Query to get all clients.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Clients.Queries.GetActiveClientsQuery">
+            <summary>
+            Query to get all active clients.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Clients.Validators.CreateClientCommandValidator">
+            <summary>
+            Validator for <see cref="T:Tfs.Portfolio.Application.Clients.Commands.CreateClientCommand"/>.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Clients.Validators.CreateClientCommandValidator.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Application.Clients.Validators.CreateClientCommandValidator"/> class.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Clients.Validators.UpdateClientCommandValidator">
+            <summary>
+            Validator for <see cref="T:Tfs.Portfolio.Application.Clients.Commands.UpdateClientCommand"/>.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Clients.Validators.UpdateClientCommandValidator.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Application.Clients.Validators.UpdateClientCommandValidator"/> class.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Clients.Validators.GetClientByIdQueryValidator">
+            <summary>
+            Validator for <see cref="T:Tfs.Portfolio.Application.Clients.Queries.GetClientByIdQuery"/>.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Clients.Validators.GetClientByIdQueryValidator.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Application.Clients.Validators.GetClientByIdQueryValidator"/> class.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Common.CQRS.CommandHandlerBase`1">
+            <summary>
+            Base class for command handlers without a result.
+            </summary>
+            <typeparam name="TCommand">The type of the command.</typeparam>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Common.CQRS.CommandHandlerBase`1.HandleAsync(`0,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Common.CQRS.CommandHandlerBase`2">
+            <summary>
+            Base class for command handlers with a result.
+            </summary>
+            <typeparam name="TCommand">The type of the command.</typeparam>
+            <typeparam name="TResult">The type of the result.</typeparam>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Common.CQRS.CommandHandlerBase`2.HandleAsync(`0,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Common.CQRS.QueryHandlerBase`2">
+            <summary>
+            Base class for query handlers.
+            </summary>
+            <typeparam name="TQuery">The type of the query.</typeparam>
+            <typeparam name="TResult">The type of the result.</typeparam>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Common.CQRS.QueryHandlerBase`2.HandleAsync(`0,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Common.CQRS.ICommand">
+            <summary>
+            Marker interface for commands that do not return a result.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Common.CQRS.ICommand`1">
+            <summary>
+            Marker interface for commands that return a result.
+            </summary>
+            <typeparam name="TResult">The type of the result.</typeparam>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Common.CQRS.IQuery`1">
+            <summary>
+            Marker interface for queries that return a result.
+            </summary>
+            <typeparam name="TResult">The type of the result.</typeparam>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Common.CQRS.ICommandHandler`1">
+            <summary>
+            Handler for commands without a result.
+            </summary>
+            <typeparam name="TCommand">The type of the command.</typeparam>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Common.CQRS.ICommandHandler`1.HandleAsync(`0,System.Threading.CancellationToken)">
+            <summary>
+            Handles the command asynchronously.
+            </summary>
+            <param name="command">The command to handle.</param>
+            <param name="cancellationToken">A token to cancel the operation.</param>
+            <returns>A task representing the asynchronous operation.</returns>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Common.CQRS.ICommandHandler`2">
+            <summary>
+            Handler for commands with a result.
+            </summary>
+            <typeparam name="TCommand">The type of the command.</typeparam>
+            <typeparam name="TResult">The type of the result.</typeparam>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Common.CQRS.ICommandHandler`2.HandleAsync(`0,System.Threading.CancellationToken)">
+            <summary>
+            Handles the command asynchronously.
+            </summary>
+            <param name="command">The command to handle.</param>
+            <param name="cancellationToken">A token to cancel the operation.</param>
+            <returns>The result of the command.</returns>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Common.CQRS.IQueryHandler`2">
+            <summary>
+            Handler for queries.
+            </summary>
+            <typeparam name="TQuery">The type of the query.</typeparam>
+            <typeparam name="TResult">The type of the result.</typeparam>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Common.CQRS.IQueryHandler`2.HandleAsync(`0,System.Threading.CancellationToken)">
+            <summary>
+            Handles the query asynchronously.
+            </summary>
+            <param name="query">The query to handle.</param>
+            <param name="cancellationToken">A token to cancel the operation.</param>
+            <returns>The result of the query.</returns>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Common.Modules.ApplicationModule">
+            <summary>
+            Autofac module for the Application layer.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Common.Modules.ApplicationModule.Load(Autofac.ContainerBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Common.Services.ICurrentUserService">
+            <summary>
+            Service for accessing current user information.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Application.Common.Services.ICurrentUserService.UserId">
+            <summary>
+            Gets the current user identifier.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Application.Common.Services.ICurrentUserService.UserName">
+            <summary>
+            Gets the current user name.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Application.Common.Services.ICurrentUserService.IsAuthenticated">
+            <summary>
+            Checks if the current user is authenticated.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Common.Services.ICurrentUserService.IsInRole(System.String)">
+            <summary>
+            Checks if the current user has the specified role.
+            </summary>
+            <param name="role">The role to check.</param>
+            <returns>True if the user has the role; otherwise, false.</returns>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Common.Services.IDateTimeProvider">
+            <summary>
+            Provides date and time abstractions for testing.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Application.Common.Services.IDateTimeProvider.UtcNow">
+            <summary>
+            Gets the current UTC date and time.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Application.Common.Services.IDateTimeProvider.Now">
+            <summary>
+            Gets the current local date and time.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Application.Common.Services.IDateTimeProvider.TodayUtc">
+            <summary>
+            Gets today's date in UTC.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.CompanyProfile.Commands.UpdateCompanyProfileCommand">
+            <summary>
+            Command to update an existing company profile.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.CompanyProfile.Commands.UpdateCompanyProfileCommand.#ctor(System.String,System.String,System.String,System.Nullable{Tfs.Portfolio.Domain.Common.ValueObjects.TfsWebUrl},System.String,System.String,System.Nullable{Tfs.Portfolio.Domain.Common.ValueObjects.TfsWebUrl})">
+            <summary>
+            Command to update an existing company profile.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.CompanyProfile.Dtos.CompanyProfileDto">
+            <summary>
+            Data transfer object for a company profile.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.CompanyProfile.Dtos.CompanyProfileDto.#ctor(System.Guid,System.String,System.String,System.String,System.Nullable{Tfs.Portfolio.Domain.Common.ValueObjects.TfsWebUrl},System.String,System.String,System.Nullable{Tfs.Portfolio.Domain.Common.ValueObjects.TfsWebUrl},System.DateTime,System.Nullable{System.DateTime})">
+            <summary>
+            Data transfer object for a company profile.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.CompanyProfile.Dtos.UpdateCompanyProfileRequest">
+            <summary>
+            Request to update an existing company profile.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.CompanyProfile.Dtos.UpdateCompanyProfileRequest.#ctor(System.String,System.String,System.String,System.Nullable{Tfs.Portfolio.Domain.Common.ValueObjects.TfsWebUrl},System.String,System.String,System.Nullable{Tfs.Portfolio.Domain.Common.ValueObjects.TfsWebUrl})">
+            <summary>
+            Request to update an existing company profile.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.CompanyProfile.Handlers.UpdateCompanyProfileCommandHandler">
+            <summary>
+            Handler for <see cref="T:Tfs.Portfolio.Application.CompanyProfile.Commands.UpdateCompanyProfileCommand"/>.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.CompanyProfile.Handlers.UpdateCompanyProfileCommandHandler.#ctor(Tfs.Portfolio.Domain.CompanyProfile.Repositories.ICompanyProfileRepository,Tfs.Portfolio.Domain.Common.IUnitOfWork)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Application.CompanyProfile.Handlers.UpdateCompanyProfileCommandHandler"/> class.
+            </summary>
+            <param name="companyProfileRepository">The company profile repository.</param>
+            <param name="unitOfWork">The unit of work.</param>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.CompanyProfile.Handlers.UpdateCompanyProfileCommandHandler.HandleAsync(Tfs.Portfolio.Application.CompanyProfile.Commands.UpdateCompanyProfileCommand,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Tfs.Portfolio.Application.CompanyProfile.Handlers.GetCompanyProfileQueryHandler">
+            <summary>
+            Handler for <see cref="T:Tfs.Portfolio.Application.CompanyProfile.Queries.GetCompanyProfileQuery"/>.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.CompanyProfile.Handlers.GetCompanyProfileQueryHandler.#ctor(Tfs.Portfolio.Domain.CompanyProfile.Repositories.ICompanyProfileRepository,AutoMapper.IMapper)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Application.CompanyProfile.Handlers.GetCompanyProfileQueryHandler"/> class.
+            </summary>
+            <param name="companyProfileRepository">The company profile repository.</param>
+            <param name="mapper">The mapper.</param>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.CompanyProfile.Handlers.GetCompanyProfileQueryHandler.HandleAsync(Tfs.Portfolio.Application.CompanyProfile.Queries.GetCompanyProfileQuery,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Tfs.Portfolio.Application.CompanyProfile.Mapping.CompanyProfileMappingProfile">
+            <summary>
+            AutoMapper profile for company profile mappings.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.CompanyProfile.Mapping.CompanyProfileMappingProfile.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Application.CompanyProfile.Mapping.CompanyProfileMappingProfile"/> class.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.CompanyProfile.Queries.GetCompanyProfileQuery">
+            <summary>
+            Query to get the company profile.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.CompanyProfile.Validators.UpdateCompanyProfileCommandValidator">
+            <summary>
+            Validator for <see cref="T:Tfs.Portfolio.Application.CompanyProfile.Commands.UpdateCompanyProfileCommand"/>.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.CompanyProfile.Validators.UpdateCompanyProfileCommandValidator.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Application.CompanyProfile.Validators.UpdateCompanyProfileCommandValidator"/> class.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.CompanyProfile.Validators.GetCompanyProfileQueryValidator">
+            <summary>
+            Validator for <see cref="T:Tfs.Portfolio.Application.CompanyProfile.Queries.GetCompanyProfileQuery"/>.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.CompanyProfile.Validators.GetCompanyProfileQueryValidator.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Application.CompanyProfile.Validators.GetCompanyProfileQueryValidator"/> class.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Projects.Commands.CreateProjectCommand">
+            <summary>
+            Command to create a new project.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Projects.Commands.CreateProjectCommand.#ctor(System.String,System.String,Tfs.Portfolio.Domain.Common.ValueObjects.YearMonth,System.Int32,System.Guid,System.Guid,System.Collections.Generic.IReadOnlyList{System.String})">
+            <summary>
+            Command to create a new project.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Projects.Commands.UpdateProjectCommand">
+            <summary>
+            Command to update an existing project.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Projects.Commands.UpdateProjectCommand.#ctor(System.Guid,System.String,System.String,Tfs.Portfolio.Domain.Common.ValueObjects.YearMonth,System.Int32,System.Guid,System.Guid,System.Collections.Generic.IReadOnlyList{System.String},Tfs.Portfolio.Domain.Projects.Entities.ProjectStatus)">
+            <summary>
+            Command to update an existing project.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Projects.Commands.DeleteProjectCommand">
+            <summary>
+            Command to delete a project.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Projects.Commands.DeleteProjectCommand.#ctor(System.Guid)">
+            <summary>
+            Command to delete a project.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Projects.Commands.ChangeProjectStatusCommand">
+            <summary>
+            Command to change a project's status.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Projects.Commands.ChangeProjectStatusCommand.#ctor(System.Guid,Tfs.Portfolio.Domain.Projects.Entities.ProjectStatus)">
+            <summary>
+            Command to change a project's status.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Projects.Commands.AddProjectServiceCommand">
+            <summary>
+            Command to add a service to a project.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Projects.Commands.AddProjectServiceCommand.#ctor(System.Guid,System.Guid)">
+            <summary>
+            Command to add a service to a project.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Projects.Commands.RemoveProjectServiceCommand">
+            <summary>
+            Command to remove a service from a project.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Projects.Commands.RemoveProjectServiceCommand.#ctor(System.Guid,System.Guid)">
+            <summary>
+            Command to remove a service from a project.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Projects.Dtos.ProjectDto">
+            <summary>
+            Data transfer object for a project.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Projects.Dtos.ProjectDto.#ctor(System.Guid,System.String,System.String,Tfs.Portfolio.Domain.Common.ValueObjects.YearMonth,System.Int32,Tfs.Portfolio.Domain.Common.ValueObjects.YearMonth,System.Guid,System.Guid,Tfs.Portfolio.Domain.Projects.Entities.ProjectStatus,System.Collections.Generic.IReadOnlyList{System.String},System.Collections.Generic.IReadOnlyList{System.Guid},System.DateTime,System.Nullable{System.DateTime})">
+            <summary>
+            Data transfer object for a project.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Projects.Dtos.ProjectListItemDto">
+            <summary>
+            Data transfer object for a project list item.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Projects.Dtos.ProjectListItemDto.#ctor(System.Guid,System.String,System.String,Tfs.Portfolio.Domain.Common.ValueObjects.YearMonth,System.Int32,Tfs.Portfolio.Domain.Common.ValueObjects.YearMonth,System.Guid,System.Guid,Tfs.Portfolio.Domain.Projects.Entities.ProjectStatus,System.DateTime)">
+            <summary>
+            Data transfer object for a project list item.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Projects.Dtos.CreateProjectRequest">
+            <summary>
+            Request to create a new project.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Projects.Dtos.CreateProjectRequest.#ctor(System.String,System.String,Tfs.Portfolio.Domain.Common.ValueObjects.YearMonth,System.Int32,System.Guid,System.Guid,System.Collections.Generic.IReadOnlyList{System.String})">
+            <summary>
+            Request to create a new project.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Projects.Dtos.UpdateProjectRequest">
+            <summary>
+            Request to update an existing project.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Projects.Dtos.UpdateProjectRequest.#ctor(System.String,System.String,Tfs.Portfolio.Domain.Common.ValueObjects.YearMonth,System.Int32,System.Guid,System.Guid,System.Collections.Generic.IReadOnlyList{System.String},Tfs.Portfolio.Domain.Projects.Entities.ProjectStatus)">
+            <summary>
+            Request to update an existing project.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Projects.Handlers.CreateProjectCommandHandler">
+            <summary>
+            Handler for <see cref="T:Tfs.Portfolio.Application.Projects.Commands.CreateProjectCommand"/>.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Projects.Handlers.CreateProjectCommandHandler.#ctor(Tfs.Portfolio.Domain.Projects.Repositories.IProjectRepository,Tfs.Portfolio.Domain.Clients.Repositories.IClientRepository,Tfs.Portfolio.Domain.Sectors.Repositories.ISectorRepository,Tfs.Portfolio.Domain.Common.IUnitOfWork,AutoMapper.IMapper)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Application.Projects.Handlers.CreateProjectCommandHandler"/> class.
+            </summary>
+            <param name="projectRepository">The project repository.</param>
+            <param name="clientRepository">The client repository.</param>
+            <param name="sectorRepository">The sector repository.</param>
+            <param name="unitOfWork">The unit of work.</param>
+            <param name="mapper">The mapper.</param>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Projects.Handlers.CreateProjectCommandHandler.HandleAsync(Tfs.Portfolio.Application.Projects.Commands.CreateProjectCommand,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Projects.Handlers.UpdateProjectCommandHandler">
+            <summary>
+            Handler for <see cref="T:Tfs.Portfolio.Application.Projects.Commands.UpdateProjectCommand"/>.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Projects.Handlers.UpdateProjectCommandHandler.#ctor(Tfs.Portfolio.Domain.Projects.Repositories.IProjectRepository,Tfs.Portfolio.Domain.Common.IUnitOfWork)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Application.Projects.Handlers.UpdateProjectCommandHandler"/> class.
+            </summary>
+            <param name="projectRepository">The project repository.</param>
+            <param name="unitOfWork">The unit of work.</param>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Projects.Handlers.UpdateProjectCommandHandler.HandleAsync(Tfs.Portfolio.Application.Projects.Commands.UpdateProjectCommand,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Projects.Handlers.DeleteProjectCommandHandler">
+            <summary>
+            Handler for <see cref="T:Tfs.Portfolio.Application.Projects.Commands.DeleteProjectCommand"/>.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Projects.Handlers.DeleteProjectCommandHandler.#ctor(Tfs.Portfolio.Domain.Projects.Repositories.IProjectRepository,Tfs.Portfolio.Domain.Common.IUnitOfWork)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Application.Projects.Handlers.DeleteProjectCommandHandler"/> class.
+            </summary>
+            <param name="projectRepository">The project repository.</param>
+            <param name="unitOfWork">The unit of work.</param>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Projects.Handlers.DeleteProjectCommandHandler.HandleAsync(Tfs.Portfolio.Application.Projects.Commands.DeleteProjectCommand,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Projects.Handlers.ChangeProjectStatusCommandHandler">
+            <summary>
+            Handler for <see cref="T:Tfs.Portfolio.Application.Projects.Commands.ChangeProjectStatusCommand"/>.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Projects.Handlers.ChangeProjectStatusCommandHandler.#ctor(Tfs.Portfolio.Domain.Projects.Repositories.IProjectRepository,Tfs.Portfolio.Domain.Common.IUnitOfWork)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Application.Projects.Handlers.ChangeProjectStatusCommandHandler"/> class.
+            </summary>
+            <param name="projectRepository">The project repository.</param>
+            <param name="unitOfWork">The unit of work.</param>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Projects.Handlers.ChangeProjectStatusCommandHandler.HandleAsync(Tfs.Portfolio.Application.Projects.Commands.ChangeProjectStatusCommand,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Projects.Handlers.AddProjectServiceCommandHandler">
+            <summary>
+            Handler for <see cref="T:Tfs.Portfolio.Application.Projects.Commands.AddProjectServiceCommand"/>.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Projects.Handlers.AddProjectServiceCommandHandler.#ctor(Tfs.Portfolio.Domain.Projects.Repositories.IProjectRepository,Tfs.Portfolio.Domain.Services.Repositories.IServiceRepository,Tfs.Portfolio.Domain.Common.IUnitOfWork)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Application.Projects.Handlers.AddProjectServiceCommandHandler"/> class.
+            </summary>
+            <param name="projectRepository">The project repository.</param>
+            <param name="serviceRepository">The service repository.</param>
+            <param name="unitOfWork">The unit of work.</param>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Projects.Handlers.AddProjectServiceCommandHandler.HandleAsync(Tfs.Portfolio.Application.Projects.Commands.AddProjectServiceCommand,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Projects.Handlers.RemoveProjectServiceCommandHandler">
+            <summary>
+            Handler for <see cref="T:Tfs.Portfolio.Application.Projects.Commands.RemoveProjectServiceCommand"/>.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Projects.Handlers.RemoveProjectServiceCommandHandler.#ctor(Tfs.Portfolio.Domain.Projects.Repositories.IProjectRepository,Tfs.Portfolio.Domain.Services.Repositories.IServiceRepository,Tfs.Portfolio.Domain.Common.IUnitOfWork)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Application.Projects.Handlers.RemoveProjectServiceCommandHandler"/> class.
+            </summary>
+            <param name="projectRepository">The project repository.</param>
+            <param name="serviceRepository">The service repository.</param>
+            <param name="unitOfWork">The unit of work.</param>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Projects.Handlers.RemoveProjectServiceCommandHandler.HandleAsync(Tfs.Portfolio.Application.Projects.Commands.RemoveProjectServiceCommand,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Projects.Handlers.GetProjectByIdQueryHandler">
+            <summary>
+            Handler for <see cref="T:Tfs.Portfolio.Application.Projects.Queries.GetProjectByIdQuery"/>.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Projects.Handlers.GetProjectByIdQueryHandler.#ctor(Tfs.Portfolio.Domain.Projects.Repositories.IProjectRepository,AutoMapper.IMapper)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Application.Projects.Handlers.GetProjectByIdQueryHandler"/> class.
+            </summary>
+            <param name="projectRepository">The project repository.</param>
+            <param name="mapper">The mapper.</param>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Projects.Handlers.GetProjectByIdQueryHandler.HandleAsync(Tfs.Portfolio.Application.Projects.Queries.GetProjectByIdQuery,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Projects.Handlers.GetProjectsQueryHandler">
+            <summary>
+            Handler for <see cref="T:Tfs.Portfolio.Application.Projects.Queries.GetProjectsQuery"/>.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Projects.Handlers.GetProjectsQueryHandler.#ctor(Tfs.Portfolio.Domain.Projects.Repositories.IProjectRepository,AutoMapper.IMapper)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Application.Projects.Handlers.GetProjectsQueryHandler"/> class.
+            </summary>
+            <param name="projectRepository">The project repository.</param>
+            <param name="mapper">The mapper.</param>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Projects.Handlers.GetProjectsQueryHandler.HandleAsync(Tfs.Portfolio.Application.Projects.Queries.GetProjectsQuery,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Projects.Handlers.GetProjectsByClientQueryHandler">
+            <summary>
+            Handler for <see cref="T:Tfs.Portfolio.Application.Projects.Queries.GetProjectsByClientQuery"/>.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Projects.Handlers.GetProjectsByClientQueryHandler.#ctor(Tfs.Portfolio.Domain.Projects.Repositories.IProjectRepository,AutoMapper.IMapper)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Application.Projects.Handlers.GetProjectsByClientQueryHandler"/> class.
+            </summary>
+            <param name="projectRepository">The project repository.</param>
+            <param name="mapper">The mapper.</param>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Projects.Handlers.GetProjectsByClientQueryHandler.HandleAsync(Tfs.Portfolio.Application.Projects.Queries.GetProjectsByClientQuery,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Projects.Handlers.GetProjectsBySectorQueryHandler">
+            <summary>
+            Handler for <see cref="T:Tfs.Portfolio.Application.Projects.Queries.GetProjectsBySectorQuery"/>.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Projects.Handlers.GetProjectsBySectorQueryHandler.#ctor(Tfs.Portfolio.Domain.Projects.Repositories.IProjectRepository,AutoMapper.IMapper)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Application.Projects.Handlers.GetProjectsBySectorQueryHandler"/> class.
+            </summary>
+            <param name="projectRepository">The project repository.</param>
+            <param name="mapper">The mapper.</param>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Projects.Handlers.GetProjectsBySectorQueryHandler.HandleAsync(Tfs.Portfolio.Application.Projects.Queries.GetProjectsBySectorQuery,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Projects.Handlers.GetProjectsByTechnologyQueryHandler">
+            <summary>
+            Handler for <see cref="T:Tfs.Portfolio.Application.Projects.Queries.GetProjectsByTechnologyQuery"/>.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Projects.Handlers.GetProjectsByTechnologyQueryHandler.#ctor(Tfs.Portfolio.Domain.Projects.Repositories.IProjectRepository,AutoMapper.IMapper)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Application.Projects.Handlers.GetProjectsByTechnologyQueryHandler"/> class.
+            </summary>
+            <param name="projectRepository">The project repository.</param>
+            <param name="mapper">The mapper.</param>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Projects.Handlers.GetProjectsByTechnologyQueryHandler.HandleAsync(Tfs.Portfolio.Application.Projects.Queries.GetProjectsByTechnologyQuery,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Projects.Handlers.GetProjectsByStatusQueryHandler">
+            <summary>
+            Handler for <see cref="T:Tfs.Portfolio.Application.Projects.Queries.GetProjectsByStatusQuery"/>.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Projects.Handlers.GetProjectsByStatusQueryHandler.#ctor(Tfs.Portfolio.Domain.Projects.Repositories.IProjectRepository,AutoMapper.IMapper)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Application.Projects.Handlers.GetProjectsByStatusQueryHandler"/> class.
+            </summary>
+            <param name="projectRepository">The project repository.</param>
+            <param name="mapper">The mapper.</param>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Projects.Handlers.GetProjectsByStatusQueryHandler.HandleAsync(Tfs.Portfolio.Application.Projects.Queries.GetProjectsByStatusQuery,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Projects.Mapping.ProjectMappingProfile">
+            <summary>
+            AutoMapper profile for project mappings.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Projects.Mapping.ProjectMappingProfile.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Application.Projects.Mapping.ProjectMappingProfile"/> class.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Projects.Queries.GetProjectByIdQuery">
+            <summary>
+            Query to get a project by its identifier.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Projects.Queries.GetProjectByIdQuery.#ctor(System.Guid)">
+            <summary>
+            Query to get a project by its identifier.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Projects.Queries.GetProjectsQuery">
+            <summary>
+            Query to get all projects with optional filters.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Projects.Queries.GetProjectsQuery.#ctor(System.Nullable{System.Guid},System.Nullable{System.Guid},System.String,System.Nullable{Tfs.Portfolio.Domain.Projects.Entities.ProjectStatus})">
+            <summary>
+            Query to get all projects with optional filters.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Projects.Queries.GetProjectsByClientQuery">
+            <summary>
+            Query to get projects by client identifier.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Projects.Queries.GetProjectsByClientQuery.#ctor(System.Guid)">
+            <summary>
+            Query to get projects by client identifier.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Projects.Queries.GetProjectsBySectorQuery">
+            <summary>
+            Query to get projects by sector identifier.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Projects.Queries.GetProjectsBySectorQuery.#ctor(System.Guid)">
+            <summary>
+            Query to get projects by sector identifier.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Projects.Queries.GetProjectsByTechnologyQuery">
+            <summary>
+            Query to get projects by technology name.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Projects.Queries.GetProjectsByTechnologyQuery.#ctor(System.String)">
+            <summary>
+            Query to get projects by technology name.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Projects.Queries.GetProjectsByStatusQuery">
+            <summary>
+            Query to get projects by status.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Projects.Queries.GetProjectsByStatusQuery.#ctor(Tfs.Portfolio.Domain.Projects.Entities.ProjectStatus)">
+            <summary>
+            Query to get projects by status.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Projects.Validators.CreateProjectCommandValidator">
+            <summary>
+            Validator for <see cref="T:Tfs.Portfolio.Application.Projects.Commands.CreateProjectCommand"/>.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Projects.Validators.CreateProjectCommandValidator.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Application.Projects.Validators.CreateProjectCommandValidator"/> class.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Projects.Validators.UpdateProjectCommandValidator">
+            <summary>
+            Validator for <see cref="T:Tfs.Portfolio.Application.Projects.Commands.UpdateProjectCommand"/>.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Projects.Validators.UpdateProjectCommandValidator.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Application.Projects.Validators.UpdateProjectCommandValidator"/> class.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Projects.Validators.DeleteProjectCommandValidator">
+            <summary>
+            Validator for <see cref="T:Tfs.Portfolio.Application.Projects.Commands.DeleteProjectCommand"/>.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Projects.Validators.DeleteProjectCommandValidator.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Application.Projects.Validators.DeleteProjectCommandValidator"/> class.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Projects.Validators.ChangeProjectStatusCommandValidator">
+            <summary>
+            Validator for <see cref="T:Tfs.Portfolio.Application.Projects.Commands.ChangeProjectStatusCommand"/>.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Projects.Validators.ChangeProjectStatusCommandValidator.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Application.Projects.Validators.ChangeProjectStatusCommandValidator"/> class.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Projects.Validators.AddProjectServiceCommandValidator">
+            <summary>
+            Validator for <see cref="T:Tfs.Portfolio.Application.Projects.Commands.AddProjectServiceCommand"/>.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Projects.Validators.AddProjectServiceCommandValidator.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Application.Projects.Validators.AddProjectServiceCommandValidator"/> class.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Projects.Validators.RemoveProjectServiceCommandValidator">
+            <summary>
+            Validator for <see cref="T:Tfs.Portfolio.Application.Projects.Commands.RemoveProjectServiceCommand"/>.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Projects.Validators.RemoveProjectServiceCommandValidator.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Application.Projects.Validators.RemoveProjectServiceCommandValidator"/> class.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Projects.Validators.GetProjectByIdQueryValidator">
+            <summary>
+            Validator for <see cref="T:Tfs.Portfolio.Application.Projects.Queries.GetProjectByIdQuery"/>.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Projects.Validators.GetProjectByIdQueryValidator.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Application.Projects.Validators.GetProjectByIdQueryValidator"/> class.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Projects.Validators.GetProjectsByClientQueryValidator">
+            <summary>
+            Validator for <see cref="T:Tfs.Portfolio.Application.Projects.Queries.GetProjectsByClientQuery"/>.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Projects.Validators.GetProjectsByClientQueryValidator.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Application.Projects.Validators.GetProjectsByClientQueryValidator"/> class.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Projects.Validators.GetProjectsBySectorQueryValidator">
+            <summary>
+            Validator for <see cref="T:Tfs.Portfolio.Application.Projects.Queries.GetProjectsBySectorQuery"/>.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Projects.Validators.GetProjectsBySectorQueryValidator.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Application.Projects.Validators.GetProjectsBySectorQueryValidator"/> class.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Projects.Validators.GetProjectsByTechnologyQueryValidator">
+            <summary>
+            Validator for <see cref="T:Tfs.Portfolio.Application.Projects.Queries.GetProjectsByTechnologyQuery"/>.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Projects.Validators.GetProjectsByTechnologyQueryValidator.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Application.Projects.Validators.GetProjectsByTechnologyQueryValidator"/> class.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Projects.Validators.GetProjectsByStatusQueryValidator">
+            <summary>
+            Validator for <see cref="T:Tfs.Portfolio.Application.Projects.Queries.GetProjectsByStatusQuery"/>.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Projects.Validators.GetProjectsByStatusQueryValidator.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Application.Projects.Validators.GetProjectsByStatusQueryValidator"/> class.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Sectors.Commands.CreateSectorCommand">
+            <summary>
+            Command to create a new sector.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Sectors.Commands.CreateSectorCommand.#ctor(System.String,System.String)">
+            <summary>
+            Command to create a new sector.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Sectors.Commands.UpdateSectorCommand">
+            <summary>
+            Command to update an existing sector.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Sectors.Commands.UpdateSectorCommand.#ctor(System.Guid,System.String,System.String)">
+            <summary>
+            Command to update an existing sector.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Sectors.Commands.DeleteSectorCommand">
+            <summary>
+            Command to delete a sector.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Sectors.Commands.DeleteSectorCommand.#ctor(System.Guid)">
+            <summary>
+            Command to delete a sector.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Sectors.Dtos.SectorDto">
+            <summary>
+            Data transfer object for a sector.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Sectors.Dtos.SectorDto.#ctor(System.Guid,System.String,System.String,System.Boolean,System.DateTime,System.Nullable{System.DateTime})">
+            <summary>
+            Data transfer object for a sector.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Sectors.Dtos.SectorListItemDto">
+            <summary>
+            Data transfer object for a sector list item.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Sectors.Dtos.SectorListItemDto.#ctor(System.Guid,System.String,System.String,System.Boolean,System.DateTime)">
+            <summary>
+            Data transfer object for a sector list item.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Sectors.Dtos.CreateSectorRequest">
+            <summary>
+            Request to create a new sector.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Sectors.Dtos.CreateSectorRequest.#ctor(System.String,System.String)">
+            <summary>
+            Request to create a new sector.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Sectors.Dtos.UpdateSectorRequest">
+            <summary>
+            Request to update an existing sector.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Sectors.Dtos.UpdateSectorRequest.#ctor(System.String,System.String)">
+            <summary>
+            Request to update an existing sector.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Sectors.Handlers.CreateSectorCommandHandler">
+            <summary>
+            Handler for <see cref="T:Tfs.Portfolio.Application.Sectors.Commands.CreateSectorCommand"/>.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Sectors.Handlers.CreateSectorCommandHandler.#ctor(Tfs.Portfolio.Domain.Sectors.Repositories.ISectorRepository,Tfs.Portfolio.Domain.Common.IUnitOfWork)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Application.Sectors.Handlers.CreateSectorCommandHandler"/> class.
+            </summary>
+            <param name="sectorRepository">The sector repository.</param>
+            <param name="unitOfWork">The unit of work.</param>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Sectors.Handlers.CreateSectorCommandHandler.HandleAsync(Tfs.Portfolio.Application.Sectors.Commands.CreateSectorCommand,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Sectors.Handlers.UpdateSectorCommandHandler">
+            <summary>
+            Handler for <see cref="T:Tfs.Portfolio.Application.Sectors.Commands.UpdateSectorCommand"/>.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Sectors.Handlers.UpdateSectorCommandHandler.#ctor(Tfs.Portfolio.Domain.Sectors.Repositories.ISectorRepository,Tfs.Portfolio.Domain.Common.IUnitOfWork)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Application.Sectors.Handlers.UpdateSectorCommandHandler"/> class.
+            </summary>
+            <param name="sectorRepository">The sector repository.</param>
+            <param name="unitOfWork">The unit of work.</param>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Sectors.Handlers.UpdateSectorCommandHandler.HandleAsync(Tfs.Portfolio.Application.Sectors.Commands.UpdateSectorCommand,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Sectors.Handlers.DeleteSectorCommandHandler">
+            <summary>
+            Handler for <see cref="T:Tfs.Portfolio.Application.Sectors.Commands.DeleteSectorCommand"/>.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Sectors.Handlers.DeleteSectorCommandHandler.#ctor(Tfs.Portfolio.Domain.Sectors.Repositories.ISectorRepository,Tfs.Portfolio.Domain.Common.IUnitOfWork)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Application.Sectors.Handlers.DeleteSectorCommandHandler"/> class.
+            </summary>
+            <param name="sectorRepository">The sector repository.</param>
+            <param name="unitOfWork">The unit of work.</param>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Sectors.Handlers.DeleteSectorCommandHandler.HandleAsync(Tfs.Portfolio.Application.Sectors.Commands.DeleteSectorCommand,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Sectors.Handlers.GetSectorByIdQueryHandler">
+            <summary>
+            Handler for <see cref="T:Tfs.Portfolio.Application.Sectors.Queries.GetSectorByIdQuery"/>.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Sectors.Handlers.GetSectorByIdQueryHandler.#ctor(Tfs.Portfolio.Domain.Sectors.Repositories.ISectorRepository,AutoMapper.IMapper)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Application.Sectors.Handlers.GetSectorByIdQueryHandler"/> class.
+            </summary>
+            <param name="sectorRepository">The sector repository.</param>
+            <param name="mapper">The mapper.</param>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Sectors.Handlers.GetSectorByIdQueryHandler.HandleAsync(Tfs.Portfolio.Application.Sectors.Queries.GetSectorByIdQuery,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Sectors.Handlers.GetSectorsQueryHandler">
+            <summary>
+            Handler for <see cref="T:Tfs.Portfolio.Application.Sectors.Queries.GetSectorsQuery"/>.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Sectors.Handlers.GetSectorsQueryHandler.#ctor(Tfs.Portfolio.Domain.Sectors.Repositories.ISectorRepository,AutoMapper.IMapper)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Application.Sectors.Handlers.GetSectorsQueryHandler"/> class.
+            </summary>
+            <param name="sectorRepository">The sector repository.</param>
+            <param name="mapper">The mapper.</param>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Sectors.Handlers.GetSectorsQueryHandler.HandleAsync(Tfs.Portfolio.Application.Sectors.Queries.GetSectorsQuery,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Sectors.Handlers.GetActiveSectorsQueryHandler">
+            <summary>
+            Handler for <see cref="T:Tfs.Portfolio.Application.Sectors.Queries.GetActiveSectorsQuery"/>.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Sectors.Handlers.GetActiveSectorsQueryHandler.#ctor(Tfs.Portfolio.Domain.Sectors.Repositories.ISectorRepository,AutoMapper.IMapper)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Application.Sectors.Handlers.GetActiveSectorsQueryHandler"/> class.
+            </summary>
+            <param name="sectorRepository">The sector repository.</param>
+            <param name="mapper">The mapper.</param>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Sectors.Handlers.GetActiveSectorsQueryHandler.HandleAsync(Tfs.Portfolio.Application.Sectors.Queries.GetActiveSectorsQuery,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Sectors.Mapping.SectorMappingProfile">
+            <summary>
+            AutoMapper profile for sector mappings.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Sectors.Mapping.SectorMappingProfile.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Application.Sectors.Mapping.SectorMappingProfile"/> class.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Sectors.Queries.GetSectorByIdQuery">
+            <summary>
+            Query to get a sector by its identifier.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Sectors.Queries.GetSectorByIdQuery.#ctor(System.Guid)">
+            <summary>
+            Query to get a sector by its identifier.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Sectors.Queries.GetSectorsQuery">
+            <summary>
+            Query to get all sectors.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Sectors.Queries.GetActiveSectorsQuery">
+            <summary>
+            Query to get all active sectors.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Sectors.Validators.CreateSectorCommandValidator">
+            <summary>
+            Validator for <see cref="T:Tfs.Portfolio.Application.Sectors.Commands.CreateSectorCommand"/>.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Sectors.Validators.CreateSectorCommandValidator.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Application.Sectors.Validators.CreateSectorCommandValidator"/> class.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Sectors.Validators.UpdateSectorCommandValidator">
+            <summary>
+            Validator for <see cref="T:Tfs.Portfolio.Application.Sectors.Commands.UpdateSectorCommand"/>.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Sectors.Validators.UpdateSectorCommandValidator.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Application.Sectors.Validators.UpdateSectorCommandValidator"/> class.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Sectors.Validators.GetSectorByIdQueryValidator">
+            <summary>
+            Validator for <see cref="T:Tfs.Portfolio.Application.Sectors.Queries.GetSectorByIdQuery"/>.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Sectors.Validators.GetSectorByIdQueryValidator.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Application.Sectors.Validators.GetSectorByIdQueryValidator"/> class.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Services.Commands.CreateServiceCommand">
+            <summary>
+            Command to create a new service.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Services.Commands.CreateServiceCommand.#ctor(System.String,System.String,Tfs.Portfolio.Domain.Services.Entities.ServiceCategory)">
+            <summary>
+            Command to create a new service.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Services.Commands.UpdateServiceCommand">
+            <summary>
+            Command to update an existing service.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Services.Commands.UpdateServiceCommand.#ctor(System.Guid,System.String,System.String,Tfs.Portfolio.Domain.Services.Entities.ServiceCategory)">
+            <summary>
+            Command to update an existing service.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Services.Commands.DeleteServiceCommand">
+            <summary>
+            Command to delete a service.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Services.Commands.DeleteServiceCommand.#ctor(System.Guid)">
+            <summary>
+            Command to delete a service.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Services.Dtos.ServiceDto">
+            <summary>
+            Data transfer object for a service.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Services.Dtos.ServiceDto.#ctor(System.Guid,System.String,System.String,Tfs.Portfolio.Domain.Services.Entities.ServiceCategory,System.Boolean,System.DateTime,System.Nullable{System.DateTime})">
+            <summary>
+            Data transfer object for a service.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Services.Dtos.ServiceListItemDto">
+            <summary>
+            Data transfer object for a service list item.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Services.Dtos.ServiceListItemDto.#ctor(System.Guid,System.String,System.String,Tfs.Portfolio.Domain.Services.Entities.ServiceCategory,System.Boolean,System.DateTime)">
+            <summary>
+            Data transfer object for a service list item.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Services.Dtos.CreateServiceRequest">
+            <summary>
+            Request to create a new service.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Services.Dtos.CreateServiceRequest.#ctor(System.String,System.String,Tfs.Portfolio.Domain.Services.Entities.ServiceCategory)">
+            <summary>
+            Request to create a new service.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Services.Dtos.UpdateServiceRequest">
+            <summary>
+            Request to update an existing service.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Services.Dtos.UpdateServiceRequest.#ctor(System.String,System.String,Tfs.Portfolio.Domain.Services.Entities.ServiceCategory)">
+            <summary>
+            Request to update an existing service.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Services.Handlers.CreateServiceCommandHandler">
+            <summary>
+            Handler for <see cref="T:Tfs.Portfolio.Application.Services.Commands.CreateServiceCommand"/>.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Services.Handlers.CreateServiceCommandHandler.#ctor(Tfs.Portfolio.Domain.Services.Repositories.IServiceRepository,Tfs.Portfolio.Domain.Common.IUnitOfWork)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Application.Services.Handlers.CreateServiceCommandHandler"/> class.
+            </summary>
+            <param name="serviceRepository">The service repository.</param>
+            <param name="unitOfWork">The unit of work.</param>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Services.Handlers.CreateServiceCommandHandler.HandleAsync(Tfs.Portfolio.Application.Services.Commands.CreateServiceCommand,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Services.Handlers.UpdateServiceCommandHandler">
+            <summary>
+            Handler for <see cref="T:Tfs.Portfolio.Application.Services.Commands.UpdateServiceCommand"/>.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Services.Handlers.UpdateServiceCommandHandler.#ctor(Tfs.Portfolio.Domain.Services.Repositories.IServiceRepository,Tfs.Portfolio.Domain.Common.IUnitOfWork)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Application.Services.Handlers.UpdateServiceCommandHandler"/> class.
+            </summary>
+            <param name="serviceRepository">The service repository.</param>
+            <param name="unitOfWork">The unit of work.</param>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Services.Handlers.UpdateServiceCommandHandler.HandleAsync(Tfs.Portfolio.Application.Services.Commands.UpdateServiceCommand,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Services.Handlers.DeleteServiceCommandHandler">
+            <summary>
+            Handler for <see cref="T:Tfs.Portfolio.Application.Services.Commands.DeleteServiceCommand"/>.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Services.Handlers.DeleteServiceCommandHandler.#ctor(Tfs.Portfolio.Domain.Services.Repositories.IServiceRepository,Tfs.Portfolio.Domain.Common.IUnitOfWork)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Application.Services.Handlers.DeleteServiceCommandHandler"/> class.
+            </summary>
+            <param name="serviceRepository">The service repository.</param>
+            <param name="unitOfWork">The unit of work.</param>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Services.Handlers.DeleteServiceCommandHandler.HandleAsync(Tfs.Portfolio.Application.Services.Commands.DeleteServiceCommand,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Services.Handlers.GetServiceByIdQueryHandler">
+            <summary>
+            Handler for <see cref="T:Tfs.Portfolio.Application.Services.Queries.GetServiceByIdQuery"/>.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Services.Handlers.GetServiceByIdQueryHandler.#ctor(Tfs.Portfolio.Domain.Services.Repositories.IServiceRepository,AutoMapper.IMapper)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Application.Services.Handlers.GetServiceByIdQueryHandler"/> class.
+            </summary>
+            <param name="serviceRepository">The service repository.</param>
+            <param name="mapper">The mapper.</param>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Services.Handlers.GetServiceByIdQueryHandler.HandleAsync(Tfs.Portfolio.Application.Services.Queries.GetServiceByIdQuery,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Services.Handlers.GetServicesQueryHandler">
+            <summary>
+            Handler for <see cref="T:Tfs.Portfolio.Application.Services.Queries.GetServicesQuery"/>.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Services.Handlers.GetServicesQueryHandler.#ctor(Tfs.Portfolio.Domain.Services.Repositories.IServiceRepository,AutoMapper.IMapper)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Application.Services.Handlers.GetServicesQueryHandler"/> class.
+            </summary>
+            <param name="serviceRepository">The service repository.</param>
+            <param name="mapper">The mapper.</param>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Services.Handlers.GetServicesQueryHandler.HandleAsync(Tfs.Portfolio.Application.Services.Queries.GetServicesQuery,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Services.Handlers.GetActiveServicesQueryHandler">
+            <summary>
+            Handler for <see cref="T:Tfs.Portfolio.Application.Services.Queries.GetActiveServicesQuery"/>.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Services.Handlers.GetActiveServicesQueryHandler.#ctor(Tfs.Portfolio.Domain.Services.Repositories.IServiceRepository,AutoMapper.IMapper)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Application.Services.Handlers.GetActiveServicesQueryHandler"/> class.
+            </summary>
+            <param name="serviceRepository">The service repository.</param>
+            <param name="mapper">The mapper.</param>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Services.Handlers.GetActiveServicesQueryHandler.HandleAsync(Tfs.Portfolio.Application.Services.Queries.GetActiveServicesQuery,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Services.Handlers.GetServicesByCategoryQueryHandler">
+            <summary>
+            Handler for <see cref="T:Tfs.Portfolio.Application.Services.Queries.GetServicesByCategoryQuery"/>.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Services.Handlers.GetServicesByCategoryQueryHandler.#ctor(Tfs.Portfolio.Domain.Services.Repositories.IServiceRepository,AutoMapper.IMapper)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Application.Services.Handlers.GetServicesByCategoryQueryHandler"/> class.
+            </summary>
+            <param name="serviceRepository">The service repository.</param>
+            <param name="mapper">The mapper.</param>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Services.Handlers.GetServicesByCategoryQueryHandler.HandleAsync(Tfs.Portfolio.Application.Services.Queries.GetServicesByCategoryQuery,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Services.Mapping.ServiceMappingProfile">
+            <summary>
+            AutoMapper profile for service mappings.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Services.Mapping.ServiceMappingProfile.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Application.Services.Mapping.ServiceMappingProfile"/> class.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Services.Queries.GetServiceByIdQuery">
+            <summary>
+            Query to get a service by its identifier.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Services.Queries.GetServiceByIdQuery.#ctor(System.Guid)">
+            <summary>
+            Query to get a service by its identifier.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Services.Queries.GetServicesQuery">
+            <summary>
+            Query to get all services.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Services.Queries.GetActiveServicesQuery">
+            <summary>
+            Query to get all active services.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Services.Queries.GetServicesByCategoryQuery">
+            <summary>
+            Query to get services by category.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Services.Queries.GetServicesByCategoryQuery.#ctor(Tfs.Portfolio.Domain.Services.Entities.ServiceCategory)">
+            <summary>
+            Query to get services by category.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Services.Validators.CreateServiceCommandValidator">
+            <summary>
+            Validator for <see cref="T:Tfs.Portfolio.Application.Services.Commands.CreateServiceCommand"/>.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Services.Validators.CreateServiceCommandValidator.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Application.Services.Validators.CreateServiceCommandValidator"/> class.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Services.Validators.UpdateServiceCommandValidator">
+            <summary>
+            Validator for <see cref="T:Tfs.Portfolio.Application.Services.Commands.UpdateServiceCommand"/>.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Services.Validators.UpdateServiceCommandValidator.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Application.Services.Validators.UpdateServiceCommandValidator"/> class.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Services.Validators.GetServiceByIdQueryValidator">
+            <summary>
+            Validator for <see cref="T:Tfs.Portfolio.Application.Services.Queries.GetServiceByIdQuery"/>.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Services.Validators.GetServiceByIdQueryValidator.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Application.Services.Validators.GetServiceByIdQueryValidator"/> class.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Application.Services.Validators.GetServicesByCategoryQueryValidator">
+            <summary>
+            Validator for <see cref="T:Tfs.Portfolio.Application.Services.Queries.GetServicesByCategoryQuery"/>.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Application.Services.Validators.GetServicesByCategoryQueryValidator.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Application.Services.Validators.GetServicesByCategoryQueryValidator"/> class.
+            </summary>
+        </member>
+    </members>
+</doc>

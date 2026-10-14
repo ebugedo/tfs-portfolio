@@ -1,0 +1,1056 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Tfs.Portfolio.IntegrationTests</name>
+    </assembly>
+    <members>
+        <member name="T:Tfs.Portfolio.IntegrationTests.Api.ClientsApiTests">
+            <summary>
+            Integration tests for the Clients API endpoints.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.ClientsApiTests.GetClients_WhenEmpty_ReturnsEmptyArray">
+            <summary>
+            Tests that GET /api/v1/clients returns 200 with empty array initially.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.ClientsApiTests.GetActiveClients_WhenEmpty_ReturnsEmptyArray">
+            <summary>
+            Tests that GET /api/v1/clients/active returns 200 with empty array initially.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.ClientsApiTests.CreateClient_WithValidBody_ReturnsCreatedWithLocationAndDto">
+            <summary>
+            Tests that POST /api/v1/clients with valid body returns 201 with Location header and ClientDto.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.ClientsApiTests.CreateClient_WithMinimalBody_ReturnsCreated">
+            <summary>
+            Tests that POST /api/v1/clients with minimal valid body returns 201.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.ClientsApiTests.GetClientById_WhenExists_ReturnsClientDto">
+            <summary>
+            Tests that GET /api/v1/clients/{id} returns 200 with ClientDto.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.ClientsApiTests.UpdateClient_WhenExists_ReturnsNoContent">
+            <summary>
+            Tests that PUT /api/v1/clients/{id} returns 204.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.ClientsApiTests.UpdateClient_WithIsActive_UpdatesStatus">
+            <summary>
+            Tests that PUT /api/v1/clients/{id} with IsActive updates the status.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.ClientsApiTests.DeactivateClient_WhenExists_ReturnsNoContent">
+            <summary>
+            Tests that PUT /api/v1/clients/{id}/deactivate returns 204.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.ClientsApiTests.DeleteClient_WhenExists_ReturnsNoContent">
+            <summary>
+            Tests that DELETE /api/v1/clients/{id} returns 204.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.ClientsApiTests.CreateClient_WithInvalidBody_ReturnsBadRequestWithProblemDetails">
+            <summary>
+            Tests that POST /api/v1/clients with invalid body returns 400 ProblemDetails.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.ClientsApiTests.CreateClient_WithInvalidEmail_ReturnsBadRequestWithProblemDetails">
+            <summary>
+            Tests that POST /api/v1/clients with invalid email returns 400 ProblemDetails.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.ClientsApiTests.GetClientById_WhenNotFound_ReturnsNotFoundWithProblemDetails">
+            <summary>
+            Tests that GET /api/v1/clients/{nonexistent} returns 404 ProblemDetails.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.ClientsApiTests.UpdateClient_WithMismatchedId_ReturnsBadRequest">
+            <summary>
+            Tests that PUT /api/v1/clients/{id} with mismatched ID returns 400.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.ClientsApiTests.DeactivateClient_WhenNotFound_ReturnsNotFound">
+            <summary>
+            Tests that PUT /api/v1/clients/{id}/deactivate for non-existent client returns 404.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.ClientsApiTests.DeleteClient_WhenNotFound_ReturnsNotFound">
+            <summary>
+            Tests that DELETE /api/v1/clients/{nonexistent} returns 404.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.ClientsApiTests.GetClients_WhenMultipleExist_ReturnsAll">
+            <summary>
+            Tests that GET /api/v1/clients returns all clients.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.ClientsApiTests.GetActiveClients_ReturnsOnlyActiveClients">
+            <summary>
+            Tests that GET /api/v1/clients/active returns only active clients.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.IntegrationTests.Api.CompanyProfileApiTests">
+            <summary>
+            Integration tests for the CompanyProfile API endpoints.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.CompanyProfileApiTests.GetCompanyProfile_WhenNotCreated_ReturnsNotFound">
+            <summary>
+            Tests that GET /api/v1/company-profile returns 404 when not created.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.CompanyProfileApiTests.UpdateCompanyProfile_WhenNotCreated_ReturnsNotFound">
+            <summary>
+            Tests that PUT /api/v1/company-profile returns 404 when profile doesn't exist.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.CompanyProfileApiTests.UpdateCompanyProfile_WithInvalidBody_ReturnsBadRequestWithProblemDetails">
+            <summary>
+            Tests that PUT /api/v1/company-profile with invalid body returns 400 ProblemDetails.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.CompanyProfileApiTests.UpdateCompanyProfile_WithInvalidEmail_ReturnsBadRequestWithProblemDetails">
+            <summary>
+            Tests that PUT /api/v1/company-profile with invalid email returns 400 ProblemDetails.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.CompanyProfileApiTests.UpdateCompanyProfile_WithValidBody_AfterCreation_ReturnsOkWithDto">
+            <summary>
+            Tests that PUT /api/v1/company-profile with valid body creates and returns 200 with CompanyProfileDto.
+            Note: Since CompanyProfile is a singleton created via domain logic, we test update which also creates if not exists.
+            However, the current implementation returns 404 if not exists, so this test verifies the behavior.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.CompanyProfileApiTests.GetCompanyProfile_AfterCreation_ReturnsCompanyProfileDto">
+            <summary>
+            Tests that GET /api/v1/company-profile returns 200 with CompanyProfileDto after creation.
+            This test would pass once a CompanyProfile is created (e.g., via database seeding or domain event).
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.IntegrationTests.Api.ProblemDetailsDto">
+            <summary>
+            ProblemDetails DTO for deserializing error responses.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.ProblemDetailsDto.#ctor(System.Int32,System.String,System.String,System.String)">
+            <summary>
+            ProblemDetails DTO for deserializing error responses.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.IntegrationTests.Api.ProjectsApiTests">
+            <summary>
+            Integration tests for the Projects API endpoints.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.ProjectsApiTests.GetProjects_WhenEmpty_ReturnsEmptyArray">
+            <summary>
+            Tests that GET /api/v1/projects returns 200 with empty array initially.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.ProjectsApiTests.CreateProject_WithValidBody_ReturnsCreatedWithLocationAndDto">
+            <summary>
+            Tests that POST /api/v1/projects with valid body returns 201 with Location header and ProjectDto.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.ProjectsApiTests.GetProjectById_WhenExists_ReturnsProjectDto">
+            <summary>
+            Tests that GET /api/v1/projects/{id} returns 200 with ProjectDto.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.ProjectsApiTests.UpdateProject_WhenExists_ReturnsNoContent">
+            <summary>
+            Tests that PUT /api/v1/projects/{id} returns 204.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.ProjectsApiTests.DeleteProject_WhenExists_ReturnsNoContent">
+            <summary>
+            Tests that DELETE /api/v1/projects/{id} returns 204.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.ProjectsApiTests.CreateProject_WithInvalidBody_ReturnsBadRequestWithProblemDetails">
+            <summary>
+            Tests that POST /api/v1/projects with invalid body returns 400 ProblemDetails.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.ProjectsApiTests.GetProjectById_WhenNotFound_ReturnsNotFoundWithProblemDetails">
+            <summary>
+            Tests that GET /api/v1/projects/{nonexistent} returns 404 ProblemDetails.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.ProjectsApiTests.UpdateProject_WithMismatchedId_ReturnsBadRequest">
+            <summary>
+            Tests that PUT /api/v1/projects/{id} with mismatched ID returns 400.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.ProjectsApiTests.GetProjects_WhenMultipleExist_ReturnsAll">
+            <summary>
+            Tests that GET /api/v1/projects returns all projects.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.ProjectsApiTests.GetProjects_WithClientIdFilter_ReturnsFilteredProjects">
+            <summary>
+            Tests that GET /api/v1/projects with clientId filter returns filtered projects.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.ProjectsApiTests.GetProjects_WithSectorIdFilter_ReturnsFilteredProjects">
+            <summary>
+            Tests that GET /api/v1/projects with sectorId filter returns filtered projects.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.ProjectsApiTests.GetProjects_WithTechnologyFilter_ReturnsFilteredProjects">
+            <summary>
+            Tests that GET /api/v1/projects with technology filter returns filtered projects.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.ProjectsApiTests.GetProjects_WithStatusFilter_ReturnsFilteredProjects">
+            <summary>
+            Tests that GET /api/v1/projects with status filter returns filtered projects.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.ProjectsApiTests.GetProjects_WithMultipleFilters_ReturnsProjectsMatchingAllFilters">
+            <summary>
+            Tests that GET /api/v1/projects with multiple filters returns projects matching all filters.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.ProjectsApiTests.ChangeProjectStatus_ValidTransition_ReturnsNoContent">
+            <summary>
+            Tests that PATCH /api/v1/projects/{id}/status changes project status successfully.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.ProjectsApiTests.ChangeProjectStatus_InvalidTransition_ReturnsBadRequest">
+            <summary>
+            Tests that PATCH /api/v1/projects/{id}/status with invalid transition returns 400.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.ProjectsApiTests.ChangeProjectStatus_WithMismatchedId_ReturnsBadRequest">
+            <summary>
+            Tests that PATCH /api/v1/projects/{id}/status with mismatched ID returns 400.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.ProjectsApiTests.ChangeProjectStatus_WhenNotFound_ReturnsNotFound">
+            <summary>
+            Tests that PATCH /api/v1/projects/{nonexistent}/status returns 404.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.ProjectsApiTests.AddProjectService_WhenValid_ReturnsNoContent">
+            <summary>
+            Tests that POST /api/v1/projects/{id}/services/{serviceId} associates a service with a project.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.ProjectsApiTests.AddProjectService_WhenProjectNotFound_ReturnsNotFound">
+            <summary>
+            Tests that POST /api/v1/projects/{id}/services/{serviceId} with non-existent project returns 404.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.ProjectsApiTests.AddProjectService_WhenServiceNotFound_ReturnsNotFound">
+            <summary>
+            Tests that POST /api/v1/projects/{id}/services/{serviceId} with non-existent service returns 404.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.ProjectsApiTests.RemoveProjectService_WhenValid_ReturnsNoContent">
+            <summary>
+            Tests that DELETE /api/v1/projects/{id}/services/{serviceId} removes a service association.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.ProjectsApiTests.RemoveProjectService_WhenProjectNotFound_ReturnsNotFound">
+            <summary>
+            Tests that DELETE /api/v1/projects/{id}/services/{serviceId} with non-existent project returns 404.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.ProjectsApiTests.RemoveProjectService_WhenServiceNotFound_ReturnsNotFound">
+            <summary>
+            Tests that DELETE /api/v1/projects/{id}/services/{serviceId} with non-existent service returns 404.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.ProjectsApiTests.ProjectServices_MultipleAssociations_WorkCorrectly">
+            <summary>
+            Tests that multiple services can be associated with a project.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.ProjectsApiTests.CreateProject_WithNonExistentClient_ReturnsNotFound">
+            <summary>
+            Tests that creating a project with non-existent client returns 404.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.ProjectsApiTests.CreateProject_WithNonExistentSector_ReturnsNotFound">
+            <summary>
+            Tests that creating a project with non-existent sector returns 404.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.IntegrationTests.Api.SectorsApiTests">
+            <summary>
+            Integration tests for the Sectors API endpoints.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.SectorsApiTests.GetSectors_WhenEmpty_ReturnsEmptyArray">
+            <summary>
+            Tests that GET /api/v1/sectors returns 200 with empty array initially.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.SectorsApiTests.GetActiveSectors_WhenEmpty_ReturnsEmptyArray">
+            <summary>
+            Tests that GET /api/v1/sectors/active returns 200 with empty array initially.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.SectorsApiTests.CreateSector_WithValidBody_ReturnsCreatedWithLocationAndDto">
+            <summary>
+            Tests that POST /api/v1/sectors with valid body returns 201 with Location header and SectorDto.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.SectorsApiTests.CreateSector_WithMinimalBody_ReturnsCreated">
+            <summary>
+            Tests that POST /api/v1/sectors with minimal valid body returns 201.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.SectorsApiTests.GetSectorById_WhenExists_ReturnsSectorDto">
+            <summary>
+            Tests that GET /api/v1/sectors/{id} returns 200 with SectorDto.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.SectorsApiTests.UpdateSector_WhenExists_ReturnsNoContent">
+            <summary>
+            Tests that PUT /api/v1/sectors/{id} returns 204.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.SectorsApiTests.UpdateSector_WithIsActive_UpdatesStatus">
+            <summary>
+            Tests that PUT /api/v1/sectors/{id} with IsActive updates the status.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.SectorsApiTests.DeleteSector_WhenExists_ReturnsNoContent">
+            <summary>
+            Tests that DELETE /api/v1/sectors/{id} returns 204.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.SectorsApiTests.CreateSector_WithInvalidBody_ReturnsBadRequestWithProblemDetails">
+            <summary>
+            Tests that POST /api/v1/sectors with invalid body returns 400 ProblemDetails.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.SectorsApiTests.CreateSector_WithNameTooLong_ReturnsBadRequestWithProblemDetails">
+            <summary>
+            Tests that POST /api/v1/sectors with name exceeding max length returns 400 ProblemDetails.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.SectorsApiTests.GetSectorById_WhenNotFound_ReturnsNotFoundWithProblemDetails">
+            <summary>
+            Tests that GET /api/v1/sectors/{nonexistent} returns 404 ProblemDetails.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.SectorsApiTests.UpdateSector_WithMismatchedId_ReturnsBadRequest">
+            <summary>
+            Tests that PUT /api/v1/sectors/{id} with mismatched ID returns 400.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.SectorsApiTests.UpdateSector_WhenNotFound_ReturnsNotFound">
+            <summary>
+            Tests that PUT /api/v1/sectors/{id} for non-existent sector returns 404.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.SectorsApiTests.DeleteSector_WhenNotFound_ReturnsNotFound">
+            <summary>
+            Tests that DELETE /api/v1/sectors/{nonexistent} returns 404.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.SectorsApiTests.GetSectors_WhenMultipleExist_ReturnsAll">
+            <summary>
+            Tests that GET /api/v1/sectors returns all sectors.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.SectorsApiTests.GetActiveSectors_ReturnsOnlyActiveSectors">
+            <summary>
+            Tests that GET /api/v1/sectors/active returns only active sectors.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.IntegrationTests.Api.ServicesApiTests">
+            <summary>
+            Integration tests for the Services API endpoints.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.ServicesApiTests.GetServices_WhenEmpty_ReturnsEmptyArray">
+            <summary>
+            Tests that GET /api/v1/services returns 200 with empty array initially.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.ServicesApiTests.GetActiveServices_WhenEmpty_ReturnsEmptyArray">
+            <summary>
+            Tests that GET /api/v1/services/active returns 200 with empty array initially.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.ServicesApiTests.GetServicesByCategory_WhenEmpty_ReturnsEmptyArray">
+            <summary>
+            Tests that GET /api/v1/services/category/{category} returns 200 with empty array initially.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.ServicesApiTests.CreateService_WithValidBody_ReturnsCreatedWithLocationAndDto">
+            <summary>
+            Tests that POST /api/v1/services with valid body returns 201 with Location header and ServiceDto.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.ServicesApiTests.CreateService_WithMinimalBody_ReturnsCreated">
+            <summary>
+            Tests that POST /api/v1/services with minimal valid body returns 201.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.ServicesApiTests.GetServiceById_WhenExists_ReturnsServiceDto">
+            <summary>
+            Tests that GET /api/v1/services/{id} returns 200 with ServiceDto.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.ServicesApiTests.UpdateService_WhenExists_ReturnsNoContent">
+            <summary>
+            Tests that PUT /api/v1/services/{id} returns 204.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.ServicesApiTests.DeleteService_WhenExists_ReturnsNoContent">
+            <summary>
+            Tests that DELETE /api/v1/services/{id} returns 204.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.ServicesApiTests.CreateService_WithInvalidBody_ReturnsBadRequestWithProblemDetails">
+            <summary>
+            Tests that POST /api/v1/services with invalid body returns 400 ProblemDetails.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.ServicesApiTests.GetServiceById_WhenNotFound_ReturnsNotFoundWithProblemDetails">
+            <summary>
+            Tests that GET /api/v1/services/{nonexistent} returns 404 ProblemDetails.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.ServicesApiTests.UpdateService_WithMismatchedId_ReturnsBadRequest">
+            <summary>
+            Tests that PUT /api/v1/services/{id} with mismatched ID returns 400.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.ServicesApiTests.UpdateService_WhenNotFound_ReturnsNotFound">
+            <summary>
+            Tests that PUT /api/v1/services/{id} for non-existent service returns 404.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.ServicesApiTests.DeleteService_WhenNotFound_ReturnsNotFound">
+            <summary>
+            Tests that DELETE /api/v1/services/{nonexistent} returns 404.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.ServicesApiTests.GetServices_WhenMultipleExist_ReturnsAll">
+            <summary>
+            Tests that GET /api/v1/services returns all services.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.ServicesApiTests.GetActiveServices_ReturnsOnlyActiveServices">
+            <summary>
+            Tests that GET /api/v1/services/active returns only active services.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Api.ServicesApiTests.GetServicesByCategory_ReturnsFilteredServices">
+            <summary>
+            Tests that GET /api/v1/services/category/{category} returns services filtered by category.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.IntegrationTests.Common.HttpClientExtensions">
+            <summary>
+            Extension methods for HttpClient using Newtonsoft.Json for serialization.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Common.HttpClientExtensions.PostAsJsonNewtonsoftAsync``1(System.Net.Http.HttpClient,System.String,``0)">
+            <summary>
+            Sends a POST request with JSON content using Newtonsoft.Json.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Common.HttpClientExtensions.PostAsJsonNewtonsoftAsync``1(System.Net.Http.HttpClient,System.Uri,``0)">
+            <summary>
+            Sends a POST request with JSON content using Newtonsoft.Json.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Common.HttpClientExtensions.PutAsJsonNewtonsoftAsync``1(System.Net.Http.HttpClient,System.String,``0)">
+            <summary>
+            Sends a PUT request with JSON content using Newtonsoft.Json.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Common.HttpClientExtensions.PutAsJsonNewtonsoftAsync``1(System.Net.Http.HttpClient,System.Uri,``0)">
+            <summary>
+            Sends a PUT request with JSON content using Newtonsoft.Json.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Common.HttpClientExtensions.PatchAsJsonNewtonsoftAsync``1(System.Net.Http.HttpClient,System.String,``0)">
+            <summary>
+            Sends a PATCH request with JSON content using Newtonsoft.Json.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Common.HttpClientExtensions.PatchAsJsonNewtonsoftAsync``1(System.Net.Http.HttpClient,System.Uri,``0)">
+            <summary>
+            Sends a PATCH request with JSON content using Newtonsoft.Json.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Common.HttpClientExtensions.ReadFromJsonNewtonsoftAsync``1(System.Net.Http.HttpContent)">
+            <summary>
+            Reads the response content as JSON using Newtonsoft.Json.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Common.HttpClientExtensions.ReadFromJsonAsync``1(System.Net.Http.HttpContent)">
+            <summary>
+            Reads the response content as JSON using System.Text.Json (for minimal APIs that use System.Text.Json).
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.IntegrationTests.Common.ProblemDetailsDto">
+            <summary>
+            ProblemDetails DTO for deserializing error responses.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Common.ProblemDetailsDto.#ctor(System.Int32,System.String,System.String,System.String)">
+            <summary>
+            ProblemDetails DTO for deserializing error responses.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.IntegrationTests.Common.IntegrationTestFakers">
+            <summary>
+            Bogus fakers for generating test data in integration tests.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Common.IntegrationTestFakers.GenerateCreateClientCommand">
+            <summary>
+            Generates a valid CreateClientCommand.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Common.IntegrationTestFakers.GenerateCreateSectorCommand">
+            <summary>
+            Generates a valid CreateSectorCommand.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Common.IntegrationTestFakers.GenerateCreateServiceCommand">
+            <summary>
+            Generates a valid CreateServiceCommand.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Common.IntegrationTestFakers.GenerateCreateProjectCommand(System.Guid,System.Guid)">
+            <summary>
+            Generates a valid CreateProjectCommand with specified client and sector IDs.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.IntegrationTests.CustomWebApplicationFactory">
+            <summary>
+            Custom WebApplicationFactory for integration tests.
+            Uses Testcontainers PostgreSQL for isolated test database.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.CustomWebApplicationFactory.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.IntegrationTests.CustomWebApplicationFactory"/> class.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.IntegrationTests.CustomWebApplicationFactory.ConnectionString">
+            <summary>
+            Gets the connection string for the test database.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.CustomWebApplicationFactory.GetDataSource">
+            <summary>
+            Gets or creates the Npgsql data source with dynamic JSON enabled.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.CustomWebApplicationFactory.ConfigureWebHost(Microsoft.AspNetCore.Hosting.IWebHostBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.CustomWebApplicationFactory.InitializeAsync">
+            <inheritdoc />
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.CustomWebApplicationFactory.ApplyMigrationsAsync">
+            <summary>
+            Applies EF Core migrations to the test database.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.CustomWebApplicationFactory.InitializeRespawnerAsync">
+            <summary>
+            Initializes Respawn for database reset.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.CustomWebApplicationFactory.ResetDatabaseAsync">
+            <summary>
+            Resets the database to a clean state.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.CustomWebApplicationFactory.DisposeAsync">
+            <inheritdoc />
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.CustomWebApplicationFactory.CreateScope">
+            <summary>
+            Creates a new scope for accessing scoped services.
+            </summary>
+            <returns>A service scope.</returns>
+        </member>
+        <member name="T:Tfs.Portfolio.IntegrationTests.IntegrationTestBase">
+            <summary>
+            Base class for integration tests.
+            Provides common setup and teardown for integration tests.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.IntegrationTestBase.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.IntegrationTests.IntegrationTestBase"/> class.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.IntegrationTests.IntegrationTestBase.Client">
+            <summary>
+            Gets the HTTP client for making API requests.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.IntegrationTests.IntegrationTestBase.DbContext">
+            <summary>
+            Gets the application database context.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.IntegrationTests.IntegrationTestBase.ProjectRepository">
+            <summary>
+            Gets the project repository.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.IntegrationTests.IntegrationTestBase.ClientRepository">
+            <summary>
+            Gets the client repository.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.IntegrationTests.IntegrationTestBase.SectorRepository">
+            <summary>
+            Gets the sector repository.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.IntegrationTests.IntegrationTestBase.ServiceRepository">
+            <summary>
+            Gets the service repository.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.IntegrationTests.IntegrationTestBase.CompanyProfileRepository">
+            <summary>
+            Gets the company profile repository.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.IntegrationTests.IntegrationTestBase.UnitOfWork">
+            <summary>
+            Gets the unit of work.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.IntegrationTestBase.InitializeAsync">
+            <inheritdoc />
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.IntegrationTestBase.CreateTestClientAsync(System.String,System.String)">
+            <summary>
+            Creates a test client via API and returns its ID.
+            </summary>
+            <param name="name">The client name.</param>
+            <param name="email">The client email.</param>
+            <returns>The created client's ID.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.IntegrationTestBase.CreateTestSectorAsync(System.String,System.String)">
+            <summary>
+            Creates a test sector via API and returns its ID.
+            </summary>
+            <param name="name">The sector name.</param>
+            <param name="description">The sector description.</param>
+            <returns>The created sector's ID.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.IntegrationTestBase.CreateTestServiceAsync(System.String,System.String,Tfs.Portfolio.Domain.Services.Entities.ServiceCategory)">
+            <summary>
+            Creates a test service via API and returns its ID.
+            </summary>
+            <param name="name">The service name.</param>
+            <param name="description">The service description.</param>
+            <param name="category">The service category.</param>
+            <returns>The created service's ID.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.IntegrationTestBase.CreateTestProjectAsync(System.String,System.String,System.Nullable{Tfs.Portfolio.Domain.Common.ValueObjects.YearMonth},System.Int32,System.Nullable{System.Guid},System.Nullable{System.Guid},System.Collections.Generic.IReadOnlyList{System.String})">
+            <summary>
+            Creates a test project via API and returns its ID.
+            </summary>
+            <param name="name">The project name.</param>
+            <param name="description">The project description.</param>
+            <param name="startDate">The project start date.</param>
+            <param name="durationMonths">The project duration in months.</param>
+            <param name="clientId">The client ID (will create one if not provided).</param>
+            <param name="sectorId">The sector ID (will create one if not provided).</param>
+            <param name="technologies">The project technologies.</param>
+            <returns>The created project's ID.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.IntegrationTestBase.Dispose">
+            <inheritdoc />
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.IntegrationTestBase.Dispose(System.Boolean)">
+            <summary>
+            Disposes the resources.
+            </summary>
+            <param name="disposing">Whether disposing managed resources.</param>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.IntegrationTestBase.DisposeAsync">
+            <inheritdoc />
+        </member>
+        <member name="T:Tfs.Portfolio.IntegrationTests.Persistence.ClientRepositoryTests">
+            <summary>
+            Integration tests for the ClientRepository.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Persistence.ClientRepositoryTests.AddAsync_PersistsClientToDatabase">
+            <summary>
+            Tests that AddAsync persists a client to the database.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Persistence.ClientRepositoryTests.GetByIdAsync_ReturnsCorrectEntity">
+            <summary>
+            Tests that GetByIdAsync returns the correct entity.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Persistence.ClientRepositoryTests.GetByIdAsync_WhenNotFound_ReturnsNull">
+            <summary>
+            Tests that GetByIdAsync returns null for non-existent ID.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Persistence.ClientRepositoryTests.GetAllAsync_ReturnsAllClients">
+            <summary>
+            Tests that GetAllAsync returns all clients.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Persistence.ClientRepositoryTests.GetActiveAsync_ReturnsActiveClients">
+            <summary>
+            Tests that GetActiveAsync returns all active clients.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Persistence.ClientRepositoryTests.Update_UpdatesExistingClient">
+            <summary>
+            Tests that Update updates an existing client.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Persistence.ClientRepositoryTests.Delete_RemovesClient">
+            <summary>
+            Tests that Delete removes a client.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Persistence.ClientRepositoryTests.UnitOfWork_SaveChangesAsync_CommitsTransaction">
+            <summary>
+            Tests that UnitOfWork commits the transaction.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Persistence.ClientRepositoryTests.UnitOfWork_MultipleOperations_AreAtomic">
+            <summary>
+            Tests that multiple operations in a single transaction are atomic.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Persistence.ClientRepositoryTests.AddAsync_WithNonNullLogoUrl_PersistsAndLoadsCorrectly">
+            <summary>
+            Tests that Client with non-null LogoUrl persists and loads correctly.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Persistence.ClientRepositoryTests.AddAsync_WithNullLogoUrl_PersistsAndLoadsCorrectly">
+            <summary>
+            Tests that Client with null LogoUrl persists and loads correctly.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.IntegrationTests.Persistence.CompanyProfileRepositoryTests">
+            <summary>
+            Integration tests for the CompanyProfileRepository.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Persistence.CompanyProfileRepositoryTests.AddAsync_PersistsCompanyProfileToDatabase">
+            <summary>
+            Tests that AddAsync persists a company profile to the database.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Persistence.CompanyProfileRepositoryTests.GetAsync_WhenExists_ReturnsCompanyProfile">
+            <summary>
+            Tests that GetAsync returns the company profile when it exists.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Persistence.CompanyProfileRepositoryTests.GetAsync_WhenNotExists_ReturnsNull">
+            <summary>
+            Tests that GetAsync returns null when no company profile exists.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Persistence.CompanyProfileRepositoryTests.AddAsync_WhenAlreadyExists_ThrowsCompanyProfileAlreadyExistsException">
+            <summary>
+            Tests that AddAsync throws when a company profile already exists (singleton constraint).
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Persistence.CompanyProfileRepositoryTests.Update_UpdatesExistingCompanyProfile">
+            <summary>
+            Tests that Update updates an existing company profile.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Persistence.CompanyProfileRepositoryTests.Delete_RemovesCompanyProfile">
+            <summary>
+            Tests that Delete removes a company profile.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Persistence.CompanyProfileRepositoryTests.UnitOfWork_SaveChangesAsync_CommitsTransaction">
+            <summary>
+            Tests that UnitOfWork commits the transaction.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Persistence.CompanyProfileRepositoryTests.SingletonConstraint_OnlyOneProfileAllowed">
+            <summary>
+            Tests that only one company profile can exist (singleton at database level).
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Persistence.CompanyProfileRepositoryTests.AddAsync_WithNullUrls_PersistsAndLoadsCorrectly">
+            <summary>
+            Tests that CompanyProfile with null TfsWebUrl and LogoUrl persists and loads correctly.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Persistence.CompanyProfileRepositoryTests.AddAsync_WithNonNullUrls_PersistsAndLoadsCorrectly">
+            <summary>
+            Tests that CompanyProfile with non-null TfsWebUrl and LogoUrl persists and loads correctly.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.IntegrationTests.Persistence.ExtendedProjectRepositoryTests">
+            <summary>
+            Integration tests for the extended ProjectRepository query methods.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Persistence.ExtendedProjectRepositoryTests.CreateTestClientAsync(System.String,System.String)">
+            <summary>
+            Creates a test client via repository and returns its ID.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Persistence.ExtendedProjectRepositoryTests.CreateTestSectorAsync(System.String,System.String)">
+            <summary>
+            Creates a test sector via repository and returns its ID.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Persistence.ExtendedProjectRepositoryTests.GetByClientIdAsync_ReturnsProjectsForClient">
+            <summary>
+            Tests that GetByClientIdAsync returns projects for a specific client.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Persistence.ExtendedProjectRepositoryTests.GetByClientIdAsync_WhenNoProjects_ReturnsEmptyList">
+            <summary>
+            Tests that GetByClientIdAsync returns empty list when client has no projects.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Persistence.ExtendedProjectRepositoryTests.GetBySectorIdAsync_ReturnsProjectsForSector">
+            <summary>
+            Tests that GetBySectorIdAsync returns projects for a specific sector.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Persistence.ExtendedProjectRepositoryTests.GetBySectorIdAsync_WhenNoProjects_ReturnsEmptyList">
+            <summary>
+            Tests that GetBySectorIdAsync returns empty list when sector has no projects.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Persistence.ExtendedProjectRepositoryTests.GetByTechnologyAsync_ReturnsProjectsWithTechnology">
+            <summary>
+            Tests that GetByTechnologyAsync returns projects containing a specific technology.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Persistence.ExtendedProjectRepositoryTests.GetByTechnologyAsync_IsCaseInsensitive">
+            <summary>
+            Tests that GetByTechnologyAsync is case-insensitive.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Persistence.ExtendedProjectRepositoryTests.GetByTechnologyAsync_WhenNoMatch_ReturnsEmptyList">
+            <summary>
+            Tests that GetByTechnologyAsync returns empty list when no projects have the technology.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Persistence.ExtendedProjectRepositoryTests.GetByStatusAsync_ReturnsProjectsWithStatus">
+            <summary>
+            Tests that GetByStatusAsync returns projects with a specific status.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Persistence.ExtendedProjectRepositoryTests.GetByStatusAsync_WhenNoMatch_ReturnsEmptyList">
+            <summary>
+            Tests that GetByStatusAsync returns empty list when no projects have the status.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Persistence.ExtendedProjectRepositoryTests.GetActiveAsync_ReturnsOnlyActiveProjects">
+            <summary>
+            Tests that GetActiveAsync returns only active projects.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Persistence.ExtendedProjectRepositoryTests.GetFilteredAsync_WithClientIdFilter_ReturnsFilteredProjects">
+            <summary>
+            Tests that GetFilteredAsync with clientId filter returns filtered projects.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Persistence.ExtendedProjectRepositoryTests.GetFilteredAsync_WithSectorIdFilter_ReturnsFilteredProjects">
+            <summary>
+            Tests that GetFilteredAsync with sectorId filter returns filtered projects.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Persistence.ExtendedProjectRepositoryTests.GetFilteredAsync_WithTechnologyFilter_ReturnsFilteredProjects">
+            <summary>
+            Tests that GetFilteredAsync with technology filter returns filtered projects.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Persistence.ExtendedProjectRepositoryTests.GetFilteredAsync_WithStatusFilter_ReturnsFilteredProjects">
+            <summary>
+            Tests that GetFilteredAsync with status filter returns filtered projects.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Persistence.ExtendedProjectRepositoryTests.GetFilteredAsync_WithMultipleFilters_ReturnsProjectsMatchingAllFilters">
+            <summary>
+            Tests that GetFilteredAsync with multiple filters returns projects matching all filters.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Persistence.ExtendedProjectRepositoryTests.GetFilteredAsync_WithNoFilters_ReturnsAllProjects">
+            <summary>
+            Tests that GetFilteredAsync with no filters returns all projects.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.IntegrationTests.Persistence.ProjectRepositoryTests">
+            <summary>
+            Integration tests for the ProjectRepository.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Persistence.ProjectRepositoryTests.CreateTestClientAsync(System.String,System.String)">
+            <summary>
+            Creates a test client via repository and returns its ID.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Persistence.ProjectRepositoryTests.CreateTestSectorAsync(System.String,System.String)">
+            <summary>
+            Creates a test sector via repository and returns its ID.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Persistence.ProjectRepositoryTests.AddAsync_PersistsProjectToDatabase">
+            <summary>
+            Tests that AddAsync persists a project to the database.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Persistence.ProjectRepositoryTests.GetByIdAsync_ReturnsCorrectEntity">
+            <summary>
+            Tests that GetByIdAsync returns the correct entity.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Persistence.ProjectRepositoryTests.GetByIdAsync_WhenNotFound_ReturnsNull">
+            <summary>
+            Tests that GetByIdAsync returns null for non-existent ID.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Persistence.ProjectRepositoryTests.GetAllAsync_ReturnsAllProjects">
+            <summary>
+            Tests that GetAllAsync returns all projects.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Persistence.ProjectRepositoryTests.Update_UpdatesExistingProject">
+            <summary>
+            Tests that Update updates an existing project.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Persistence.ProjectRepositoryTests.UnitOfWork_SaveChangesAsync_CommitsTransaction">
+            <summary>
+            Tests that UnitOfWork commits the transaction.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Persistence.ProjectRepositoryTests.UnitOfWork_MultipleOperations_AreAtomic">
+            <summary>
+            Tests that multiple operations in a single transaction are atomic.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.IntegrationTests.Persistence.SectorRepositoryTests">
+            <summary>
+            Integration tests for the SectorRepository.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Persistence.SectorRepositoryTests.AddAsync_PersistsSectorToDatabase">
+            <summary>
+            Tests that AddAsync persists a sector to the database.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Persistence.SectorRepositoryTests.GetByIdAsync_ReturnsCorrectEntity">
+            <summary>
+            Tests that GetByIdAsync returns the correct entity.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Persistence.SectorRepositoryTests.GetByIdAsync_WhenNotFound_ReturnsNull">
+            <summary>
+            Tests that GetByIdAsync returns null for non-existent ID.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Persistence.SectorRepositoryTests.GetAllAsync_ReturnsAllSectors">
+            <summary>
+            Tests that GetAllAsync returns all sectors.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Persistence.SectorRepositoryTests.GetActiveAsync_ReturnsActiveSectors">
+            <summary>
+            Tests that GetActiveAsync returns all active sectors.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Persistence.SectorRepositoryTests.Update_UpdatesExistingSector">
+            <summary>
+            Tests that Update updates an existing sector.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Persistence.SectorRepositoryTests.Delete_RemovesSector">
+            <summary>
+            Tests that Delete removes a sector.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Persistence.SectorRepositoryTests.UnitOfWork_SaveChangesAsync_CommitsTransaction">
+            <summary>
+            Tests that UnitOfWork commits the transaction.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Persistence.SectorRepositoryTests.UnitOfWork_MultipleOperations_AreAtomic">
+            <summary>
+            Tests that multiple operations in a single transaction are atomic.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.IntegrationTests.Persistence.ServiceRepositoryTests">
+            <summary>
+            Integration tests for the ServiceRepository.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Persistence.ServiceRepositoryTests.AddAsync_PersistsServiceToDatabase">
+            <summary>
+            Tests that AddAsync persists a service to the database.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Persistence.ServiceRepositoryTests.GetByIdAsync_ReturnsCorrectEntity">
+            <summary>
+            Tests that GetByIdAsync returns the correct entity.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Persistence.ServiceRepositoryTests.GetByIdAsync_WhenNotFound_ReturnsNull">
+            <summary>
+            Tests that GetByIdAsync returns null for non-existent ID.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Persistence.ServiceRepositoryTests.GetAllAsync_ReturnsAllServices">
+            <summary>
+            Tests that GetAllAsync returns all services.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Persistence.ServiceRepositoryTests.GetActiveAsync_ReturnsActiveServices">
+            <summary>
+            Tests that GetActiveAsync returns all active services.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Persistence.ServiceRepositoryTests.GetByCategoryAsync_ReturnsFilteredServices">
+            <summary>
+            Tests that GetByCategoryAsync returns services filtered by category.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Persistence.ServiceRepositoryTests.Update_UpdatesExistingService">
+            <summary>
+            Tests that Update updates an existing service.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Persistence.ServiceRepositoryTests.Delete_RemovesService">
+            <summary>
+            Tests that Delete removes a service.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Persistence.ServiceRepositoryTests.UnitOfWork_SaveChangesAsync_CommitsTransaction">
+            <summary>
+            Tests that UnitOfWork commits the transaction.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.IntegrationTests.Persistence.ServiceRepositoryTests.UnitOfWork_MultipleOperations_AreAtomic">
+            <summary>
+            Tests that multiple operations in a single transaction are atomic.
+            </summary>
+        </member>
+    </members>
+</doc>
