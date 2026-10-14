@@ -1,0 +1,31 @@
+{
+  "format": 1,
+  "restore": {
+    "D:\\dev\\Tfs\\Portfolio\\tfs-portfolio\\src\\Infrastructure\\Persistence\\Tfs.Portfolio.Infrastructure.Persistence.csproj": {}
+  },
+  "projects": {
+    "D:\\dev\\Tfs\\Portfolio\\tfs-portfolio\\src\\Infrastructure\\Persistence\\Tfs.Portfolio.Infrastructure.Persistence.csproj": {
+      "restore": {
+        "projectUniqueName": "D:\\dev\\Tfs\\Portfolio\\tfs-portfolio\\src\\Infrastructure\\Persistence\\Tfs.Portfolio.Infrastructure.Persistence.csproj",
+        "projectPath": "D:\\dev\\Tfs\\Portfolio\\tfs-portfolio\\src\\Infrastructure\\Persistence\\Tfs.Portfolio.Infrastructure.Persistence.csproj",
+        "packagesPath": "C:\\Users\\ebuge\\.nuget\\packages\\",
+        "outputPath": "D:\\dev\\Tfs\\Portfolio\\tfs-portfolio\\src\\Infrastructure\\Persistence\\obj\\",
+        "projectStyle": "PackageReference",
+        "UsingMicrosoftNETSdk": false,
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\ebuge\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "D:\\dev\\LocalPackagesSource": {},
+          "https://api.nuget.org/v3/index.json": {}
+        }
+      }
+    }
+  }
+}

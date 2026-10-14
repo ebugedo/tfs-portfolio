@@ -1,0 +1,17 @@
+{
+  "version": 2,
+  "dgSpecHash": "T15bMTRrEVo=",
+  "success": false,
+  "projectFilePath": "D:\\dev\\Tfs\\Portfolio\\tfs-portfolio\\src\\Core\\Application\\Tfs.Portfolio.Application.csproj",
+  "expectedPackageFiles": [],
+  "logs": [
+    {
+      "code": "NU1105",
+      "level": "Error",
+      "message": "Unable to read project information for 'Tfs.Portfolio.Application': Invalid framework identifier ''.",
+      "projectPath": "D:\\dev\\Tfs\\Portfolio\\tfs-portfolio\\src\\Core\\Application\\Tfs.Portfolio.Application.csproj",
+      "filePath": "D:\\dev\\Tfs\\Portfolio\\tfs-portfolio\\src\\Core\\Application\\Tfs.Portfolio.Application.csproj",
+      "targetGraphs": []
+    }
+  ]
+}

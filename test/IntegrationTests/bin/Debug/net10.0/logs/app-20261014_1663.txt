@@ -1,0 +1,36 @@
+2026-10-14 19:50:25.369 +02:00 [WRN] Failed to determine the https port for redirect.
+2026-10-14 19:50:25.428 +02:00 [INF] HTTP POST /api/v1/clients responded 201 in 58.6024 ms
+2026-10-14 19:50:25.489 +02:00 [INF] HTTP POST /api/v1/sectors responded 201 in 59.8235 ms
+2026-10-14 19:50:25.529 +02:00 [INF] HTTP POST /api/v1/projects responded 201 in 39.6118 ms
+2026-10-14 19:50:25.538 +02:00 [INF] HTTP PATCH /api/v1/projects/4cd1c5d9-6a69-4ea7-bcd4-49fbe81c80ca/status responded 204 in 8.8141 ms
+2026-10-14 19:50:25.540 +02:00 [ERR] HTTP PATCH /api/v1/projects/4cd1c5d9-6a69-4ea7-bcd4-49fbe81c80ca/status responded 500 in 2.1359 ms
+Tfs.Portfolio.Domain.Projects.Exceptions.InvalidProjectStateException: Invalid status transition from Active to Draft
+   at Tfs.Portfolio.Domain.Projects.Entities.Project.ChangeStatus(ProjectStatus newStatus) in D:\dev\Tfs\Portfolio\tfs-portfolio\src\Core\Domain\Projects\Entities\Project.cs:line 217
+   at Tfs.Portfolio.Application.Projects.Handlers.ChangeProjectStatusCommandHandler.HandleAsync(ChangeProjectStatusCommand command, CancellationToken cancellationToken) in D:\dev\Tfs\Portfolio\tfs-portfolio\src\Core\Application\Projects\Handlers\ProjectCommandHandlers.cs:line 179
+   at Tfs.Portfolio.Api.Controllers.ProjectsController.ChangeProjectStatus(Guid id, ChangeProjectStatusCommand command, ChangeProjectStatusCommandHandler handler, IValidator`1 validator, CancellationToken ct) in D:\dev\Tfs\Portfolio\tfs-portfolio\src\Presentation\WebAPI\Controllers\ProjectsController.cs:line 207
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2026-10-14 19:50:25.541 +02:00 [ERR] An unhandled exception occurred
+Tfs.Portfolio.Domain.Projects.Exceptions.InvalidProjectStateException: Invalid status transition from Active to Draft
+   at Tfs.Portfolio.Domain.Projects.Entities.Project.ChangeStatus(ProjectStatus newStatus) in D:\dev\Tfs\Portfolio\tfs-portfolio\src\Core\Domain\Projects\Entities\Project.cs:line 217
+   at Tfs.Portfolio.Application.Projects.Handlers.ChangeProjectStatusCommandHandler.HandleAsync(ChangeProjectStatusCommand command, CancellationToken cancellationToken) in D:\dev\Tfs\Portfolio\tfs-portfolio\src\Core\Application\Projects\Handlers\ProjectCommandHandlers.cs:line 179
+   at Tfs.Portfolio.Api.Controllers.ProjectsController.ChangeProjectStatus(Guid id, ChangeProjectStatusCommand command, ChangeProjectStatusCommandHandler handler, IValidator`1 validator, CancellationToken ct) in D:\dev\Tfs\Portfolio\tfs-portfolio\src\Presentation\WebAPI\Controllers\ProjectsController.cs:line 207
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at Tfs.Portfolio.Api.Middleware.ErrorHandlingMiddleware.InvokeAsync(HttpContext context) in D:\dev\Tfs\Portfolio\tfs-portfolio\src\Presentation\WebAPI\Middleware\ErrorHandlingMiddleware.cs:line 46

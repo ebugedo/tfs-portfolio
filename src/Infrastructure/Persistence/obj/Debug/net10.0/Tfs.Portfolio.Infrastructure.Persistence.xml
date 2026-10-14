@@ -1,0 +1,300 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Tfs.Portfolio.Infrastructure.Persistence</name>
+    </assembly>
+    <members>
+        <member name="T:Tfs.Portfolio.Infrastructure.Persistence.ApplicationDbContext">
+            <summary>
+            Application database context.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Infrastructure.Persistence.ApplicationDbContext.#ctor(Microsoft.EntityFrameworkCore.DbContextOptions{Tfs.Portfolio.Infrastructure.Persistence.ApplicationDbContext})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Infrastructure.Persistence.ApplicationDbContext"/> class.
+            </summary>
+            <param name="options">The database context options.</param>
+        </member>
+        <member name="P:Tfs.Portfolio.Infrastructure.Persistence.ApplicationDbContext.Clients">
+            <summary>
+            Gets or sets the clients.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Infrastructure.Persistence.ApplicationDbContext.Sectors">
+            <summary>
+            Gets or sets the sectors.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Infrastructure.Persistence.ApplicationDbContext.Services">
+            <summary>
+            Gets or sets the services.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Infrastructure.Persistence.ApplicationDbContext.CompanyProfiles">
+            <summary>
+            Gets or sets the company profiles.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Infrastructure.Persistence.ApplicationDbContext.Projects">
+            <summary>
+            Gets or sets the projects.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Infrastructure.Persistence.ApplicationDbContext.ProjectServices">
+            <summary>
+            Gets or sets the project-service associations.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Infrastructure.Persistence.ApplicationDbContext.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:Tfs.Portfolio.Infrastructure.Persistence.Configurations.ClientConfiguration">
+            <summary>
+            Entity configuration for Client.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Infrastructure.Persistence.Configurations.ClientConfiguration.Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder{Tfs.Portfolio.Domain.Clients.Entities.Client})">
+            <inheritdoc />
+        </member>
+        <member name="T:Tfs.Portfolio.Infrastructure.Persistence.Configurations.CompanyProfileConfiguration">
+            <summary>
+            Entity configuration for CompanyProfile (singleton).
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Infrastructure.Persistence.Configurations.CompanyProfileConfiguration.Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder{Tfs.Portfolio.Domain.CompanyProfile.Entities.CompanyProfileEntity})">
+            <inheritdoc />
+        </member>
+        <member name="T:Tfs.Portfolio.Infrastructure.Persistence.Configurations.ProjectConfiguration">
+            <summary>
+            Entity configuration for Project.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Infrastructure.Persistence.Configurations.ProjectConfiguration.Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder{Tfs.Portfolio.Domain.Projects.Entities.Project})">
+            <inheritdoc />
+        </member>
+        <member name="T:Tfs.Portfolio.Infrastructure.Persistence.Configurations.ProjectServiceConfiguration">
+            <summary>
+            Entity configuration for Project-Service many-to-many relationship.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Infrastructure.Persistence.Configurations.ProjectServiceConfiguration.Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder{Tfs.Portfolio.Infrastructure.Persistence.Entities.ProjectService})">
+            <inheritdoc />
+        </member>
+        <member name="T:Tfs.Portfolio.Infrastructure.Persistence.Configurations.SectorConfiguration">
+            <summary>
+            Entity configuration for Sector.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Infrastructure.Persistence.Configurations.SectorConfiguration.Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder{Tfs.Portfolio.Domain.Sectors.Entities.Sector})">
+            <inheritdoc />
+        </member>
+        <member name="T:Tfs.Portfolio.Infrastructure.Persistence.Configurations.ServiceConfiguration">
+            <summary>
+            Entity configuration for Service.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Infrastructure.Persistence.Configurations.ServiceConfiguration.Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder{Tfs.Portfolio.Domain.Services.Entities.Service})">
+            <inheritdoc />
+        </member>
+        <member name="T:Tfs.Portfolio.Infrastructure.Persistence.Entities.ProjectService">
+            <summary>
+            Join entity for Project-Service many-to-many relationship.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Infrastructure.Persistence.Entities.ProjectService.ProjectId">
+            <summary>
+            Gets the project identifier.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Infrastructure.Persistence.Entities.ProjectService.ServiceId">
+            <summary>
+            Gets the service identifier.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Infrastructure.Persistence.Modules.PersistenceModule">
+            <summary>
+            Autofac module for the Persistence layer.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Infrastructure.Persistence.Modules.PersistenceModule.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Infrastructure.Persistence.Modules.PersistenceModule"/> class.
+            </summary>
+            <param name="configuration">The configuration.</param>
+        </member>
+        <member name="M:Tfs.Portfolio.Infrastructure.Persistence.Modules.PersistenceModule.Load(Autofac.ContainerBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:Tfs.Portfolio.Infrastructure.Persistence.Repositories.ClientRepository">
+            <summary>
+            Repository implementation for clients.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Infrastructure.Persistence.Repositories.ClientRepository.#ctor(Tfs.Portfolio.Infrastructure.Persistence.ApplicationDbContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Infrastructure.Persistence.Repositories.ClientRepository"/> class.
+            </summary>
+            <param name="context">The database context.</param>
+        </member>
+        <member name="M:Tfs.Portfolio.Infrastructure.Persistence.Repositories.ClientRepository.GetByIdAsync(System.Guid,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Tfs.Portfolio.Infrastructure.Persistence.Repositories.ClientRepository.GetAllAsync(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Tfs.Portfolio.Infrastructure.Persistence.Repositories.ClientRepository.GetActiveAsync(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Tfs.Portfolio.Infrastructure.Persistence.Repositories.ClientRepository.AddAsync(Tfs.Portfolio.Domain.Clients.Entities.Client,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Tfs.Portfolio.Infrastructure.Persistence.Repositories.ClientRepository.Update(Tfs.Portfolio.Domain.Clients.Entities.Client)">
+            <inheritdoc />
+        </member>
+        <member name="M:Tfs.Portfolio.Infrastructure.Persistence.Repositories.ClientRepository.Delete(Tfs.Portfolio.Domain.Clients.Entities.Client)">
+            <inheritdoc />
+        </member>
+        <member name="T:Tfs.Portfolio.Infrastructure.Persistence.Repositories.CompanyProfileRepository">
+            <summary>
+            Repository implementation for company profile (singleton).
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Infrastructure.Persistence.Repositories.CompanyProfileRepository.#ctor(Tfs.Portfolio.Infrastructure.Persistence.ApplicationDbContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Infrastructure.Persistence.Repositories.CompanyProfileRepository"/> class.
+            </summary>
+            <param name="context">The database context.</param>
+        </member>
+        <member name="M:Tfs.Portfolio.Infrastructure.Persistence.Repositories.CompanyProfileRepository.GetAsync(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Tfs.Portfolio.Infrastructure.Persistence.Repositories.CompanyProfileRepository.AddAsync(Tfs.Portfolio.Domain.CompanyProfile.Entities.CompanyProfileEntity,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Tfs.Portfolio.Infrastructure.Persistence.Repositories.CompanyProfileRepository.Update(Tfs.Portfolio.Domain.CompanyProfile.Entities.CompanyProfileEntity)">
+            <inheritdoc />
+        </member>
+        <member name="M:Tfs.Portfolio.Infrastructure.Persistence.Repositories.CompanyProfileRepository.Delete(Tfs.Portfolio.Domain.CompanyProfile.Entities.CompanyProfileEntity)">
+            <inheritdoc />
+        </member>
+        <member name="T:Tfs.Portfolio.Infrastructure.Persistence.Repositories.ProjectRepository">
+            <summary>
+            Repository implementation for projects.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Infrastructure.Persistence.Repositories.ProjectRepository.#ctor(Tfs.Portfolio.Infrastructure.Persistence.ApplicationDbContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Infrastructure.Persistence.Repositories.ProjectRepository"/> class.
+            </summary>
+            <param name="context">The database context.</param>
+        </member>
+        <member name="M:Tfs.Portfolio.Infrastructure.Persistence.Repositories.ProjectRepository.GetByIdAsync(System.Guid,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Tfs.Portfolio.Infrastructure.Persistence.Repositories.ProjectRepository.GetAllAsync(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Tfs.Portfolio.Infrastructure.Persistence.Repositories.ProjectRepository.GetActiveAsync(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Tfs.Portfolio.Infrastructure.Persistence.Repositories.ProjectRepository.GetByClientIdAsync(System.Guid,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Tfs.Portfolio.Infrastructure.Persistence.Repositories.ProjectRepository.GetBySectorIdAsync(System.Guid,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Tfs.Portfolio.Infrastructure.Persistence.Repositories.ProjectRepository.GetByTechnologyAsync(System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Tfs.Portfolio.Infrastructure.Persistence.Repositories.ProjectRepository.GetByStatusAsync(Tfs.Portfolio.Domain.Projects.Entities.ProjectStatus,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Tfs.Portfolio.Infrastructure.Persistence.Repositories.ProjectRepository.GetFilteredAsync(System.Nullable{System.Guid},System.Nullable{System.Guid},System.String,System.Nullable{Tfs.Portfolio.Domain.Projects.Entities.ProjectStatus},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Tfs.Portfolio.Infrastructure.Persistence.Repositories.ProjectRepository.AddAsync(Tfs.Portfolio.Domain.Projects.Entities.Project,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Tfs.Portfolio.Infrastructure.Persistence.Repositories.ProjectRepository.Update(Tfs.Portfolio.Domain.Projects.Entities.Project)">
+            <inheritdoc />
+        </member>
+        <member name="M:Tfs.Portfolio.Infrastructure.Persistence.Repositories.ProjectRepository.Delete(Tfs.Portfolio.Domain.Projects.Entities.Project)">
+            <inheritdoc />
+        </member>
+        <member name="T:Tfs.Portfolio.Infrastructure.Persistence.Repositories.SectorRepository">
+            <summary>
+            Repository implementation for sectors.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Infrastructure.Persistence.Repositories.SectorRepository.#ctor(Tfs.Portfolio.Infrastructure.Persistence.ApplicationDbContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Infrastructure.Persistence.Repositories.SectorRepository"/> class.
+            </summary>
+            <param name="context">The database context.</param>
+        </member>
+        <member name="M:Tfs.Portfolio.Infrastructure.Persistence.Repositories.SectorRepository.GetByIdAsync(System.Guid,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Tfs.Portfolio.Infrastructure.Persistence.Repositories.SectorRepository.GetAllAsync(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Tfs.Portfolio.Infrastructure.Persistence.Repositories.SectorRepository.GetActiveAsync(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Tfs.Portfolio.Infrastructure.Persistence.Repositories.SectorRepository.AddAsync(Tfs.Portfolio.Domain.Sectors.Entities.Sector,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Tfs.Portfolio.Infrastructure.Persistence.Repositories.SectorRepository.Update(Tfs.Portfolio.Domain.Sectors.Entities.Sector)">
+            <inheritdoc />
+        </member>
+        <member name="M:Tfs.Portfolio.Infrastructure.Persistence.Repositories.SectorRepository.Delete(Tfs.Portfolio.Domain.Sectors.Entities.Sector)">
+            <inheritdoc />
+        </member>
+        <member name="T:Tfs.Portfolio.Infrastructure.Persistence.Repositories.ServiceRepository">
+            <summary>
+            Repository implementation for services.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Infrastructure.Persistence.Repositories.ServiceRepository.#ctor(Tfs.Portfolio.Infrastructure.Persistence.ApplicationDbContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Infrastructure.Persistence.Repositories.ServiceRepository"/> class.
+            </summary>
+            <param name="context">The database context.</param>
+        </member>
+        <member name="M:Tfs.Portfolio.Infrastructure.Persistence.Repositories.ServiceRepository.GetByIdAsync(System.Guid,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Tfs.Portfolio.Infrastructure.Persistence.Repositories.ServiceRepository.GetAllAsync(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Tfs.Portfolio.Infrastructure.Persistence.Repositories.ServiceRepository.GetActiveAsync(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Tfs.Portfolio.Infrastructure.Persistence.Repositories.ServiceRepository.GetByCategoryAsync(Tfs.Portfolio.Domain.Services.Entities.ServiceCategory,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Tfs.Portfolio.Infrastructure.Persistence.Repositories.ServiceRepository.AddAsync(Tfs.Portfolio.Domain.Services.Entities.Service,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Tfs.Portfolio.Infrastructure.Persistence.Repositories.ServiceRepository.Update(Tfs.Portfolio.Domain.Services.Entities.Service)">
+            <inheritdoc />
+        </member>
+        <member name="M:Tfs.Portfolio.Infrastructure.Persistence.Repositories.ServiceRepository.Delete(Tfs.Portfolio.Domain.Services.Entities.Service)">
+            <inheritdoc />
+        </member>
+        <member name="T:Tfs.Portfolio.Infrastructure.Persistence.UnitOfWork">
+            <summary>
+            Unit of work implementation.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Infrastructure.Persistence.UnitOfWork.#ctor(Tfs.Portfolio.Infrastructure.Persistence.ApplicationDbContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Infrastructure.Persistence.UnitOfWork"/> class.
+            </summary>
+            <param name="context">The database context.</param>
+        </member>
+        <member name="M:Tfs.Portfolio.Infrastructure.Persistence.UnitOfWork.SaveChangesAsync(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+    </members>
+</doc>

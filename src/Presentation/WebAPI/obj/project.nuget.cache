@@ -1,0 +1,17 @@
+{
+  "version": 2,
+  "dgSpecHash": "0rj1EV7Bca8=",
+  "success": false,
+  "projectFilePath": "D:\\dev\\Tfs\\Portfolio\\tfs-portfolio\\src\\Presentation\\WebAPI\\Tfs.Portfolio.Api.csproj",
+  "expectedPackageFiles": [],
+  "logs": [
+    {
+      "code": "NU1105",
+      "level": "Error",
+      "message": "Unable to read project information for 'Tfs.Portfolio.Api': Invalid framework identifier ''.",
+      "projectPath": "D:\\dev\\Tfs\\Portfolio\\tfs-portfolio\\src\\Presentation\\WebAPI\\Tfs.Portfolio.Api.csproj",
+      "filePath": "D:\\dev\\Tfs\\Portfolio\\tfs-portfolio\\src\\Presentation\\WebAPI\\Tfs.Portfolio.Api.csproj",
+      "targetGraphs": []
+    }
+  ]
+}

@@ -1,0 +1,430 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Tfs.Portfolio.Api</name>
+    </assembly>
+    <members>
+        <member name="T:Tfs.Portfolio.Api.Controllers.ClientsController">
+            <summary>
+            Controller for managing clients.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Api.Controllers.ClientsController.GetClients(Tfs.Portfolio.Application.Clients.Handlers.GetClientsQueryHandler,System.Threading.CancellationToken)">
+            <summary>
+            Gets all clients.
+            </summary>
+            <param name="handler">The query handler.</param>
+            <param name="ct">Cancellation token.</param>
+            <returns>List of clients.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Api.Controllers.ClientsController.GetActiveClients(Tfs.Portfolio.Application.Clients.Handlers.GetActiveClientsQueryHandler,System.Threading.CancellationToken)">
+            <summary>
+            Gets all active clients.
+            </summary>
+            <param name="handler">The query handler.</param>
+            <param name="ct">Cancellation token.</param>
+            <returns>List of active clients.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Api.Controllers.ClientsController.GetClientById(System.Guid,Tfs.Portfolio.Application.Clients.Handlers.GetClientByIdQueryHandler,System.Threading.CancellationToken)">
+            <summary>
+            Gets a client by ID.
+            </summary>
+            <param name="id">The client ID.</param>
+            <param name="handler">The query handler.</param>
+            <param name="ct">Cancellation token.</param>
+            <returns>The client if found.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Api.Controllers.ClientsController.CreateClient(Tfs.Portfolio.Application.Clients.Commands.CreateClientCommand,Tfs.Portfolio.Application.Clients.Handlers.CreateClientCommandHandler,AutoMapper.IMapper,Tfs.Portfolio.Domain.Clients.Repositories.IClientRepository,FluentValidation.IValidator{Tfs.Portfolio.Application.Clients.Commands.CreateClientCommand},System.Threading.CancellationToken)">
+            <summary>
+            Creates a new client.
+            </summary>
+            <param name="command">The create client command.</param>
+            <param name="handler">The command handler.</param>
+            <param name="mapper">The mapper.</param>
+            <param name="clientRepository">The client repository.</param>
+            <param name="validator">The validator for the command.</param>
+            <param name="ct">Cancellation token.</param>
+            <returns>The created client.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Api.Controllers.ClientsController.UpdateClient(System.Guid,Tfs.Portfolio.Application.Clients.Commands.UpdateClientCommand,Tfs.Portfolio.Application.Clients.Handlers.UpdateClientCommandHandler,FluentValidation.IValidator{Tfs.Portfolio.Application.Clients.Commands.UpdateClientCommand},System.Threading.CancellationToken)">
+            <summary>
+            Updates an existing client.
+            </summary>
+            <param name="id">The client ID.</param>
+            <param name="command">The update client command.</param>
+            <param name="handler">The command handler.</param>
+            <param name="validator">The validator for the command.</param>
+            <param name="ct">Cancellation token.</param>
+            <returns>No content if successful.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Api.Controllers.ClientsController.DeactivateClient(System.Guid,Tfs.Portfolio.Application.Clients.Handlers.DeactivateClientCommandHandler,System.Threading.CancellationToken)">
+            <summary>
+            Deactivates a client.
+            </summary>
+            <param name="id">The client ID.</param>
+            <param name="handler">The command handler.</param>
+            <param name="ct">Cancellation token.</param>
+            <returns>No content if successful.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Api.Controllers.ClientsController.DeleteClient(System.Guid,Tfs.Portfolio.Application.Clients.Handlers.DeleteClientCommandHandler,System.Threading.CancellationToken)">
+            <summary>
+            Deletes a client.
+            </summary>
+            <param name="id">The client ID.</param>
+            <param name="handler">The command handler.</param>
+            <param name="ct">Cancellation token.</param>
+            <returns>No content if successful.</returns>
+        </member>
+        <member name="T:Tfs.Portfolio.Api.Controllers.CompanyProfileController">
+            <summary>
+            Controller for managing company profile (singleton resource).
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Api.Controllers.CompanyProfileController.GetCompanyProfile(Tfs.Portfolio.Application.CompanyProfile.Handlers.GetCompanyProfileQueryHandler,System.Threading.CancellationToken)">
+            <summary>
+            Gets the company profile.
+            </summary>
+            <param name="handler">The query handler.</param>
+            <param name="ct">Cancellation token.</param>
+            <returns>The company profile if found.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Api.Controllers.CompanyProfileController.UpdateCompanyProfile(Tfs.Portfolio.Application.CompanyProfile.Commands.UpdateCompanyProfileCommand,Tfs.Portfolio.Application.CompanyProfile.Handlers.UpdateCompanyProfileCommandHandler,AutoMapper.IMapper,Tfs.Portfolio.Domain.CompanyProfile.Repositories.ICompanyProfileRepository,FluentValidation.IValidator{Tfs.Portfolio.Application.CompanyProfile.Commands.UpdateCompanyProfileCommand},System.Threading.CancellationToken)">
+            <summary>
+            Creates or updates the company profile.
+            </summary>
+            <param name="command">The update company profile command.</param>
+            <param name="handler">The command handler.</param>
+            <param name="mapper">The mapper.</param>
+            <param name="companyProfileRepository">The company profile repository.</param>
+            <param name="validator">The validator for the command.</param>
+            <param name="ct">Cancellation token.</param>
+            <returns>The updated company profile.</returns>
+        </member>
+        <member name="T:Tfs.Portfolio.Api.Controllers.ProjectsController">
+            <summary>
+            Controller for managing projects.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Api.Controllers.ProjectsController.GetProjects(System.Nullable{System.Guid},System.Nullable{System.Guid},System.String,System.Nullable{Tfs.Portfolio.Domain.Projects.Entities.ProjectStatus},Tfs.Portfolio.Application.Projects.Handlers.GetProjectsQueryHandler,System.Threading.CancellationToken)">
+            <summary>
+            Gets all projects with optional filters.
+            </summary>
+            <param name="clientId">Optional client ID filter.</param>
+            <param name="sectorId">Optional sector ID filter.</param>
+            <param name="technology">Optional technology filter.</param>
+            <param name="status">Optional status filter.</param>
+            <param name="handler">The query handler.</param>
+            <param name="ct">Cancellation token.</param>
+            <returns>List of projects.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Api.Controllers.ProjectsController.GetProjectById(System.Guid,Tfs.Portfolio.Application.Projects.Handlers.GetProjectByIdQueryHandler,System.Threading.CancellationToken)">
+            <summary>
+            Gets a project by ID.
+            </summary>
+            <param name="id">The project ID.</param>
+            <param name="handler">The query handler.</param>
+            <param name="ct">Cancellation token.</param>
+            <returns>The project if found.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Api.Controllers.ProjectsController.CreateProject(Tfs.Portfolio.Application.Projects.Commands.CreateProjectCommand,Tfs.Portfolio.Application.Projects.Handlers.CreateProjectCommandHandler,AutoMapper.IMapper,Tfs.Portfolio.Domain.Projects.Repositories.IProjectRepository,FluentValidation.IValidator{Tfs.Portfolio.Application.Projects.Commands.CreateProjectCommand},System.Threading.CancellationToken)">
+            <summary>
+            Creates a new project.
+            </summary>
+            <param name="command">The create project command.</param>
+            <param name="handler">The command handler.</param>
+            <param name="mapper">The mapper.</param>
+            <param name="projectRepository">The project repository.</param>
+            <param name="validator">The validator for the command.</param>
+            <param name="ct">Cancellation token.</param>
+            <returns>The created project.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Api.Controllers.ProjectsController.UpdateProject(System.Guid,Tfs.Portfolio.Application.Projects.Commands.UpdateProjectCommand,Tfs.Portfolio.Application.Projects.Handlers.UpdateProjectCommandHandler,FluentValidation.IValidator{Tfs.Portfolio.Application.Projects.Commands.UpdateProjectCommand},System.Threading.CancellationToken)">
+            <summary>
+            Updates an existing project.
+            </summary>
+            <param name="id">The project ID.</param>
+            <param name="command">The update project command.</param>
+            <param name="handler">The command handler.</param>
+            <param name="validator">The validator for the command.</param>
+            <param name="ct">Cancellation token.</param>
+            <returns>No content if successful.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Api.Controllers.ProjectsController.ChangeProjectStatus(System.Guid,Tfs.Portfolio.Application.Projects.Commands.ChangeProjectStatusCommand,Tfs.Portfolio.Application.Projects.Handlers.ChangeProjectStatusCommandHandler,FluentValidation.IValidator{Tfs.Portfolio.Application.Projects.Commands.ChangeProjectStatusCommand},System.Threading.CancellationToken)">
+            <summary>
+            Changes a project's status.
+            </summary>
+            <param name="id">The project ID.</param>
+            <param name="command">The change project status command.</param>
+            <param name="handler">The command handler.</param>
+            <param name="validator">The validator for the command.</param>
+            <param name="ct">Cancellation token.</param>
+            <returns>No content if successful.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Api.Controllers.ProjectsController.AddProjectService(System.Guid,System.Guid,Tfs.Portfolio.Application.Projects.Handlers.AddProjectServiceCommandHandler,FluentValidation.IValidator{Tfs.Portfolio.Application.Projects.Commands.AddProjectServiceCommand},System.Threading.CancellationToken)">
+            <summary>
+            Adds a service to a project.
+            </summary>
+            <param name="projectId">The project ID.</param>
+            <param name="serviceId">The service ID.</param>
+            <param name="handler">The command handler.</param>
+            <param name="validator">The validator for the command.</param>
+            <param name="ct">Cancellation token.</param>
+            <returns>No content if successful.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Api.Controllers.ProjectsController.RemoveProjectService(System.Guid,System.Guid,Tfs.Portfolio.Application.Projects.Handlers.RemoveProjectServiceCommandHandler,FluentValidation.IValidator{Tfs.Portfolio.Application.Projects.Commands.RemoveProjectServiceCommand},System.Threading.CancellationToken)">
+            <summary>
+            Removes a service from a project.
+            </summary>
+            <param name="projectId">The project ID.</param>
+            <param name="serviceId">The service ID.</param>
+            <param name="handler">The command handler.</param>
+            <param name="validator">The validator for the command.</param>
+            <param name="ct">Cancellation token.</param>
+            <returns>No content if successful.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Api.Controllers.ProjectsController.DeleteProject(System.Guid,Tfs.Portfolio.Application.Projects.Handlers.DeleteProjectCommandHandler,System.Threading.CancellationToken)">
+            <summary>
+            Deletes a project.
+            </summary>
+            <param name="id">The project ID.</param>
+            <param name="handler">The command handler.</param>
+            <param name="ct">Cancellation token.</param>
+            <returns>No content if successful.</returns>
+        </member>
+        <member name="T:Tfs.Portfolio.Api.Controllers.SectorsController">
+            <summary>
+            Controller for managing sectors.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Api.Controllers.SectorsController.GetSectors(Tfs.Portfolio.Application.Sectors.Handlers.GetSectorsQueryHandler,System.Threading.CancellationToken)">
+            <summary>
+            Gets all sectors.
+            </summary>
+            <param name="handler">The query handler.</param>
+            <param name="ct">Cancellation token.</param>
+            <returns>List of sectors.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Api.Controllers.SectorsController.GetActiveSectors(Tfs.Portfolio.Application.Sectors.Handlers.GetActiveSectorsQueryHandler,System.Threading.CancellationToken)">
+            <summary>
+            Gets all active sectors.
+            </summary>
+            <param name="handler">The query handler.</param>
+            <param name="ct">Cancellation token.</param>
+            <returns>List of active sectors.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Api.Controllers.SectorsController.GetSectorById(System.Guid,Tfs.Portfolio.Application.Sectors.Handlers.GetSectorByIdQueryHandler,System.Threading.CancellationToken)">
+            <summary>
+            Gets a sector by ID.
+            </summary>
+            <param name="id">The sector ID.</param>
+            <param name="handler">The query handler.</param>
+            <param name="ct">Cancellation token.</param>
+            <returns>The sector if found.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Api.Controllers.SectorsController.CreateSector(Tfs.Portfolio.Application.Sectors.Commands.CreateSectorCommand,Tfs.Portfolio.Application.Sectors.Handlers.CreateSectorCommandHandler,AutoMapper.IMapper,Tfs.Portfolio.Domain.Sectors.Repositories.ISectorRepository,FluentValidation.IValidator{Tfs.Portfolio.Application.Sectors.Commands.CreateSectorCommand},System.Threading.CancellationToken)">
+            <summary>
+            Creates a new sector.
+            </summary>
+            <param name="command">The create sector command.</param>
+            <param name="handler">The command handler.</param>
+            <param name="mapper">The mapper.</param>
+            <param name="sectorRepository">The sector repository.</param>
+            <param name="validator">The validator for the command.</param>
+            <param name="ct">Cancellation token.</param>
+            <returns>The created sector.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Api.Controllers.SectorsController.UpdateSector(System.Guid,Tfs.Portfolio.Application.Sectors.Commands.UpdateSectorCommand,Tfs.Portfolio.Application.Sectors.Handlers.UpdateSectorCommandHandler,FluentValidation.IValidator{Tfs.Portfolio.Application.Sectors.Commands.UpdateSectorCommand},System.Threading.CancellationToken)">
+            <summary>
+            Updates an existing sector.
+            </summary>
+            <param name="id">The sector ID.</param>
+            <param name="command">The update sector command.</param>
+            <param name="handler">The command handler.</param>
+            <param name="validator">The validator for the command.</param>
+            <param name="ct">Cancellation token.</param>
+            <returns>No content if successful.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Api.Controllers.SectorsController.DeleteSector(System.Guid,Tfs.Portfolio.Application.Sectors.Handlers.DeleteSectorCommandHandler,System.Threading.CancellationToken)">
+            <summary>
+            Deletes a sector.
+            </summary>
+            <param name="id">The sector ID.</param>
+            <param name="handler">The command handler.</param>
+            <param name="ct">Cancellation token.</param>
+            <returns>No content if successful.</returns>
+        </member>
+        <member name="T:Tfs.Portfolio.Api.Controllers.ServicesController">
+            <summary>
+            Controller for managing services.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Api.Controllers.ServicesController.GetServices(Tfs.Portfolio.Application.Services.Handlers.GetServicesQueryHandler,System.Threading.CancellationToken)">
+            <summary>
+            Gets all services.
+            </summary>
+            <param name="handler">The query handler.</param>
+            <param name="ct">Cancellation token.</param>
+            <returns>List of services.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Api.Controllers.ServicesController.GetActiveServices(Tfs.Portfolio.Application.Services.Handlers.GetActiveServicesQueryHandler,System.Threading.CancellationToken)">
+            <summary>
+            Gets all active services.
+            </summary>
+            <param name="handler">The query handler.</param>
+            <param name="ct">Cancellation token.</param>
+            <returns>List of active services.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Api.Controllers.ServicesController.GetServicesByCategory(Tfs.Portfolio.Domain.Services.Entities.ServiceCategory,Tfs.Portfolio.Application.Services.Handlers.GetServicesByCategoryQueryHandler,System.Threading.CancellationToken)">
+            <summary>
+            Gets services by category.
+            </summary>
+            <param name="category">The service category.</param>
+            <param name="handler">The query handler.</param>
+            <param name="ct">Cancellation token.</param>
+            <returns>List of services in the category.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Api.Controllers.ServicesController.GetServiceById(System.Guid,Tfs.Portfolio.Application.Services.Handlers.GetServiceByIdQueryHandler,System.Threading.CancellationToken)">
+            <summary>
+            Gets a service by ID.
+            </summary>
+            <param name="id">The service ID.</param>
+            <param name="handler">The query handler.</param>
+            <param name="ct">Cancellation token.</param>
+            <returns>The service if found.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Api.Controllers.ServicesController.CreateService(Tfs.Portfolio.Application.Services.Commands.CreateServiceCommand,Tfs.Portfolio.Application.Services.Handlers.CreateServiceCommandHandler,AutoMapper.IMapper,Tfs.Portfolio.Domain.Services.Repositories.IServiceRepository,FluentValidation.IValidator{Tfs.Portfolio.Application.Services.Commands.CreateServiceCommand},System.Threading.CancellationToken)">
+            <summary>
+            Creates a new service.
+            </summary>
+            <param name="command">The create service command.</param>
+            <param name="handler">The command handler.</param>
+            <param name="mapper">The mapper.</param>
+            <param name="serviceRepository">The service repository.</param>
+            <param name="validator">The validator for the command.</param>
+            <param name="ct">Cancellation token.</param>
+            <returns>The created service.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Api.Controllers.ServicesController.UpdateService(System.Guid,Tfs.Portfolio.Application.Services.Commands.UpdateServiceCommand,Tfs.Portfolio.Application.Services.Handlers.UpdateServiceCommandHandler,FluentValidation.IValidator{Tfs.Portfolio.Application.Services.Commands.UpdateServiceCommand},System.Threading.CancellationToken)">
+            <summary>
+            Updates an existing service.
+            </summary>
+            <param name="id">The service ID.</param>
+            <param name="command">The update service command.</param>
+            <param name="handler">The command handler.</param>
+            <param name="validator">The validator for the command.</param>
+            <param name="ct">Cancellation token.</param>
+            <returns>No content if successful.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Api.Controllers.ServicesController.DeleteService(System.Guid,Tfs.Portfolio.Application.Services.Handlers.DeleteServiceCommandHandler,System.Threading.CancellationToken)">
+            <summary>
+            Deletes a service.
+            </summary>
+            <param name="id">The service ID.</param>
+            <param name="handler">The command handler.</param>
+            <param name="ct">Cancellation token.</param>
+            <returns>No content if successful.</returns>
+        </member>
+        <member name="T:Tfs.Portfolio.Api.CurrentUserService">
+            <summary>
+            Implementation of current user service using HttpContext.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Api.CurrentUserService.#ctor(Microsoft.AspNetCore.Http.IHttpContextAccessor)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Api.CurrentUserService"/> class.
+            </summary>
+            <param name="httpContextAccessor">The HTTP context accessor.</param>
+        </member>
+        <member name="P:Tfs.Portfolio.Api.CurrentUserService.UserId">
+            <inheritdoc />
+        </member>
+        <member name="P:Tfs.Portfolio.Api.CurrentUserService.UserName">
+            <inheritdoc />
+        </member>
+        <member name="P:Tfs.Portfolio.Api.CurrentUserService.IsAuthenticated">
+            <inheritdoc />
+        </member>
+        <member name="M:Tfs.Portfolio.Api.CurrentUserService.IsInRole(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="T:Tfs.Portfolio.Api.DateTimeProvider">
+            <summary>
+            Implementation of date time provider using system clock.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Api.DateTimeProvider.UtcNow">
+            <inheritdoc />
+        </member>
+        <member name="P:Tfs.Portfolio.Api.DateTimeProvider.Now">
+            <inheritdoc />
+        </member>
+        <member name="P:Tfs.Portfolio.Api.DateTimeProvider.TodayUtc">
+            <inheritdoc />
+        </member>
+        <member name="T:Tfs.Portfolio.Api.Filters.ValidationFilter`1">
+            <summary>
+            Endpoint filter for FluentValidation.
+            </summary>
+            <typeparam name="TRequest">The request type to validate.</typeparam>
+        </member>
+        <member name="M:Tfs.Portfolio.Api.Filters.ValidationFilter`1.#ctor(FluentValidation.IValidator{`0})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Api.Filters.ValidationFilter`1"/> class.
+            </summary>
+            <param name="validator">The validator for the request type.</param>
+        </member>
+        <member name="M:Tfs.Portfolio.Api.Filters.ValidationFilter`1.InvokeAsync(Microsoft.AspNetCore.Http.EndpointFilterInvocationContext,Microsoft.AspNetCore.Http.EndpointFilterDelegate)">
+            <inheritdoc />
+        </member>
+        <member name="T:Tfs.Portfolio.Api.Json.TfsWebUrlContractResolver">
+            <summary>
+            Custom contract resolver that applies the TfsWebUrlJsonConverter to all TfsWebUrl? properties.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Api.Json.TfsWebUrlContractResolver.CreateProperty(System.Reflection.MemberInfo,Newtonsoft.Json.MemberSerialization)">
+            <inheritdoc />
+        </member>
+        <member name="T:Tfs.Portfolio.Api.Middleware.ErrorHandlingMiddleware">
+            <summary>
+            Middleware for handling exceptions and returning ProblemDetails.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Api.Middleware.ErrorHandlingMiddleware.#ctor(Microsoft.AspNetCore.Http.RequestDelegate,Microsoft.Extensions.Logging.ILogger{Tfs.Portfolio.Api.Middleware.ErrorHandlingMiddleware})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Api.Middleware.ErrorHandlingMiddleware"/> class.
+            </summary>
+            <param name="next">The next middleware in the pipeline.</param>
+            <param name="logger">The logger.</param>
+        </member>
+        <member name="M:Tfs.Portfolio.Api.Middleware.ErrorHandlingMiddleware.InvokeAsync(Microsoft.AspNetCore.Http.HttpContext)">
+            <summary>
+            Invokes the middleware.
+            </summary>
+            <param name="context">The HTTP context.</param>
+            <returns>A task representing the asynchronous operation.</returns>
+        </member>
+        <member name="T:Tfs.Portfolio.Api.Middleware.ErrorHandlingMiddlewareExtensions">
+            <summary>
+            Extension methods for registering the error handling middleware.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Api.Middleware.ErrorHandlingMiddlewareExtensions.UseErrorHandling(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            Adds the error handling middleware to the pipeline.
+            </summary>
+            <param name="app">The application builder.</param>
+            <returns>The application builder.</returns>
+        </member>
+        <member name="T:Tfs.Portfolio.Api.Program">
+            <summary>
+            Program entry point.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Api.Program.Main(System.String[])">
+            <summary>
+            Main entry point.
+            </summary>
+            <param name="args">Command line arguments.</param>
+        </member>
+    </members>
+</doc>

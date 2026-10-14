@@ -1,0 +1,17 @@
+{
+  "version": 2,
+  "dgSpecHash": "bNIawT86zAs=",
+  "success": false,
+  "projectFilePath": "D:\\dev\\Tfs\\Portfolio\\tfs-portfolio\\src\\Infrastructure\\Persistence\\Tfs.Portfolio.Infrastructure.Persistence.csproj",
+  "expectedPackageFiles": [],
+  "logs": [
+    {
+      "code": "NU1105",
+      "level": "Error",
+      "message": "Unable to read project information for 'Tfs.Portfolio.Infrastructure.Persistence': Invalid framework identifier ''.",
+      "projectPath": "D:\\dev\\Tfs\\Portfolio\\tfs-portfolio\\src\\Infrastructure\\Persistence\\Tfs.Portfolio.Infrastructure.Persistence.csproj",
+      "filePath": "D:\\dev\\Tfs\\Portfolio\\tfs-portfolio\\src\\Infrastructure\\Persistence\\Tfs.Portfolio.Infrastructure.Persistence.csproj",
+      "targetGraphs": []
+    }
+  ]
+}

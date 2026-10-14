@@ -1,0 +1,116 @@
+2026-10-06 14:26:44.283 +00:00 [INF] No action descriptors found. This may indicate an incorrectly configured application or missing application parts. To learn more, visit https://aka.ms/aspnet/mvc/app-parts
+2026-10-06 14:26:44.358 +00:00 [WRN] Overriding HTTP_PORTS '8080' and HTTPS_PORTS ''. Binding to values defined by URLS instead 'http://0.0.0.0:8080'.
+2026-10-06 14:26:44.419 +00:00 [INF] Now listening on: http://0.0.0.0:8080
+2026-10-06 14:26:44.421 +00:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-10-06 14:26:44.422 +00:00 [INF] Hosting environment: Development
+2026-10-06 14:26:44.422 +00:00 [INF] Content root path: /app/src/Presentation/WebAPI
+[INF] Application started. Press Ctrl+C to shut down.
+2026-10-06 14:26:44.422 +00:00 [INF] Hosting environment: Development
+2026-10-06 14:26:44.422 +00:00 [INF] Content root path: /app/src/Presentation/WebAPI
+2026-10-06 14:30:01.191 +00:00 [INF] No action descriptors found. This may indicate an incorrectly configured application or missing application parts. To learn more, visit https://aka.ms/aspnet/mvc/app-parts
+2026-10-06 14:30:01.267 +00:00 [WRN] Overriding HTTP_PORTS '8080' and HTTPS_PORTS ''. Binding to values defined by URLS instead 'http://0.0.0.0:8080'.
+2026-10-06 14:30:01.329 +00:00 [INF] Now listening on: http://0.0.0.0:8080
+2026-10-06 14:30:01.331 +00:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-10-06 14:30:01.333 +00:00 [INF] Hosting environment: Development
+2026-10-06 14:30:01.334 +00:00 [INF] Content root path: /app/src/Presentation/WebAPI
+2026-10-06 14:30:10.438 +00:00 [INF] Request starting HTTP/1.1 GET http://localhost:8082/test - null null
+2026-10-06 14:30:10.480 +00:00 [WRN] Failed to determine the https port for redirect.
+2026-10-06 14:30:10.524 +00:00 [INF] Executing endpoint 'HTTP: GET /test'
+2026-10-06 14:30:10.536 +00:00 [INF] Setting HTTP status code 200.
+2026-10-06 14:30:10.542 +00:00 [INF] Writing value of type '<>f__AnonymousType0`2' as Json.
+2026-10-06 14:30:10.553 +00:00 [INF] Executed endpoint 'HTTP: GET /test'
+2026-10-06 14:30:10.555 +00:00 [INF] HTTP GET /test responded 200 in 75.3106 ms
+2026-10-06 14:30:10.559 +00:00 [INF] Request finished HTTP/1.1 GET http://localhost:8082/test - 200 null application/json; charset=utf-8 121.1716ms
+2026-10-06 14:30:18.769 +00:00 [INF] Request starting HTTP/1.1 GET http://localhost:8082/scalar/v1 - null null
+2026-10-06 14:30:18.776 +00:00 [INF] Executing endpoint 'HTTP: GET /scalar/{documentName}'
+2026-10-06 14:30:18.787 +00:00 [INF] Write content with HTTP Response ContentType of text/html
+2026-10-06 14:30:18.790 +00:00 [INF] Executed endpoint 'HTTP: GET /scalar/{documentName}'
+2026-10-06 14:30:18.791 +00:00 [INF] HTTP GET /scalar/v1 responded 200 in 15.5610 ms
+2026-10-06 14:30:18.793 +00:00 [INF] Request finished HTTP/1.1 GET http://localhost:8082/scalar/v1 - 200 762 text/html 23.2415ms
+2026-10-06 14:30:23.209 +00:00 [INF] Request starting HTTP/1.1 GET http://localhost:8082/openapi/v1.json - null null
+2026-10-06 14:30:23.212 +00:00 [INF] Executing endpoint 'HTTP: GET /openapi/{documentName}.json'
+2026-10-06 14:30:23.273 +00:00 [INF] Executed endpoint 'HTTP: GET /openapi/{documentName}.json'
+2026-10-06 14:30:23.274 +00:00 [INF] HTTP GET /openapi/v1.json responded 200 in 62.6935 ms
+2026-10-06 14:30:23.275 +00:00 [INF] Request finished HTTP/1.1 GET http://localhost:8082/openapi/v1.json - 200 null application/json;charset=utf-8 66.4175ms
+2026-10-06 14:30:30.728 +00:00 [INF] Request starting HTTP/1.1 GET http://localhost:8082/api/v1/projects - null null
+2026-10-06 14:30:30.732 +00:00 [INF] Executing endpoint 'HTTP: GET /api/v1/projects/'
+2026-10-06 14:30:30.932 +00:00 [INF] Setting HTTP status code 200.
+2026-10-06 14:30:30.933 +00:00 [INF] Writing value of type 'List`1' as Json.
+2026-10-06 14:30:30.935 +00:00 [INF] Executed endpoint 'HTTP: GET /api/v1/projects/'
+2026-10-06 14:30:30.937 +00:00 [INF] HTTP GET /api/v1/projects responded 200 in 204.8690 ms
+2026-10-06 14:30:30.942 +00:00 [INF] Request finished HTTP/1.1 GET http://localhost:8082/api/v1/projects - 200 null application/json; charset=utf-8 213.6327ms
+2026-10-06 14:30:35.536 +00:00 [INF] Request starting HTTP/1.1 POST http://localhost:8082/api/v1/projects - application/json 56
+2026-10-06 14:30:35.539 +00:00 [INF] Executing endpoint 'HTTP: POST /api/v1/projects/'
+2026-10-06 14:30:35.665 +00:00 [INF] Setting HTTP status code 201.
+2026-10-06 14:30:35.669 +00:00 [INF] Writing value of type '<>f__AnonymousType1`1' as Json.
+2026-10-06 14:30:35.674 +00:00 [INF] Executed endpoint 'HTTP: POST /api/v1/projects/'
+2026-10-06 14:30:35.687 +00:00 [INF] HTTP POST /api/v1/projects responded 201 in 148.3918 ms
+2026-10-06 14:30:35.688 +00:00 [INF] Request finished HTTP/1.1 POST http://localhost:8082/api/v1/projects - 201 null application/json; charset=utf-8 152.075ms
+2026-10-06 14:30:41.943 +00:00 [INF] Request starting HTTP/1.1 GET http://localhost:8082/api/v1/projects/2abbbf82-85ac-4c4c-bf87-fdcb18e9194e - null null
+2026-10-06 14:30:41.946 +00:00 [INF] Executing endpoint 'HTTP: GET /api/v1/projects/{id:guid}'
+2026-10-06 14:30:41.976 +00:00 [INF] Setting HTTP status code 200.
+2026-10-06 14:30:41.979 +00:00 [INF] Writing value of type 'ProjectDto' as Json.
+2026-10-06 14:30:41.982 +00:00 [INF] Executed endpoint 'HTTP: GET /api/v1/projects/{id:guid}'
+2026-10-06 14:30:41.982 +00:00 [INF] HTTP GET /api/v1/projects/2abbbf82-85ac-4c4c-bf87-fdcb18e9194e responded 200 in 36.2472 ms
+2026-10-06 14:30:41.984 +00:00 [INF] Request finished HTTP/1.1 GET http://localhost:8082/api/v1/projects/2abbbf82-85ac-4c4c-bf87-fdcb18e9194e - 200 null application/json; charset=utf-8 40.5815ms
+2026-10-06 14:30:56.596 +00:00 [INF] Request starting HTTP/1.1 PUT http://localhost:8082/api/v1/projects/2abbbf82-85ac-4c4c-bf87-fdcb18e9194e - application/json 106
+2026-10-06 14:30:56.598 +00:00 [INF] Executing endpoint 'HTTP: PUT /api/v1/projects/{id:guid}'
+2026-10-06 14:30:56.615 +00:00 [INF] Setting HTTP status code 204.
+2026-10-06 14:30:56.617 +00:00 [INF] Executed endpoint 'HTTP: PUT /api/v1/projects/{id:guid}'
+2026-10-06 14:30:56.618 +00:00 [INF] HTTP PUT /api/v1/projects/2abbbf82-85ac-4c4c-bf87-fdcb18e9194e responded 204 in 20.2023 ms
+2026-10-06 14:30:56.619 +00:00 [INF] Request finished HTTP/1.1 PUT http://localhost:8082/api/v1/projects/2abbbf82-85ac-4c4c-bf87-fdcb18e9194e - 204 null null 22.7502ms
+2026-10-06 14:31:06.972 +00:00 [INF] Request starting HTTP/1.1 GET http://localhost:8082/api/v1/projects/2abbbf82-85ac-4c4c-bf87-fdcb18e9194e - null null
+2026-10-06 14:31:06.974 +00:00 [INF] Executing endpoint 'HTTP: GET /api/v1/projects/{id:guid}'
+2026-10-06 14:31:06.982 +00:00 [INF] Setting HTTP status code 200.
+2026-10-06 14:31:06.983 +00:00 [INF] Writing value of type 'ProjectDto' as Json.
+2026-10-06 14:31:06.985 +00:00 [INF] Executed endpoint 'HTTP: GET /api/v1/projects/{id:guid}'
+2026-10-06 14:31:06.986 +00:00 [INF] HTTP GET /api/v1/projects/2abbbf82-85ac-4c4c-bf87-fdcb18e9194e responded 200 in 12.3248 ms
+2026-10-06 14:31:06.988 +00:00 [INF] Request finished HTTP/1.1 GET http://localhost:8082/api/v1/projects/2abbbf82-85ac-4c4c-bf87-fdcb18e9194e - 200 null application/json; charset=utf-8 15.8002ms
+2026-10-06 14:31:18.471 +00:00 [INF] Request starting HTTP/1.1 DELETE http://localhost:8082/api/v1/projects/2abbbf82-85ac-4c4c-bf87-fdcb18e9194e - null null
+2026-10-06 14:31:18.472 +00:00 [INF] Executing endpoint 'HTTP: DELETE /api/v1/projects/{id:guid}'
+2026-10-06 14:31:18.484 +00:00 [INF] Setting HTTP status code 204.
+2026-10-06 14:31:18.485 +00:00 [INF] Executed endpoint 'HTTP: DELETE /api/v1/projects/{id:guid}'
+2026-10-06 14:31:18.485 +00:00 [INF] HTTP DELETE /api/v1/projects/2abbbf82-85ac-4c4c-bf87-fdcb18e9194e responded 204 in 13.6415 ms
+2026-10-06 14:31:18.486 +00:00 [INF] Request finished HTTP/1.1 DELETE http://localhost:8082/api/v1/projects/2abbbf82-85ac-4c4c-bf87-fdcb18e9194e - 204 null null 15.3854ms
+2026-10-06 14:31:23.545 +00:00 [INF] Request starting HTTP/1.1 GET http://localhost:8082/api/v1/projects/2abbbf82-85ac-4c4c-bf87-fdcb18e9194e - null null
+2026-10-06 14:31:23.547 +00:00 [INF] Executing endpoint 'HTTP: GET /api/v1/projects/{id:guid}'
+2026-10-06 14:31:23.549 +00:00 [INF] Setting HTTP status code 200.
+2026-10-06 14:31:23.551 +00:00 [INF] Writing value of type 'ProjectDto' as Json.
+2026-10-06 14:31:23.553 +00:00 [INF] Executed endpoint 'HTTP: GET /api/v1/projects/{id:guid}'
+2026-10-06 14:31:23.553 +00:00 [INF] HTTP GET /api/v1/projects/2abbbf82-85ac-4c4c-bf87-fdcb18e9194e responded 200 in 6.5016 ms
+2026-10-06 14:31:23.556 +00:00 [INF] Request finished HTTP/1.1 GET http://localhost:8082/api/v1/projects/2abbbf82-85ac-4c4c-bf87-fdcb18e9194e - 200 null application/json; charset=utf-8 11.7191ms
+2026-10-06 14:32:39.530 +00:00 [INF] Request starting HTTP/1.1 POST http://localhost:8082/api/v1/projects - application/json 32
+2026-10-06 14:32:39.534 +00:00 [INF] Executing endpoint 'HTTP: POST /api/v1/projects/'
+2026-10-06 14:32:39.547 +00:00 [INF] Setting HTTP status code 400.
+2026-10-06 14:32:39.557 +00:00 [INF] Executed endpoint 'HTTP: POST /api/v1/projects/'
+2026-10-06 14:32:39.559 +00:00 [INF] HTTP POST /api/v1/projects responded 400 in 25.5133 ms
+2026-10-06 14:32:39.560 +00:00 [INF] Request finished HTTP/1.1 POST http://localhost:8082/api/v1/projects - 400 null application/problem+json 30.5065ms
+2026-10-06 14:32:47.664 +00:00 [INF] Request starting HTTP/1.1 GET http://localhost:8082/api/v1/projects/00000000-0000-0000-0000-000000000000 - null null
+2026-10-06 14:32:47.666 +00:00 [INF] Executing endpoint 'HTTP: GET /api/v1/projects/{id:guid}'
+2026-10-06 14:32:47.671 +00:00 [INF] Setting HTTP status code 404.
+2026-10-06 14:32:47.673 +00:00 [INF] Executed endpoint 'HTTP: GET /api/v1/projects/{id:guid}'
+2026-10-06 14:32:47.674 +00:00 [INF] HTTP GET /api/v1/projects/00000000-0000-0000-0000-000000000000 responded 404 in 7.6184 ms
+2026-10-06 14:32:47.674 +00:00 [INF] Request finished HTTP/1.1 GET http://localhost:8082/api/v1/projects/00000000-0000-0000-0000-000000000000 - 404 0 null 10.5003ms
+2026-10-06 14:33:03.712 +00:00 [INF] Request starting HTTP/1.1 GET http://localhost:8082/api/v1/projects/00000000-0000-0000-0000-000000000000 - null null
+2026-10-06 14:33:03.713 +00:00 [INF] Executing endpoint 'HTTP: GET /api/v1/projects/{id:guid}'
+2026-10-06 14:33:03.716 +00:00 [INF] Setting HTTP status code 404.
+2026-10-06 14:33:03.717 +00:00 [INF] Executed endpoint 'HTTP: GET /api/v1/projects/{id:guid}'
+2026-10-06 14:33:03.718 +00:00 [INF] HTTP GET /api/v1/projects/00000000-0000-0000-0000-000000000000 responded 404 in 4.1235 ms
+2026-10-06 14:33:03.718 +00:00 [INF] Request finished HTTP/1.1 GET http://localhost:8082/api/v1/projects/00000000-0000-0000-0000-000000000000 - 404 0 null 6.3154ms
+2026-10-06 14:33:11.329 +00:00 [INF] Request starting HTTP/1.1 GET http://localhost:8082/test - null null
+2026-10-06 14:33:11.331 +00:00 [INF] Executing endpoint 'HTTP: GET /test'
+2026-10-06 14:33:11.333 +00:00 [INF] Setting HTTP status code 200.
+2026-10-06 14:33:11.335 +00:00 [INF] Writing value of type '<>f__AnonymousType0`2' as Json.
+2026-10-06 14:33:11.336 +00:00 [INF] Executed endpoint 'HTTP: GET /test'
+2026-10-06 14:33:11.338 +00:00 [INF] HTTP GET /test responded 200 in 7.2546 ms
+2026-10-06 14:33:11.340 +00:00 [INF] Request finished HTTP/1.1 GET http://localhost:8082/test - 200 null application/json; charset=utf-8 10.9042ms
+2026-10-06 14:33:31.205 +00:00 [INF] No action descriptors found. This may indicate an incorrectly configured application or missing application parts. To learn more, visit https://aka.ms/aspnet/mvc/app-parts
+2026-10-06 14:33:51.522 +00:00 [INF] Request starting HTTP/1.1 GET http://localhost:8082/test - null null
+2026-10-06 14:33:51.531 +00:00 [INF] Executing endpoint 'HTTP: GET /test'
+2026-10-06 14:33:51.533 +00:00 [INF] Setting HTTP status code 200.
+2026-10-06 14:33:51.535 +00:00 [INF] Writing value of type '<>f__AnonymousType0`2' as Json.
+2026-10-06 14:33:51.537 +00:00 [INF] Executed endpoint 'HTTP: GET /test'
+2026-10-06 14:33:51.538 +00:00 [INF] HTTP GET /test responded 200 in 7.0604 ms
+2026-10-06 14:33:51.539 +00:00 [INF] Request finished HTTP/1.1 GET http://localhost:8082/test - 200 null application/json; charset=utf-8 17.1209ms
+51.538 +00:00 [INF] HTTP GET /test responded 200 in 7.0604 ms
+2026-10-06 14:33:51.539 +00:00 [INF] Request finished HTTP/1.1 GET http://localhost:8082/test - 200 null application/json; charset=utf-8 17.1209ms

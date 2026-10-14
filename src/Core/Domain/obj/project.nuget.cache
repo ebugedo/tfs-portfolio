@@ -1,0 +1,17 @@
+{
+  "version": 2,
+  "dgSpecHash": "EWYZ8VKFAjU=",
+  "success": false,
+  "projectFilePath": "D:\\dev\\Tfs\\Portfolio\\tfs-portfolio\\src\\Core\\Domain\\Tfs.Portfolio.Domain.csproj",
+  "expectedPackageFiles": [],
+  "logs": [
+    {
+      "code": "NU1105",
+      "level": "Error",
+      "message": "Unable to read project information for 'Tfs.Portfolio.Domain': Invalid framework identifier ''.",
+      "projectPath": "D:\\dev\\Tfs\\Portfolio\\tfs-portfolio\\src\\Core\\Domain\\Tfs.Portfolio.Domain.csproj",
+      "filePath": "D:\\dev\\Tfs\\Portfolio\\tfs-portfolio\\src\\Core\\Domain\\Tfs.Portfolio.Domain.csproj",
+      "targetGraphs": []
+    }
+  ]
+}

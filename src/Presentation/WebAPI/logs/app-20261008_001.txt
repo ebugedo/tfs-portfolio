@@ -1,0 +1,2 @@
+2026-10-08 20:21:07.286 +02:00 [ERR] An error occurred using the connection to database 'portfolio_test' on server 'tcp://localhost:5432'.
+2026-10-08 20:24:33.293 +02:00 [ERR] An error occurred using the connection to database 'portfolio_test' on server 'tcp://localhost:5432'.

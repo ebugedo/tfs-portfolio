@@ -1,0 +1,2 @@
+2026-10-07 16:28:42.451 +02:00 [WRN] The property 'Project.ServiceIds' is a collection or enumeration type with a value converter but with no value comparer. Set a value comparer to ensure the collection/enumeration elements are compared correctly.
+2026-10-07 16:28:42.488 +02:00 [WRN] The property 'Project.Technologies' is a collection or enumeration type with a value converter but with no value comparer. Set a value comparer to ensure the collection/enumeration elements are compared correctly.

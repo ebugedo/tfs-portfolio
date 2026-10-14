@@ -1,0 +1,1978 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Tfs.Portfolio.Domain</name>
+    </assembly>
+    <members>
+        <member name="T:Tfs.Portfolio.Domain.Clients.Entities.Client">
+            <summary>
+            Represents a client aggregate root.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Clients.Entities.Client.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Domain.Clients.Entities.Client"/> class.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Clients.Entities.Client.#ctor(System.Guid,System.String,System.Nullable{Tfs.Portfolio.Domain.Common.ValueObjects.TfsWebUrl},System.String,System.String,System.String,System.Boolean,System.DateTime)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Domain.Clients.Entities.Client"/> class.
+            </summary>
+            <param name="id">The unique identifier.</param>
+            <param name="name">The client name.</param>
+            <param name="logoUrl">The client logo URL.</param>
+            <param name="email">The client email.</param>
+            <param name="phone">The client phone number.</param>
+            <param name="address">The client address.</param>
+            <param name="isActive">The active status.</param>
+            <param name="createdAt">The creation date.</param>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Clients.Entities.Client.Name">
+            <summary>
+            Gets the name of the client.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Clients.Entities.Client.LogoUrl">
+            <summary>
+            Gets the logo URL of the client.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Clients.Entities.Client.Email">
+            <summary>
+            Gets the email of the client.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Clients.Entities.Client.Phone">
+            <summary>
+            Gets the phone number of the client.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Clients.Entities.Client.Address">
+            <summary>
+            Gets the address of the client.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Clients.Entities.Client.IsActive">
+            <summary>
+            Gets a value indicating whether the client is active.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Clients.Entities.Client.CreatedAt">
+            <summary>
+            Gets the date and time when the client was created.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Clients.Entities.Client.UpdatedAt">
+            <summary>
+            Gets the date and time when the client was last updated.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Clients.Entities.Client.Create(System.String,System.String,System.Nullable{Tfs.Portfolio.Domain.Common.ValueObjects.TfsWebUrl},System.String,System.String)">
+            <summary>
+            Creates a new client.
+            </summary>
+            <param name="name">The client name.</param>
+            <param name="email">The client email.</param>
+            <param name="logoUrl">The client logo URL.</param>
+            <param name="phone">The client phone number.</param>
+            <param name="address">The client address.</param>
+            <returns>A new client instance.</returns>
+            <exception cref="T:Tfs.Portfolio.Domain.Clients.Exceptions.InvalidClientStateException">Thrown when the name is empty or email is invalid.</exception>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Clients.Entities.Client.Update(System.String,System.String,System.Nullable{Tfs.Portfolio.Domain.Common.ValueObjects.TfsWebUrl},System.String,System.String)">
+            <summary>
+            Updates the client details.
+            </summary>
+            <param name="name">The new name.</param>
+            <param name="email">The new email.</param>
+            <param name="logoUrl">The new logo URL.</param>
+            <param name="phone">The new phone number.</param>
+            <param name="address">The new address.</param>
+            <exception cref="T:Tfs.Portfolio.Domain.Clients.Exceptions.InvalidClientStateException">Thrown when the name is empty or email is invalid.</exception>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Clients.Entities.Client.Deactivate">
+            <summary>
+            Deactivates the client.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Domain.Clients.Events.ClientCreatedEvent">
+            <summary>
+            Event raised when a client is created.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Clients.Events.ClientCreatedEvent.ClientId">
+            <summary>
+            Gets the client identifier.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Clients.Events.ClientCreatedEvent.ClientName">
+            <summary>
+            Gets the client name.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Clients.Events.ClientCreatedEvent.OccurredOn">
+            <inheritdoc />
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Clients.Events.ClientCreatedEvent.EventId">
+            <inheritdoc />
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Clients.Events.ClientCreatedEvent.#ctor(System.Guid,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Domain.Clients.Events.ClientCreatedEvent"/> class.
+            </summary>
+            <param name="clientId">The client identifier.</param>
+            <param name="clientName">The client name.</param>
+        </member>
+        <member name="T:Tfs.Portfolio.Domain.Clients.Events.ClientDeactivatedEvent">
+            <summary>
+            Event raised when a client is deactivated.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Clients.Events.ClientDeactivatedEvent.ClientId">
+            <summary>
+            Gets the client identifier.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Clients.Events.ClientDeactivatedEvent.OccurredOn">
+            <inheritdoc />
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Clients.Events.ClientDeactivatedEvent.EventId">
+            <inheritdoc />
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Clients.Events.ClientDeactivatedEvent.#ctor(System.Guid)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Domain.Clients.Events.ClientDeactivatedEvent"/> class.
+            </summary>
+            <param name="clientId">The client identifier.</param>
+        </member>
+        <member name="T:Tfs.Portfolio.Domain.Clients.Events.ClientUpdatedEvent">
+            <summary>
+            Event raised when a client is updated.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Clients.Events.ClientUpdatedEvent.ClientId">
+            <summary>
+            Gets the client identifier.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Clients.Events.ClientUpdatedEvent.OccurredOn">
+            <inheritdoc />
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Clients.Events.ClientUpdatedEvent.EventId">
+            <inheritdoc />
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Clients.Events.ClientUpdatedEvent.#ctor(System.Guid)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Domain.Clients.Events.ClientUpdatedEvent"/> class.
+            </summary>
+            <param name="clientId">The client identifier.</param>
+        </member>
+        <member name="T:Tfs.Portfolio.Domain.Clients.Exceptions.ClientNotFoundException">
+            <summary>
+            Exception thrown when a client is not found.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Clients.Exceptions.ClientNotFoundException.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Domain.Clients.Exceptions.ClientNotFoundException"/> class.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Clients.Exceptions.ClientNotFoundException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Domain.Clients.Exceptions.ClientNotFoundException"/> class with a specified error message.
+            </summary>
+            <param name="message">The error message.</param>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Clients.Exceptions.ClientNotFoundException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Domain.Clients.Exceptions.ClientNotFoundException"/> class with a specified error message and a reference to the inner exception.
+            </summary>
+            <param name="message">The error message.</param>
+            <param name="innerException">The inner exception.</param>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Clients.Exceptions.ClientNotFoundException.#ctor(System.Guid)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Domain.Clients.Exceptions.ClientNotFoundException"/> class with the client identifier.
+            </summary>
+            <param name="clientId">The client identifier that was not found.</param>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Clients.Exceptions.ClientNotFoundException.ClientId">
+            <summary>
+            Gets the client identifier that was not found.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Domain.Clients.Exceptions.InvalidClientStateException">
+            <summary>
+            Exception thrown when a client is in an invalid state.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Clients.Exceptions.InvalidClientStateException.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Domain.Clients.Exceptions.InvalidClientStateException"/> class.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Clients.Exceptions.InvalidClientStateException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Domain.Clients.Exceptions.InvalidClientStateException"/> class with a specified error message.
+            </summary>
+            <param name="message">The error message.</param>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Clients.Exceptions.InvalidClientStateException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Domain.Clients.Exceptions.InvalidClientStateException"/> class with a specified error message and a reference to the inner exception.
+            </summary>
+            <param name="message">The error message.</param>
+            <param name="innerException">The inner exception.</param>
+        </member>
+        <member name="T:Tfs.Portfolio.Domain.Clients.Repositories.IClientRepository">
+            <summary>
+            Repository interface for clients.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Clients.Repositories.IClientRepository.GetByIdAsync(System.Guid,System.Threading.CancellationToken)">
+            <summary>
+            Gets a client by its identifier.
+            </summary>
+            <param name="id">The client identifier.</param>
+            <param name="cancellationToken">A token to cancel the operation.</param>
+            <returns>The client if found; otherwise, null.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Clients.Repositories.IClientRepository.GetAllAsync(System.Threading.CancellationToken)">
+            <summary>
+            Gets all clients.
+            </summary>
+            <param name="cancellationToken">A token to cancel the operation.</param>
+            <returns>A read-only list of clients.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Clients.Repositories.IClientRepository.GetActiveAsync(System.Threading.CancellationToken)">
+            <summary>
+            Gets all active clients.
+            </summary>
+            <param name="cancellationToken">A token to cancel the operation.</param>
+            <returns>A read-only list of active clients.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Clients.Repositories.IClientRepository.AddAsync(Tfs.Portfolio.Domain.Clients.Entities.Client,System.Threading.CancellationToken)">
+            <summary>
+            Adds a new client.
+            </summary>
+            <param name="client">The client to add.</param>
+            <param name="cancellationToken">A token to cancel the operation.</param>
+            <returns>A task representing the asynchronous operation.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Clients.Repositories.IClientRepository.Update(Tfs.Portfolio.Domain.Clients.Entities.Client)">
+            <summary>
+            Updates an existing client.
+            </summary>
+            <param name="client">The client to update.</param>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Clients.Repositories.IClientRepository.Delete(Tfs.Portfolio.Domain.Clients.Entities.Client)">
+            <summary>
+            Deletes a client.
+            </summary>
+            <param name="client">The client to delete.</param>
+        </member>
+        <member name="T:Tfs.Portfolio.Domain.Common.AggregateRoot`1">
+            <summary>
+            Base class for aggregate roots that track domain events.
+            </summary>
+            <typeparam name="TId">The type of the identifier.</typeparam>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Common.AggregateRoot`1.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Domain.Common.AggregateRoot`1"/> class.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Common.AggregateRoot`1.#ctor(`0)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Domain.Common.AggregateRoot`1"/> class with the specified identifier.
+            </summary>
+            <param name="id">The identifier.</param>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Common.AggregateRoot`1.Events">
+            <summary>
+            Gets the domain events raised by this aggregate.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Common.AggregateRoot`1.AddDomainEvent(Tfs.Portfolio.Domain.Common.IDomainEvent)">
+            <summary>
+            Adds a domain event to the aggregate.
+            </summary>
+            <param name="domainEvent">The domain event to add.</param>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Common.AggregateRoot`1.ClearDomainEvents">
+            <summary>
+            Clears all domain events from the aggregate.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Domain.Common.DomainException">
+            <summary>
+            Base exception for domain rule violations.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Common.DomainException.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Domain.Common.DomainException"/> class.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Common.DomainException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Domain.Common.DomainException"/> class with a specified error message.
+            </summary>
+            <param name="message">The error message.</param>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Common.DomainException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Domain.Common.DomainException"/> class with a specified error message and a reference to the inner exception.
+            </summary>
+            <param name="message">The error message.</param>
+            <param name="innerException">The inner exception.</param>
+        </member>
+        <member name="T:Tfs.Portfolio.Domain.Common.Entity`1">
+            <summary>
+            Base class for all entities with a typed identifier.
+            </summary>
+            <typeparam name="TId">The type of the identifier.</typeparam>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Common.Entity`1.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Domain.Common.Entity`1"/> class.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Common.Entity`1.#ctor(`0)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Domain.Common.Entity`1"/> class with the specified identifier.
+            </summary>
+            <param name="id">The identifier.</param>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Common.Entity`1.Id">
+            <summary>
+            Gets the unique identifier of the entity.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Common.Entity`1.ToString">
+            <inheritdoc />
+        </member>
+        <member name="T:Tfs.Portfolio.Domain.Common.IDomainEvent">
+            <summary>
+            Marker interface for domain events.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Common.IDomainEvent.OccurredOn">
+            <summary>
+            Gets the date and time when the event occurred.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Common.IDomainEvent.EventId">
+            <summary>
+            Gets the unique identifier of the event.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Domain.Common.IUnitOfWork">
+            <summary>
+            Defines the contract for a unit of work.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Common.IUnitOfWork.SaveChangesAsync(System.Threading.CancellationToken)">
+            <summary>
+            Saves all changes made in this unit of work.
+            </summary>
+            <param name="cancellationToken">A token to cancel the operation.</param>
+            <returns>The number of state entries written to the database.</returns>
+        </member>
+        <member name="T:Tfs.Portfolio.Domain.Common.ValueObject">
+            <summary>
+            Base class for value objects with structural equality.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Common.ValueObject.EqualOperator(Tfs.Portfolio.Domain.Common.ValueObject,Tfs.Portfolio.Domain.Common.ValueObject)">
+            <summary>
+            Checks equality between two value objects.
+            </summary>
+            <param name="left">The left operand.</param>
+            <param name="right">The right operand.</param>
+            <returns>True if equal, false otherwise.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Common.ValueObject.NotEqualOperator(Tfs.Portfolio.Domain.Common.ValueObject,Tfs.Portfolio.Domain.Common.ValueObject)">
+            <summary>
+            Checks inequality between two value objects.
+            </summary>
+            <param name="left">The left operand.</param>
+            <param name="right">The right operand.</param>
+            <returns>True if not equal, false otherwise.</returns>
+        </member>
+        <member name="T:Tfs.Portfolio.Domain.Common.ValueObjects.ContactInfo">
+            <summary>
+            Represents contact information with email, phone, and address.
+            Immutable value object with email validation.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Common.ValueObjects.ContactInfo.#ctor(System.String,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Domain.Common.ValueObjects.ContactInfo"/> struct.
+            </summary>
+            <param name="email">The email address.</param>
+            <param name="phone">The phone number.</param>
+            <param name="address">The address.</param>
+            <exception cref="T:System.ArgumentException">Thrown when email is not a valid format.</exception>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Common.ValueObjects.ContactInfo.Email">
+            <summary>
+            Gets the email address.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Common.ValueObjects.ContactInfo.Phone">
+            <summary>
+            Gets the phone number.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Common.ValueObjects.ContactInfo.Address">
+            <summary>
+            Gets the address.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Common.ValueObjects.ContactInfo.op_Equality(Tfs.Portfolio.Domain.Common.ValueObjects.ContactInfo,Tfs.Portfolio.Domain.Common.ValueObjects.ContactInfo)">
+            <summary>
+            Compares two <see cref="T:Tfs.Portfolio.Domain.Common.ValueObjects.ContactInfo"/> instances for equality.
+            </summary>
+            <param name="left">The left operand.</param>
+            <param name="right">The right operand.</param>
+            <returns>True if all properties are equal.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Common.ValueObjects.ContactInfo.op_Inequality(Tfs.Portfolio.Domain.Common.ValueObjects.ContactInfo,Tfs.Portfolio.Domain.Common.ValueObjects.ContactInfo)">
+            <summary>
+            Compares two <see cref="T:Tfs.Portfolio.Domain.Common.ValueObjects.ContactInfo"/> instances for inequality.
+            </summary>
+            <param name="left">The left operand.</param>
+            <param name="right">The right operand.</param>
+            <returns>True if any property is not equal.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Common.ValueObjects.ContactInfo.Create(System.String,System.String,System.String)">
+            <summary>
+            Creates a new <see cref="T:Tfs.Portfolio.Domain.Common.ValueObjects.ContactInfo"/> instance.
+            </summary>
+            <param name="email">The email address.</param>
+            <param name="phone">The phone number.</param>
+            <param name="address">The address.</param>
+            <returns>A new <see cref="T:Tfs.Portfolio.Domain.Common.ValueObjects.ContactInfo"/> instance.</returns>
+            <exception cref="T:System.ArgumentException">Thrown when email is not a valid format.</exception>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Common.ValueObjects.ContactInfo.Equals(Tfs.Portfolio.Domain.Common.ValueObjects.ContactInfo)">
+            <summary>
+            Determines whether the current instance is equal to another instance.
+            </summary>
+            <param name="other">The other ContactInfo to compare.</param>
+            <returns>True if all properties are equal.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Common.ValueObjects.ContactInfo.Equals(System.Object)">
+            <summary>
+            Determines whether the current instance is equal to the specified object.
+            </summary>
+            <param name="obj">The object to compare.</param>
+            <returns>True if obj is a ContactInfo with equal properties.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Common.ValueObjects.ContactInfo.GetHashCode">
+            <summary>
+            Gets the hash code.
+            </summary>
+            <returns>The hash code.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Common.ValueObjects.ContactInfo.ToString">
+            <summary>
+            Returns a string representation.
+            </summary>
+            <returns>The email address.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Common.ValueObjects.ContactInfo.IsValidEmail(System.String)">
+            <summary>
+            Validates email format using System.Net.Mail.MailAddress.
+            </summary>
+            <param name="email">The email to validate.</param>
+            <returns>True if valid, false otherwise.</returns>
+        </member>
+        <member name="T:Tfs.Portfolio.Domain.Common.ValueObjects.TechnologyCategory">
+            <summary>
+            Represents a technology category.
+            </summary>
+        </member>
+        <member name="F:Tfs.Portfolio.Domain.Common.ValueObjects.TechnologyCategory.Frontend">
+            <summary>Frontend technologies (React, Angular, Vue, etc.)</summary>
+        </member>
+        <member name="F:Tfs.Portfolio.Domain.Common.ValueObjects.TechnologyCategory.Backend">
+            <summary>Backend technologies (C#, Java, Node.js, Python, etc.)</summary>
+        </member>
+        <member name="F:Tfs.Portfolio.Domain.Common.ValueObjects.TechnologyCategory.Database">
+            <summary>Database technologies (PostgreSQL, MongoDB, Redis, etc.)</summary>
+        </member>
+        <member name="F:Tfs.Portfolio.Domain.Common.ValueObjects.TechnologyCategory.Cloud">
+            <summary>Cloud technologies (AWS, Azure, GCP, Kubernetes, etc.)</summary>
+        </member>
+        <member name="F:Tfs.Portfolio.Domain.Common.ValueObjects.TechnologyCategory.Tools">
+            <summary>Tools and utilities (Docker, Git, CI/CD, etc.)</summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Domain.Common.ValueObjects.ProficiencyLevel">
+            <summary>
+            Represents a proficiency level.
+            </summary>
+        </member>
+        <member name="F:Tfs.Portfolio.Domain.Common.ValueObjects.ProficiencyLevel.Beginner">
+            <summary>Beginner level</summary>
+        </member>
+        <member name="F:Tfs.Portfolio.Domain.Common.ValueObjects.ProficiencyLevel.Intermediate">
+            <summary>Intermediate level</summary>
+        </member>
+        <member name="F:Tfs.Portfolio.Domain.Common.ValueObjects.ProficiencyLevel.Expert">
+            <summary>Expert level</summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Domain.Common.ValueObjects.Technology">
+            <summary>
+            Represents a technology with name, category, and proficiency.
+            Immutable value object with case-insensitive equality by name.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Common.ValueObjects.Technology.#ctor(System.String,Tfs.Portfolio.Domain.Common.ValueObjects.TechnologyCategory,Tfs.Portfolio.Domain.Common.ValueObjects.ProficiencyLevel)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Domain.Common.ValueObjects.Technology"/> struct.
+            </summary>
+            <param name="name">The technology name.</param>
+            <param name="category">The technology category.</param>
+            <param name="proficiency">The proficiency level.</param>
+            <exception cref="T:System.ArgumentException">Thrown when name is null or whitespace.</exception>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Common.ValueObjects.Technology.Name">
+            <summary>
+            Gets the technology name (e.g., "React", "PostgreSQL").
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Common.ValueObjects.Technology.Category">
+            <summary>
+            Gets the technology category.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Common.ValueObjects.Technology.Proficiency">
+            <summary>
+            Gets the proficiency level.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Common.ValueObjects.Technology.op_Equality(Tfs.Portfolio.Domain.Common.ValueObjects.Technology,Tfs.Portfolio.Domain.Common.ValueObjects.Technology)">
+            <summary>
+            Compares two <see cref="T:Tfs.Portfolio.Domain.Common.ValueObjects.Technology"/> instances for equality (case-insensitive by name).
+            </summary>
+            <param name="left">The left operand.</param>
+            <param name="right">The right operand.</param>
+            <returns>True if names are equal ignoring case.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Common.ValueObjects.Technology.op_Inequality(Tfs.Portfolio.Domain.Common.ValueObjects.Technology,Tfs.Portfolio.Domain.Common.ValueObjects.Technology)">
+            <summary>
+            Compares two <see cref="T:Tfs.Portfolio.Domain.Common.ValueObjects.Technology"/> instances for inequality.
+            </summary>
+            <param name="left">The left operand.</param>
+            <param name="right">The right operand.</param>
+            <returns>True if names are not equal ignoring case.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Common.ValueObjects.Technology.Create(System.String,Tfs.Portfolio.Domain.Common.ValueObjects.TechnologyCategory,Tfs.Portfolio.Domain.Common.ValueObjects.ProficiencyLevel)">
+            <summary>
+            Creates a new <see cref="T:Tfs.Portfolio.Domain.Common.ValueObjects.Technology"/> instance.
+            </summary>
+            <param name="name">The technology name.</param>
+            <param name="category">The technology category.</param>
+            <param name="proficiency">The proficiency level.</param>
+            <returns>A new <see cref="T:Tfs.Portfolio.Domain.Common.ValueObjects.Technology"/> instance.</returns>
+            <exception cref="T:System.ArgumentException">Thrown when name is null or whitespace.</exception>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Common.ValueObjects.Technology.Equals(Tfs.Portfolio.Domain.Common.ValueObjects.Technology)">
+            <summary>
+            Determines whether the current instance is equal to another instance.
+            Equality is based on case-insensitive name comparison.
+            </summary>
+            <param name="other">The other technology to compare.</param>
+            <returns>True if names are equal ignoring case.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Common.ValueObjects.Technology.Equals(System.Object)">
+            <summary>
+            Determines whether the current instance is equal to the specified object.
+            </summary>
+            <param name="obj">The object to compare.</param>
+            <returns>True if obj is a Technology with equal name (case-insensitive).</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Common.ValueObjects.Technology.GetHashCode">
+            <summary>
+            Gets the hash code based on the name (case-insensitive).
+            </summary>
+            <returns>The hash code.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Common.ValueObjects.Technology.ToString">
+            <summary>
+            Returns a string representation.
+            </summary>
+            <returns>The technology name with category and proficiency.</returns>
+        </member>
+        <member name="T:Tfs.Portfolio.Domain.Common.ValueObjects.TfsWebUrl">
+            <summary>
+            Represents a validated URL.
+            Immutable value object with implicit conversion from string and nullable support.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Common.ValueObjects.TfsWebUrl.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Domain.Common.ValueObjects.TfsWebUrl"/> struct.
+            </summary>
+            <param name="value">The URL string.</param>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Common.ValueObjects.TfsWebUrl.Value">
+            <summary>
+            Gets the URL value.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Common.ValueObjects.TfsWebUrl.IsValid">
+            <summary>
+            Gets a value indicating whether the URL is valid (non-null and valid format).
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Common.ValueObjects.TfsWebUrl.op_Equality(Tfs.Portfolio.Domain.Common.ValueObjects.TfsWebUrl,Tfs.Portfolio.Domain.Common.ValueObjects.TfsWebUrl)">
+            <summary>
+            Compares two <see cref="T:Tfs.Portfolio.Domain.Common.ValueObjects.TfsWebUrl"/> instances for equality.
+            </summary>
+            <param name="left">The left operand.</param>
+            <param name="right">The right operand.</param>
+            <returns>True if both values are equal.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Common.ValueObjects.TfsWebUrl.op_Inequality(Tfs.Portfolio.Domain.Common.ValueObjects.TfsWebUrl,Tfs.Portfolio.Domain.Common.ValueObjects.TfsWebUrl)">
+            <summary>
+            Compares two <see cref="T:Tfs.Portfolio.Domain.Common.ValueObjects.TfsWebUrl"/> instances for inequality.
+            </summary>
+            <param name="left">The left operand.</param>
+            <param name="right">The right operand.</param>
+            <returns>True if values are not equal.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Common.ValueObjects.TfsWebUrl.op_Implicit(System.String)~Tfs.Portfolio.Domain.Common.ValueObjects.TfsWebUrl">
+            <summary>
+            Implicitly converts a string to a <see cref="T:Tfs.Portfolio.Domain.Common.ValueObjects.TfsWebUrl"/> (allows null/empty).
+            </summary>
+            <param name="value">The URL string.</param>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Common.ValueObjects.TfsWebUrl.op_Implicit(Tfs.Portfolio.Domain.Common.ValueObjects.TfsWebUrl)~System.String">
+            <summary>
+            Implicitly converts a <see cref="T:Tfs.Portfolio.Domain.Common.ValueObjects.TfsWebUrl"/> to a string.
+            </summary>
+            <param name="url">The URL.</param>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Common.ValueObjects.TfsWebUrl.Create(System.String)">
+            <summary>
+            Creates a new <see cref="T:Tfs.Portfolio.Domain.Common.ValueObjects.TfsWebUrl"/> instance with validation.
+            </summary>
+            <param name="value">The URL string.</param>
+            <returns>A new <see cref="T:Tfs.Portfolio.Domain.Common.ValueObjects.TfsWebUrl"/> instance.</returns>
+            <exception cref="T:System.ArgumentException">Thrown when value is not a valid HTTP/HTTPS URL.</exception>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Common.ValueObjects.TfsWebUrl.FromString(System.String)">
+            <summary>
+            Creates a new <see cref="T:Tfs.Portfolio.Domain.Common.ValueObjects.TfsWebUrl"/> instance without validation (for trusted sources).
+            </summary>
+            <param name="value">The URL string.</param>
+            <returns>A new <see cref="T:Tfs.Portfolio.Domain.Common.ValueObjects.TfsWebUrl"/> instance.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Common.ValueObjects.TfsWebUrl.Equals(Tfs.Portfolio.Domain.Common.ValueObjects.TfsWebUrl)">
+            <summary>
+            Determines whether the current instance is equal to another instance.
+            </summary>
+            <param name="other">The other TfsWebUrl to compare.</param>
+            <returns>True if both values are equal.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Common.ValueObjects.TfsWebUrl.Equals(System.Object)">
+            <summary>
+            Determines whether the current instance is equal to the specified object.
+            </summary>
+            <param name="obj">The object to compare.</param>
+            <returns>True if obj is a TfsWebUrl with equal value.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Common.ValueObjects.TfsWebUrl.GetHashCode">
+            <summary>
+            Gets the hash code.
+            </summary>
+            <returns>The hash code.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Common.ValueObjects.TfsWebUrl.ToString">
+            <summary>
+            Returns a string representation.
+            </summary>
+            <returns>The URL value or empty string if null.</returns>
+        </member>
+        <member name="T:Tfs.Portfolio.Domain.Common.ValueObjects.TfsWebUrlJsonConverter">
+            <summary>
+            JsonConverter for <see cref="T:Tfs.Portfolio.Domain.Common.ValueObjects.TfsWebUrl"/> and nullable <see cref="T:Tfs.Portfolio.Domain.Common.ValueObjects.TfsWebUrl"/> to handle JSON serialization/deserialization.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Common.ValueObjects.TfsWebUrlJsonConverter.CanRead">
+            <inheritdoc />
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Common.ValueObjects.TfsWebUrlJsonConverter.CanWrite">
+            <inheritdoc />
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Common.ValueObjects.TfsWebUrlJsonConverter.CanConvert(System.Type)">
+            <inheritdoc />
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Common.ValueObjects.TfsWebUrlJsonConverter.WriteJson(Newtonsoft.Json.JsonWriter,System.Object,Newtonsoft.Json.JsonSerializer)">
+            <inheritdoc />
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Common.ValueObjects.TfsWebUrlJsonConverter.ReadJson(Newtonsoft.Json.JsonReader,System.Type,System.Object,Newtonsoft.Json.JsonSerializer)">
+            <inheritdoc />
+        </member>
+        <member name="T:Tfs.Portfolio.Domain.Common.ValueObjects.YearMonth">
+            <summary>
+            Represents a year and month combination (e.g., June 2024).
+            Immutable value object with no day component.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Common.ValueObjects.YearMonth.#ctor(System.Int32,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Domain.Common.ValueObjects.YearMonth"/> struct.
+            </summary>
+            <param name="month">The month (1-12).</param>
+            <param name="year">The year.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException">Thrown when month is not between 1 and 12.</exception>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Common.ValueObjects.YearMonth.Month">
+            <summary>
+            Gets the month (1-12).
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Common.ValueObjects.YearMonth.Year">
+            <summary>
+            Gets the year (e.g., 2024).
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Common.ValueObjects.YearMonth.op_Equality(Tfs.Portfolio.Domain.Common.ValueObjects.YearMonth,Tfs.Portfolio.Domain.Common.ValueObjects.YearMonth)">
+            <summary>
+            Compares two <see cref="T:Tfs.Portfolio.Domain.Common.ValueObjects.YearMonth"/> instances for equality.
+            </summary>
+            <param name="left">The left operand.</param>
+            <param name="right">The right operand.</param>
+            <returns>True if both month and year are equal.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Common.ValueObjects.YearMonth.op_Inequality(Tfs.Portfolio.Domain.Common.ValueObjects.YearMonth,Tfs.Portfolio.Domain.Common.ValueObjects.YearMonth)">
+            <summary>
+            Compares two <see cref="T:Tfs.Portfolio.Domain.Common.ValueObjects.YearMonth"/> instances for inequality.
+            </summary>
+            <param name="left">The left operand.</param>
+            <param name="right">The right operand.</param>
+            <returns>True if month or year are not equal.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Common.ValueObjects.YearMonth.op_LessThan(Tfs.Portfolio.Domain.Common.ValueObjects.YearMonth,Tfs.Portfolio.Domain.Common.ValueObjects.YearMonth)">
+            <summary>
+            Compares two <see cref="T:Tfs.Portfolio.Domain.Common.ValueObjects.YearMonth"/> instances for ordering.
+            </summary>
+            <param name="left">The left operand.</param>
+            <param name="right">The right operand.</param>
+            <returns>True if left is less than right.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Common.ValueObjects.YearMonth.op_GreaterThan(Tfs.Portfolio.Domain.Common.ValueObjects.YearMonth,Tfs.Portfolio.Domain.Common.ValueObjects.YearMonth)">
+            <summary>
+            Compares two <see cref="T:Tfs.Portfolio.Domain.Common.ValueObjects.YearMonth"/> instances for ordering.
+            </summary>
+            <param name="left">The left operand.</param>
+            <param name="right">The right operand.</param>
+            <returns>True if left is greater than right.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Common.ValueObjects.YearMonth.op_LessThanOrEqual(Tfs.Portfolio.Domain.Common.ValueObjects.YearMonth,Tfs.Portfolio.Domain.Common.ValueObjects.YearMonth)">
+            <summary>
+            Compares two <see cref="T:Tfs.Portfolio.Domain.Common.ValueObjects.YearMonth"/> instances for ordering.
+            </summary>
+            <param name="left">The left operand.</param>
+            <param name="right">The right operand.</param>
+            <returns>True if left is less than or equal to right.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Common.ValueObjects.YearMonth.op_GreaterThanOrEqual(Tfs.Portfolio.Domain.Common.ValueObjects.YearMonth,Tfs.Portfolio.Domain.Common.ValueObjects.YearMonth)">
+            <summary>
+            Compares two <see cref="T:Tfs.Portfolio.Domain.Common.ValueObjects.YearMonth"/> instances for ordering.
+            </summary>
+            <param name="left">The left operand.</param>
+            <param name="right">The right operand.</param>
+            <returns>True if left is greater than or equal to right.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Common.ValueObjects.YearMonth.Create(System.Int32,System.Int32)">
+            <summary>
+            Creates a new <see cref="T:Tfs.Portfolio.Domain.Common.ValueObjects.YearMonth"/> instance.
+            </summary>
+            <param name="month">The month (1-12).</param>
+            <param name="year">The year.</param>
+            <returns>A new <see cref="T:Tfs.Portfolio.Domain.Common.ValueObjects.YearMonth"/> instance.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">Thrown when month is not between 1 and 12.</exception>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Common.ValueObjects.YearMonth.FromDateTime(System.DateTime)">
+            <summary>
+            Creates a <see cref="T:Tfs.Portfolio.Domain.Common.ValueObjects.YearMonth"/> from a <see cref="T:System.DateTime"/>.
+            </summary>
+            <param name="dateTime">The date time to extract month and year from.</param>
+            <returns>A new <see cref="T:Tfs.Portfolio.Domain.Common.ValueObjects.YearMonth"/> instance.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Common.ValueObjects.YearMonth.AddMonths(System.Int32)">
+            <summary>
+            Adds the specified number of months to this instance.
+            </summary>
+            <param name="months">The number of months to add (can be negative).</param>
+            <returns>A new <see cref="T:Tfs.Portfolio.Domain.Common.ValueObjects.YearMonth"/> with the months added.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Common.ValueObjects.YearMonth.Equals(Tfs.Portfolio.Domain.Common.ValueObjects.YearMonth)">
+            <summary>
+            Determines whether the current instance is equal to another instance.
+            </summary>
+            <param name="other">The other YearMonth to compare.</param>
+            <returns>True if both month and year are equal.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Common.ValueObjects.YearMonth.Equals(System.Object)">
+            <summary>
+            Determines whether the current instance is equal to the specified object.
+            </summary>
+            <param name="obj">The object to compare.</param>
+            <returns>True if obj is a YearMonth with equal month and year.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Common.ValueObjects.YearMonth.GetHashCode">
+            <summary>
+            Gets the hash code.
+            </summary>
+            <returns>The hash code.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Common.ValueObjects.YearMonth.CompareTo(Tfs.Portfolio.Domain.Common.ValueObjects.YearMonth)">
+            <summary>
+            Compares the current instance with another YearMonth.
+            </summary>
+            <param name="other">The YearMonth to compare with.</param>
+            <returns>A value indicating the relative order.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Common.ValueObjects.YearMonth.ToString">
+            <summary>
+            Returns a string representation in "MM/yyyy" format.
+            </summary>
+            <returns>The formatted string.</returns>
+        </member>
+        <member name="T:Tfs.Portfolio.Domain.CompanyProfile.Entities.CompanyProfileEntity">
+            <summary>
+            Represents the singleton company profile aggregate root.
+            Only one instance can exist in the system.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.CompanyProfile.Entities.CompanyProfileEntity.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Domain.CompanyProfile.Entities.CompanyProfileEntity"/> class.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.CompanyProfile.Entities.CompanyProfileEntity.#ctor(System.Guid,System.String,System.String,System.String,System.Nullable{Tfs.Portfolio.Domain.Common.ValueObjects.TfsWebUrl},System.String,System.String,System.Nullable{Tfs.Portfolio.Domain.Common.ValueObjects.TfsWebUrl},System.DateTime)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Domain.CompanyProfile.Entities.CompanyProfileEntity"/> class.
+            </summary>
+            <param name="id">The unique identifier.</param>
+            <param name="companyName">The company name.</param>
+            <param name="contactEmail">The contact email.</param>
+            <param name="contactPhone">The contact phone number.</param>
+            <param name="webUrl">The company web URL.</param>
+            <param name="address">The company address.</param>
+            <param name="description">The company description.</param>
+            <param name="logoUrl">The company logo URL.</param>
+            <param name="createdAt">The creation date.</param>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.CompanyProfile.Entities.CompanyProfileEntity.Instance">
+            <summary>
+            Gets the existing company profile instance.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.CompanyProfile.Entities.CompanyProfileEntity.CompanyName">
+            <summary>
+            Gets the company name.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.CompanyProfile.Entities.CompanyProfileEntity.ContactEmail">
+            <summary>
+            Gets the contact email.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.CompanyProfile.Entities.CompanyProfileEntity.ContactPhone">
+            <summary>
+            Gets the contact phone number.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.CompanyProfile.Entities.CompanyProfileEntity.TfsWebUrl">
+            <summary>
+            Gets the company web URL.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.CompanyProfile.Entities.CompanyProfileEntity.Address">
+            <summary>
+            Gets the company address.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.CompanyProfile.Entities.CompanyProfileEntity.Description">
+            <summary>
+            Gets the company description.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.CompanyProfile.Entities.CompanyProfileEntity.LogoUrl">
+            <summary>
+            Gets the company logo URL.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.CompanyProfile.Entities.CompanyProfileEntity.CreatedAt">
+            <summary>
+            Gets the date and time when the profile was created.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.CompanyProfile.Entities.CompanyProfileEntity.UpdatedAt">
+            <summary>
+            Gets the date and time when the profile was last updated.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.CompanyProfile.Entities.CompanyProfileEntity.Create(System.String,System.String,System.String,System.Nullable{Tfs.Portfolio.Domain.Common.ValueObjects.TfsWebUrl},System.String,System.String,System.Nullable{Tfs.Portfolio.Domain.Common.ValueObjects.TfsWebUrl})">
+            <summary>
+            Creates a new company profile (singleton).
+            </summary>
+            <param name="companyName">The company name.</param>
+            <param name="contactEmail">The contact email.</param>
+            <param name="contactPhone">The contact phone number.</param>
+            <param name="webUrl">The company web URL.</param>
+            <param name="address">The company address.</param>
+            <param name="description">The company description.</param>
+            <param name="logoUrl">The company logo URL.</param>
+            <returns>A new company profile instance.</returns>
+            <exception cref="T:Tfs.Portfolio.Domain.CompanyProfile.Exceptions.CompanyProfileAlreadyExistsException">Thrown when a profile already exists.</exception>
+            <exception cref="T:Tfs.Portfolio.Domain.CompanyProfile.Exceptions.InvalidCompanyProfileStateException">Thrown when validation fails.</exception>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.CompanyProfile.Entities.CompanyProfileEntity.ResetInstance">
+            <summary>
+            Resets the singleton instance (for testing purposes only).
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.CompanyProfile.Entities.CompanyProfileEntity.Update(System.String,System.String,System.String,System.Nullable{Tfs.Portfolio.Domain.Common.ValueObjects.TfsWebUrl},System.String,System.String,System.Nullable{Tfs.Portfolio.Domain.Common.ValueObjects.TfsWebUrl})">
+            <summary>
+            Creates a new company profile (singleton).
+            </summary>
+            <param name="companyName">The new company name.</param>
+            <param name="contactEmail">The new contact email.</param>
+            <param name="contactPhone">The new contact phone number.</param>
+            <param name="webUrl">The new web URL.</param>
+            <param name="address">The new address.</param>
+            <param name="description">The new description.</param>
+            <param name="logoUrl">The new logo URL.</param>
+            <exception cref="T:Tfs.Portfolio.Domain.CompanyProfile.Exceptions.InvalidCompanyProfileStateException">Thrown when validation fails.</exception>
+        </member>
+        <member name="T:Tfs.Portfolio.Domain.CompanyProfile.Events.CompanyProfileCreatedEvent">
+            <summary>
+            Event raised when a company profile is created.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.CompanyProfile.Events.CompanyProfileCreatedEvent.ProfileId">
+            <summary>
+            Gets the profile identifier.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.CompanyProfile.Events.CompanyProfileCreatedEvent.CompanyName">
+            <summary>
+            Gets the company name.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.CompanyProfile.Events.CompanyProfileCreatedEvent.OccurredOn">
+            <inheritdoc />
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.CompanyProfile.Events.CompanyProfileCreatedEvent.EventId">
+            <inheritdoc />
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.CompanyProfile.Events.CompanyProfileCreatedEvent.#ctor(System.Guid,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Domain.CompanyProfile.Events.CompanyProfileCreatedEvent"/> class.
+            </summary>
+            <param name="profileId">The profile identifier.</param>
+            <param name="companyName">The company name.</param>
+        </member>
+        <member name="T:Tfs.Portfolio.Domain.CompanyProfile.Events.CompanyProfileUpdatedEvent">
+            <summary>
+            Event raised when a company profile is updated.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.CompanyProfile.Events.CompanyProfileUpdatedEvent.ProfileId">
+            <summary>
+            Gets the profile identifier.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.CompanyProfile.Events.CompanyProfileUpdatedEvent.OccurredOn">
+            <inheritdoc />
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.CompanyProfile.Events.CompanyProfileUpdatedEvent.EventId">
+            <inheritdoc />
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.CompanyProfile.Events.CompanyProfileUpdatedEvent.#ctor(System.Guid)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Domain.CompanyProfile.Events.CompanyProfileUpdatedEvent"/> class.
+            </summary>
+            <param name="profileId">The profile identifier.</param>
+        </member>
+        <member name="T:Tfs.Portfolio.Domain.CompanyProfile.Exceptions.CompanyProfileAlreadyExistsException">
+            <summary>
+            Exception thrown when attempting to create a company profile when one already exists.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.CompanyProfile.Exceptions.CompanyProfileAlreadyExistsException.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Domain.CompanyProfile.Exceptions.CompanyProfileAlreadyExistsException"/> class.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.CompanyProfile.Exceptions.CompanyProfileAlreadyExistsException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Domain.CompanyProfile.Exceptions.CompanyProfileAlreadyExistsException"/> class with a specified error message.
+            </summary>
+            <param name="message">The error message.</param>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.CompanyProfile.Exceptions.CompanyProfileAlreadyExistsException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Domain.CompanyProfile.Exceptions.CompanyProfileAlreadyExistsException"/> class with a specified error message and a reference to the inner exception.
+            </summary>
+            <param name="message">The error message.</param>
+            <param name="innerException">The inner exception.</param>
+        </member>
+        <member name="T:Tfs.Portfolio.Domain.CompanyProfile.Exceptions.CompanyProfileNotFoundException">
+            <summary>
+            Exception thrown when a company profile is not found.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.CompanyProfile.Exceptions.CompanyProfileNotFoundException.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Domain.CompanyProfile.Exceptions.CompanyProfileNotFoundException"/> class.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.CompanyProfile.Exceptions.CompanyProfileNotFoundException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Domain.CompanyProfile.Exceptions.CompanyProfileNotFoundException"/> class with a specified error message.
+            </summary>
+            <param name="message">The error message.</param>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.CompanyProfile.Exceptions.CompanyProfileNotFoundException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Domain.CompanyProfile.Exceptions.CompanyProfileNotFoundException"/> class with a specified error message and a reference to the inner exception.
+            </summary>
+            <param name="message">The error message.</param>
+            <param name="innerException">The inner exception.</param>
+        </member>
+        <member name="T:Tfs.Portfolio.Domain.CompanyProfile.Exceptions.InvalidCompanyProfileStateException">
+            <summary>
+            Exception thrown when a company profile is in an invalid state.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.CompanyProfile.Exceptions.InvalidCompanyProfileStateException.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Domain.CompanyProfile.Exceptions.InvalidCompanyProfileStateException"/> class.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.CompanyProfile.Exceptions.InvalidCompanyProfileStateException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Domain.CompanyProfile.Exceptions.InvalidCompanyProfileStateException"/> class with a specified error message.
+            </summary>
+            <param name="message">The error message.</param>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.CompanyProfile.Exceptions.InvalidCompanyProfileStateException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Domain.CompanyProfile.Exceptions.InvalidCompanyProfileStateException"/> class with a specified error message and a reference to the inner exception.
+            </summary>
+            <param name="message">The error message.</param>
+            <param name="innerException">The inner exception.</param>
+        </member>
+        <member name="T:Tfs.Portfolio.Domain.CompanyProfile.Repositories.ICompanyProfileRepository">
+            <summary>
+            Repository interface for company profile (singleton).
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.CompanyProfile.Repositories.ICompanyProfileRepository.GetAsync(System.Threading.CancellationToken)">
+            <summary>
+            Gets the company profile (singleton).
+            </summary>
+            <param name="cancellationToken">A token to cancel the operation.</param>
+            <returns>The company profile if exists; otherwise, null.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.CompanyProfile.Repositories.ICompanyProfileRepository.AddAsync(Tfs.Portfolio.Domain.CompanyProfile.Entities.CompanyProfileEntity,System.Threading.CancellationToken)">
+            <summary>
+            Adds a new company profile (singleton).
+            </summary>
+            <param name="profile">The company profile to add.</param>
+            <param name="cancellationToken">A token to cancel the operation.</param>
+            <returns>A task representing the asynchronous operation.</returns>
+            <exception cref="T:System.InvalidOperationException">Thrown when a profile already exists.</exception>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.CompanyProfile.Repositories.ICompanyProfileRepository.Update(Tfs.Portfolio.Domain.CompanyProfile.Entities.CompanyProfileEntity)">
+            <summary>
+            Updates the company profile.
+            </summary>
+            <param name="profile">The company profile to update.</param>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.CompanyProfile.Repositories.ICompanyProfileRepository.Delete(Tfs.Portfolio.Domain.CompanyProfile.Entities.CompanyProfileEntity)">
+            <summary>
+            Deletes the company profile.
+            </summary>
+            <param name="profile">The company profile to delete.</param>
+        </member>
+        <member name="T:Tfs.Portfolio.Domain.Projects.Entities.Project">
+            <summary>
+            Represents a project aggregate root.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Projects.Entities.Project.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Domain.Projects.Entities.Project"/> class.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Projects.Entities.Project.#ctor(System.Guid,System.String,System.String,Tfs.Portfolio.Domain.Common.ValueObjects.YearMonth,System.Int32,System.Guid,System.Guid,System.DateTime)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Domain.Projects.Entities.Project"/> class.
+            </summary>
+            <param name="id">The unique identifier.</param>
+            <param name="name">The project name.</param>
+            <param name="description">The project description.</param>
+            <param name="startDate">The project start date.</param>
+            <param name="durationMonths">The project duration in months.</param>
+            <param name="clientId">The client identifier.</param>
+            <param name="sectorId">The sector identifier.</param>
+            <param name="createdAt">The creation date.</param>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Projects.Entities.Project.Name">
+            <summary>
+            Gets the name of the project.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Projects.Entities.Project.Description">
+            <summary>
+            Gets the description of the project.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Projects.Entities.Project.StartDate">
+            <summary>
+            Gets the project start date.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Projects.Entities.Project.DurationMonths">
+            <summary>
+            Gets the project duration in months.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Projects.Entities.Project.EndDate">
+            <summary>
+            Gets the computed project end date.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Projects.Entities.Project.Technologies">
+            <summary>
+            Gets the project technologies.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Projects.Entities.Project.ClientId">
+            <summary>
+            Gets the client identifier.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Projects.Entities.Project.SectorId">
+            <summary>
+            Gets the sector identifier.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Projects.Entities.Project.Status">
+            <summary>
+            Gets the project status.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Projects.Entities.Project.ServiceIds">
+            <summary>
+            Gets the associated service identifiers.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Projects.Entities.Project.CreatedAt">
+            <summary>
+            Gets the date and time when the project was created.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Projects.Entities.Project.UpdatedAt">
+            <summary>
+            Gets the date and time when the project was last updated.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Projects.Entities.Project.Create(System.String,System.String,Tfs.Portfolio.Domain.Common.ValueObjects.YearMonth,System.Int32,System.Guid,System.Guid,System.Collections.Generic.IReadOnlyList{System.String})">
+            <summary>
+            Creates a new project.
+            </summary>
+            <param name="name">The project name.</param>
+            <param name="description">The project description.</param>
+            <param name="startDate">The project start date.</param>
+            <param name="durationMonths">The project duration in months (1-120).</param>
+            <param name="clientId">The client identifier.</param>
+            <param name="sectorId">The sector identifier.</param>
+            <param name="technologies">Optional list of technology names.</param>
+            <returns>A new project instance.</returns>
+            <exception cref="T:Tfs.Portfolio.Domain.Projects.Exceptions.InvalidProjectStateException">Thrown when validation fails.</exception>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Projects.Entities.Project.Update(System.String,System.String,Tfs.Portfolio.Domain.Common.ValueObjects.YearMonth,System.Int32,System.Guid,System.Guid)">
+            <summary>
+            Updates the project details.
+            </summary>
+            <param name="name">The new name.</param>
+            <param name="description">The new description.</param>
+            <param name="startDate">The new start date.</param>
+            <param name="durationMonths">The new duration in months.</param>
+            <param name="clientId">The new client identifier.</param>
+            <param name="sectorId">The new sector identifier.</param>
+            <exception cref="T:Tfs.Portfolio.Domain.Projects.Exceptions.InvalidProjectStateException">Thrown when validation fails.</exception>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Projects.Entities.Project.ChangeStatus(Tfs.Portfolio.Domain.Projects.Entities.ProjectStatus)">
+            <summary>
+            Changes the project status.
+            </summary>
+            <param name="newStatus">The new status.</param>
+            <exception cref="T:Tfs.Portfolio.Domain.Projects.Exceptions.InvalidProjectStateException">Thrown when the status transition is invalid.</exception>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Projects.Entities.Project.AddTechnology(Tfs.Portfolio.Domain.Common.ValueObjects.Technology)">
+            <summary>
+            Adds a technology to the project.
+            </summary>
+            <param name="technology">The technology to add.</param>
+            <exception cref="T:Tfs.Portfolio.Domain.Projects.Exceptions.InvalidProjectStateException">Thrown when the technology already exists.</exception>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Projects.Entities.Project.RemoveTechnology(Tfs.Portfolio.Domain.Common.ValueObjects.Technology)">
+            <summary>
+            Removes a technology from the project.
+            </summary>
+            <param name="technology">The technology to remove.</param>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Projects.Entities.Project.AddService(System.Guid)">
+            <summary>
+            Adds a service to the project.
+            </summary>
+            <param name="serviceId">The service identifier to add.</param>
+            <exception cref="T:Tfs.Portfolio.Domain.Projects.Exceptions.InvalidProjectStateException">Thrown when the service is already associated.</exception>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Projects.Entities.Project.RemoveService(System.Guid)">
+            <summary>
+            Removes a service from the project.
+            </summary>
+            <param name="serviceId">The service identifier to remove.</param>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Projects.Entities.Project.IsValidTransition(Tfs.Portfolio.Domain.Projects.Entities.ProjectStatus,Tfs.Portfolio.Domain.Projects.Entities.ProjectStatus)">
+            <summary>
+            Determines if a status transition is valid.
+            </summary>
+            <param name="from">The current status.</param>
+            <param name="to">The target status.</param>
+            <returns>True if the transition is valid; otherwise, false.</returns>
+        </member>
+        <member name="T:Tfs.Portfolio.Domain.Projects.Entities.ProjectStatus">
+            <summary>
+            Represents the status of a project.
+            </summary>
+        </member>
+        <member name="F:Tfs.Portfolio.Domain.Projects.Entities.ProjectStatus.Draft">
+            <summary>Project is in draft state.</summary>
+        </member>
+        <member name="F:Tfs.Portfolio.Domain.Projects.Entities.ProjectStatus.Active">
+            <summary>Project is active.</summary>
+        </member>
+        <member name="F:Tfs.Portfolio.Domain.Projects.Entities.ProjectStatus.OnHold">
+            <summary>Project is on hold.</summary>
+        </member>
+        <member name="F:Tfs.Portfolio.Domain.Projects.Entities.ProjectStatus.Completed">
+            <summary>Project is completed.</summary>
+        </member>
+        <member name="F:Tfs.Portfolio.Domain.Projects.Entities.ProjectStatus.Cancelled">
+            <summary>Project is cancelled.</summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Domain.Projects.Events.ProjectCreatedEvent">
+            <summary>
+            Event raised when a project is created.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Projects.Events.ProjectCreatedEvent.ProjectId">
+            <summary>
+            Gets the project identifier.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Projects.Events.ProjectCreatedEvent.ProjectName">
+            <summary>
+            Gets the project name.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Projects.Events.ProjectCreatedEvent.OccurredOn">
+            <inheritdoc />
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Projects.Events.ProjectCreatedEvent.EventId">
+            <inheritdoc />
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Projects.Events.ProjectCreatedEvent.#ctor(System.Guid,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Domain.Projects.Events.ProjectCreatedEvent"/> class.
+            </summary>
+            <param name="projectId">The project identifier.</param>
+            <param name="projectName">The project name.</param>
+        </member>
+        <member name="T:Tfs.Portfolio.Domain.Projects.Events.ProjectStatusChangedEvent">
+            <summary>
+            Event raised when a project status changes.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Projects.Events.ProjectStatusChangedEvent.ProjectId">
+            <summary>
+            Gets the project identifier.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Projects.Events.ProjectStatusChangedEvent.OldStatus">
+            <summary>
+            Gets the previous status.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Projects.Events.ProjectStatusChangedEvent.NewStatus">
+            <summary>
+            Gets the new status.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Projects.Events.ProjectStatusChangedEvent.OccurredOn">
+            <inheritdoc />
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Projects.Events.ProjectStatusChangedEvent.EventId">
+            <inheritdoc />
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Projects.Events.ProjectStatusChangedEvent.#ctor(System.Guid,Tfs.Portfolio.Domain.Projects.Entities.ProjectStatus,Tfs.Portfolio.Domain.Projects.Entities.ProjectStatus)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Domain.Projects.Events.ProjectStatusChangedEvent"/> class.
+            </summary>
+            <param name="projectId">The project identifier.</param>
+            <param name="oldStatus">The previous status.</param>
+            <param name="newStatus">The new status.</param>
+        </member>
+        <member name="T:Tfs.Portfolio.Domain.Projects.Events.ProjectUpdatedEvent">
+            <summary>
+            Event raised when a project is updated.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Projects.Events.ProjectUpdatedEvent.ProjectId">
+            <summary>
+            Gets the project identifier.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Projects.Events.ProjectUpdatedEvent.OccurredOn">
+            <inheritdoc />
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Projects.Events.ProjectUpdatedEvent.EventId">
+            <inheritdoc />
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Projects.Events.ProjectUpdatedEvent.#ctor(System.Guid)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Domain.Projects.Events.ProjectUpdatedEvent"/> class.
+            </summary>
+            <param name="projectId">The project identifier.</param>
+        </member>
+        <member name="T:Tfs.Portfolio.Domain.Projects.Exceptions.InvalidProjectStateException">
+            <summary>
+            Exception thrown when a project is in an invalid state.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Projects.Exceptions.InvalidProjectStateException.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Domain.Projects.Exceptions.InvalidProjectStateException"/> class.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Projects.Exceptions.InvalidProjectStateException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Domain.Projects.Exceptions.InvalidProjectStateException"/> class with a specified error message.
+            </summary>
+            <param name="message">The error message.</param>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Projects.Exceptions.InvalidProjectStateException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Domain.Projects.Exceptions.InvalidProjectStateException"/> class with a specified error message and a reference to the inner exception.
+            </summary>
+            <param name="message">The error message.</param>
+            <param name="innerException">The inner exception.</param>
+        </member>
+        <member name="T:Tfs.Portfolio.Domain.Projects.Exceptions.ProjectNotFoundException">
+            <summary>
+            Exception thrown when a project is not found.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Projects.Exceptions.ProjectNotFoundException.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Domain.Projects.Exceptions.ProjectNotFoundException"/> class.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Projects.Exceptions.ProjectNotFoundException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Domain.Projects.Exceptions.ProjectNotFoundException"/> class with a specified error message.
+            </summary>
+            <param name="message">The error message.</param>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Projects.Exceptions.ProjectNotFoundException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Domain.Projects.Exceptions.ProjectNotFoundException"/> class with a specified error message and a reference to the inner exception.
+            </summary>
+            <param name="message">The error message.</param>
+            <param name="innerException">The inner exception.</param>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Projects.Exceptions.ProjectNotFoundException.#ctor(System.Guid)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Domain.Projects.Exceptions.ProjectNotFoundException"/> class with the project identifier.
+            </summary>
+            <param name="projectId">The project identifier that was not found.</param>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Projects.Exceptions.ProjectNotFoundException.ProjectId">
+            <summary>
+            Gets the project identifier that was not found.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Domain.Projects.Repositories.IProjectRepository">
+            <summary>
+            Repository interface for projects.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Projects.Repositories.IProjectRepository.GetByIdAsync(System.Guid,System.Threading.CancellationToken)">
+            <summary>
+            Gets a project by its identifier.
+            </summary>
+            <param name="id">The project identifier.</param>
+            <param name="cancellationToken">A token to cancel the operation.</param>
+            <returns>The project if found; otherwise, null.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Projects.Repositories.IProjectRepository.GetAllAsync(System.Threading.CancellationToken)">
+            <summary>
+            Gets all projects.
+            </summary>
+            <param name="cancellationToken">A token to cancel the operation.</param>
+            <returns>A read-only list of projects.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Projects.Repositories.IProjectRepository.GetByClientIdAsync(System.Guid,System.Threading.CancellationToken)">
+            <summary>
+            Gets projects by client identifier.
+            </summary>
+            <param name="clientId">The client identifier.</param>
+            <param name="cancellationToken">A token to cancel the operation.</param>
+            <returns>A read-only list of projects belonging to the client.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Projects.Repositories.IProjectRepository.GetBySectorIdAsync(System.Guid,System.Threading.CancellationToken)">
+            <summary>
+            Gets projects by sector identifier.
+            </summary>
+            <param name="sectorId">The sector identifier.</param>
+            <param name="cancellationToken">A token to cancel the operation.</param>
+            <returns>A read-only list of projects belonging to the sector.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Projects.Repositories.IProjectRepository.GetByTechnologyAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Gets projects by technology name.
+            </summary>
+            <param name="technologyName">The technology name to search for.</param>
+            <param name="cancellationToken">A token to cancel the operation.</param>
+            <returns>A read-only list of projects containing the technology.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Projects.Repositories.IProjectRepository.GetByStatusAsync(Tfs.Portfolio.Domain.Projects.Entities.ProjectStatus,System.Threading.CancellationToken)">
+            <summary>
+            Gets projects by status.
+            </summary>
+            <param name="status">The project status to filter by.</param>
+            <param name="cancellationToken">A token to cancel the operation.</param>
+            <returns>A read-only list of projects with the specified status.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Projects.Repositories.IProjectRepository.GetActiveAsync(System.Threading.CancellationToken)">
+            <summary>
+            Gets all active projects (status Active).
+            </summary>
+            <param name="cancellationToken">A token to cancel the operation.</param>
+            <returns>A read-only list of active projects.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Projects.Repositories.IProjectRepository.GetFilteredAsync(System.Nullable{System.Guid},System.Nullable{System.Guid},System.String,System.Nullable{Tfs.Portfolio.Domain.Projects.Entities.ProjectStatus},System.Threading.CancellationToken)">
+            <summary>
+            Gets projects with combined filters.
+            </summary>
+            <param name="clientId">Optional client identifier filter.</param>
+            <param name="sectorId">Optional sector identifier filter.</param>
+            <param name="technologyName">Optional technology name filter.</param>
+            <param name="status">Optional project status filter.</param>
+            <param name="cancellationToken">A token to cancel the operation.</param>
+            <returns>A read-only list of projects matching all specified filters.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Projects.Repositories.IProjectRepository.AddAsync(Tfs.Portfolio.Domain.Projects.Entities.Project,System.Threading.CancellationToken)">
+            <summary>
+            Adds a new project.
+            </summary>
+            <param name="project">The project to add.</param>
+            <param name="cancellationToken">A token to cancel the operation.</param>
+            <returns>A task representing the asynchronous operation.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Projects.Repositories.IProjectRepository.Update(Tfs.Portfolio.Domain.Projects.Entities.Project)">
+            <summary>
+            Updates an existing project.
+            </summary>
+            <param name="project">The project to update.</param>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Projects.Repositories.IProjectRepository.Delete(Tfs.Portfolio.Domain.Projects.Entities.Project)">
+            <summary>
+            Deletes a project.
+            </summary>
+            <param name="project">The project to delete.</param>
+        </member>
+        <member name="T:Tfs.Portfolio.Domain.Sectors.Entities.Sector">
+            <summary>
+            Represents a sector aggregate root for categorizing projects.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Sectors.Entities.Sector.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Domain.Sectors.Entities.Sector"/> class.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Sectors.Entities.Sector.#ctor(System.Guid,System.String,System.String,System.Boolean,System.DateTime)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Domain.Sectors.Entities.Sector"/> class.
+            </summary>
+            <param name="id">The unique identifier.</param>
+            <param name="name">The sector name.</param>
+            <param name="description">The sector description.</param>
+            <param name="isActive">The active status.</param>
+            <param name="createdAt">The creation date.</param>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Sectors.Entities.Sector.Name">
+            <summary>
+            Gets the name of the sector.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Sectors.Entities.Sector.Description">
+            <summary>
+            Gets the description of the sector.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Sectors.Entities.Sector.IsActive">
+            <summary>
+            Gets a value indicating whether the sector is active.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Sectors.Entities.Sector.CreatedAt">
+            <summary>
+            Gets the date and time when the sector was created.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Sectors.Entities.Sector.UpdatedAt">
+            <summary>
+            Gets the date and time when the sector was last updated.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Sectors.Entities.Sector.Create(System.String,System.String)">
+            <summary>
+            Creates a new sector.
+            </summary>
+            <param name="name">The sector name.</param>
+            <param name="description">The sector description.</param>
+            <returns>A new sector instance.</returns>
+            <exception cref="T:Tfs.Portfolio.Domain.Sectors.Exceptions.InvalidSectorStateException">Thrown when the name is empty or exceeds max length.</exception>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Sectors.Entities.Sector.Update(System.String,System.String)">
+            <summary>
+            Updates the sector details.
+            </summary>
+            <param name="name">The new name.</param>
+            <param name="description">The new description.</param>
+            <exception cref="T:Tfs.Portfolio.Domain.Sectors.Exceptions.InvalidSectorStateException">Thrown when the name is empty or exceeds max length.</exception>
+        </member>
+        <member name="T:Tfs.Portfolio.Domain.Sectors.Events.SectorCreatedEvent">
+            <summary>
+            Event raised when a sector is created.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Sectors.Events.SectorCreatedEvent.SectorId">
+            <summary>
+            Gets the sector identifier.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Sectors.Events.SectorCreatedEvent.SectorName">
+            <summary>
+            Gets the sector name.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Sectors.Events.SectorCreatedEvent.OccurredOn">
+            <inheritdoc />
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Sectors.Events.SectorCreatedEvent.EventId">
+            <inheritdoc />
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Sectors.Events.SectorCreatedEvent.#ctor(System.Guid,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Domain.Sectors.Events.SectorCreatedEvent"/> class.
+            </summary>
+            <param name="sectorId">The sector identifier.</param>
+            <param name="sectorName">The sector name.</param>
+        </member>
+        <member name="T:Tfs.Portfolio.Domain.Sectors.Events.SectorUpdatedEvent">
+            <summary>
+            Event raised when a sector is updated.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Sectors.Events.SectorUpdatedEvent.SectorId">
+            <summary>
+            Gets the sector identifier.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Sectors.Events.SectorUpdatedEvent.OccurredOn">
+            <inheritdoc />
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Sectors.Events.SectorUpdatedEvent.EventId">
+            <inheritdoc />
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Sectors.Events.SectorUpdatedEvent.#ctor(System.Guid)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Domain.Sectors.Events.SectorUpdatedEvent"/> class.
+            </summary>
+            <param name="sectorId">The sector identifier.</param>
+        </member>
+        <member name="T:Tfs.Portfolio.Domain.Sectors.Exceptions.InvalidSectorStateException">
+            <summary>
+            Exception thrown when a sector is in an invalid state.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Sectors.Exceptions.InvalidSectorStateException.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Domain.Sectors.Exceptions.InvalidSectorStateException"/> class.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Sectors.Exceptions.InvalidSectorStateException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Domain.Sectors.Exceptions.InvalidSectorStateException"/> class with a specified error message.
+            </summary>
+            <param name="message">The error message.</param>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Sectors.Exceptions.InvalidSectorStateException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Domain.Sectors.Exceptions.InvalidSectorStateException"/> class with a specified error message and a reference to the inner exception.
+            </summary>
+            <param name="message">The error message.</param>
+            <param name="innerException">The inner exception.</param>
+        </member>
+        <member name="T:Tfs.Portfolio.Domain.Sectors.Exceptions.SectorNotFoundException">
+            <summary>
+            Exception thrown when a sector is not found.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Sectors.Exceptions.SectorNotFoundException.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Domain.Sectors.Exceptions.SectorNotFoundException"/> class.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Sectors.Exceptions.SectorNotFoundException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Domain.Sectors.Exceptions.SectorNotFoundException"/> class with a specified error message.
+            </summary>
+            <param name="message">The error message.</param>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Sectors.Exceptions.SectorNotFoundException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Domain.Sectors.Exceptions.SectorNotFoundException"/> class with a specified error message and a reference to the inner exception.
+            </summary>
+            <param name="message">The error message.</param>
+            <param name="innerException">The inner exception.</param>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Sectors.Exceptions.SectorNotFoundException.#ctor(System.Guid)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Domain.Sectors.Exceptions.SectorNotFoundException"/> class with the sector identifier.
+            </summary>
+            <param name="sectorId">The sector identifier that was not found.</param>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Sectors.Exceptions.SectorNotFoundException.SectorId">
+            <summary>
+            Gets the sector identifier that was not found.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Domain.Sectors.Repositories.ISectorRepository">
+            <summary>
+            Repository interface for sectors.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Sectors.Repositories.ISectorRepository.GetByIdAsync(System.Guid,System.Threading.CancellationToken)">
+            <summary>
+            Gets a sector by its identifier.
+            </summary>
+            <param name="id">The sector identifier.</param>
+            <param name="cancellationToken">A token to cancel the operation.</param>
+            <returns>The sector if found; otherwise, null.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Sectors.Repositories.ISectorRepository.GetAllAsync(System.Threading.CancellationToken)">
+            <summary>
+            Gets all sectors.
+            </summary>
+            <param name="cancellationToken">A token to cancel the operation.</param>
+            <returns>A read-only list of sectors.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Sectors.Repositories.ISectorRepository.GetActiveAsync(System.Threading.CancellationToken)">
+            <summary>
+            Gets all active sectors.
+            </summary>
+            <param name="cancellationToken">A token to cancel the operation.</param>
+            <returns>A read-only list of active sectors.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Sectors.Repositories.ISectorRepository.AddAsync(Tfs.Portfolio.Domain.Sectors.Entities.Sector,System.Threading.CancellationToken)">
+            <summary>
+            Adds a new sector.
+            </summary>
+            <param name="sector">The sector to add.</param>
+            <param name="cancellationToken">A token to cancel the operation.</param>
+            <returns>A task representing the asynchronous operation.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Sectors.Repositories.ISectorRepository.Update(Tfs.Portfolio.Domain.Sectors.Entities.Sector)">
+            <summary>
+            Updates an existing sector.
+            </summary>
+            <param name="sector">The sector to update.</param>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Sectors.Repositories.ISectorRepository.Delete(Tfs.Portfolio.Domain.Sectors.Entities.Sector)">
+            <summary>
+            Deletes a sector.
+            </summary>
+            <param name="sector">The sector to delete.</param>
+        </member>
+        <member name="T:Tfs.Portfolio.Domain.Services.Entities.Service">
+            <summary>
+            Represents a service aggregate root offered by the company.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Services.Entities.Service.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Domain.Services.Entities.Service"/> class.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Services.Entities.Service.#ctor(System.Guid,System.String,System.String,Tfs.Portfolio.Domain.Services.Entities.ServiceCategory,System.Boolean,System.DateTime)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Domain.Services.Entities.Service"/> class.
+            </summary>
+            <param name="id">The unique identifier.</param>
+            <param name="name">The service name.</param>
+            <param name="description">The service description.</param>
+            <param name="category">The service category.</param>
+            <param name="isActive">The active status.</param>
+            <param name="createdAt">The creation date.</param>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Services.Entities.Service.Name">
+            <summary>
+            Gets the name of the service.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Services.Entities.Service.Description">
+            <summary>
+            Gets the description of the service.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Services.Entities.Service.Category">
+            <summary>
+            Gets the category of the service.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Services.Entities.Service.IsActive">
+            <summary>
+            Gets a value indicating whether the service is active.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Services.Entities.Service.CreatedAt">
+            <summary>
+            Gets the date and time when the service was created.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Services.Entities.Service.UpdatedAt">
+            <summary>
+            Gets the date and time when the service was last updated.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Services.Entities.Service.Create(System.String,System.String,Tfs.Portfolio.Domain.Services.Entities.ServiceCategory)">
+            <summary>
+            Creates a new service.
+            </summary>
+            <param name="name">The service name.</param>
+            <param name="description">The service description.</param>
+            <param name="category">The service category.</param>
+            <returns>A new service instance.</returns>
+            <exception cref="T:Tfs.Portfolio.Domain.Services.Exceptions.InvalidServiceStateException">Thrown when the name is empty or exceeds max length.</exception>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Services.Entities.Service.Update(System.String,System.String,Tfs.Portfolio.Domain.Services.Entities.ServiceCategory)">
+            <summary>
+            Updates the service details.
+            </summary>
+            <param name="name">The new name.</param>
+            <param name="description">The new description.</param>
+            <param name="category">The new category.</param>
+            <exception cref="T:Tfs.Portfolio.Domain.Services.Exceptions.InvalidServiceStateException">Thrown when the name is empty or exceeds max length.</exception>
+        </member>
+        <member name="T:Tfs.Portfolio.Domain.Services.Entities.ServiceCategory">
+            <summary>
+            Represents a service category.
+            </summary>
+        </member>
+        <member name="F:Tfs.Portfolio.Domain.Services.Entities.ServiceCategory.Development">
+            <summary>Development services</summary>
+        </member>
+        <member name="F:Tfs.Portfolio.Domain.Services.Entities.ServiceCategory.Consulting">
+            <summary>Consulting services</summary>
+        </member>
+        <member name="F:Tfs.Portfolio.Domain.Services.Entities.ServiceCategory.Design">
+            <summary>Design services</summary>
+        </member>
+        <member name="F:Tfs.Portfolio.Domain.Services.Entities.ServiceCategory.DevOps">
+            <summary>DevOps services</summary>
+        </member>
+        <member name="F:Tfs.Portfolio.Domain.Services.Entities.ServiceCategory.Training">
+            <summary>Training services</summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Domain.Services.Events.ServiceCreatedEvent">
+            <summary>
+            Event raised when a service is created.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Services.Events.ServiceCreatedEvent.ServiceId">
+            <summary>
+            Gets the service identifier.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Services.Events.ServiceCreatedEvent.ServiceName">
+            <summary>
+            Gets the service name.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Services.Events.ServiceCreatedEvent.OccurredOn">
+            <inheritdoc />
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Services.Events.ServiceCreatedEvent.EventId">
+            <inheritdoc />
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Services.Events.ServiceCreatedEvent.#ctor(System.Guid,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Domain.Services.Events.ServiceCreatedEvent"/> class.
+            </summary>
+            <param name="serviceId">The service identifier.</param>
+            <param name="serviceName">The service name.</param>
+        </member>
+        <member name="T:Tfs.Portfolio.Domain.Services.Events.ServiceUpdatedEvent">
+            <summary>
+            Event raised when a service is updated.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Services.Events.ServiceUpdatedEvent.ServiceId">
+            <summary>
+            Gets the service identifier.
+            </summary>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Services.Events.ServiceUpdatedEvent.OccurredOn">
+            <inheritdoc />
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Services.Events.ServiceUpdatedEvent.EventId">
+            <inheritdoc />
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Services.Events.ServiceUpdatedEvent.#ctor(System.Guid)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Domain.Services.Events.ServiceUpdatedEvent"/> class.
+            </summary>
+            <param name="serviceId">The service identifier.</param>
+        </member>
+        <member name="T:Tfs.Portfolio.Domain.Services.Exceptions.InvalidServiceStateException">
+            <summary>
+            Exception thrown when a service is in an invalid state.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Services.Exceptions.InvalidServiceStateException.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Domain.Services.Exceptions.InvalidServiceStateException"/> class.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Services.Exceptions.InvalidServiceStateException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Domain.Services.Exceptions.InvalidServiceStateException"/> class with a specified error message.
+            </summary>
+            <param name="message">The error message.</param>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Services.Exceptions.InvalidServiceStateException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Domain.Services.Exceptions.InvalidServiceStateException"/> class with a specified error message and a reference to the inner exception.
+            </summary>
+            <param name="message">The error message.</param>
+            <param name="innerException">The inner exception.</param>
+        </member>
+        <member name="T:Tfs.Portfolio.Domain.Services.Exceptions.ServiceNotFoundException">
+            <summary>
+            Exception thrown when a service is not found.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Services.Exceptions.ServiceNotFoundException.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Domain.Services.Exceptions.ServiceNotFoundException"/> class.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Services.Exceptions.ServiceNotFoundException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Domain.Services.Exceptions.ServiceNotFoundException"/> class with a specified error message.
+            </summary>
+            <param name="message">The error message.</param>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Services.Exceptions.ServiceNotFoundException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Domain.Services.Exceptions.ServiceNotFoundException"/> class with a specified error message and a reference to the inner exception.
+            </summary>
+            <param name="message">The error message.</param>
+            <param name="innerException">The inner exception.</param>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Services.Exceptions.ServiceNotFoundException.#ctor(System.Guid)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tfs.Portfolio.Domain.Services.Exceptions.ServiceNotFoundException"/> class with the service identifier.
+            </summary>
+            <param name="serviceId">The service identifier that was not found.</param>
+        </member>
+        <member name="P:Tfs.Portfolio.Domain.Services.Exceptions.ServiceNotFoundException.ServiceId">
+            <summary>
+            Gets the service identifier that was not found.
+            </summary>
+        </member>
+        <member name="T:Tfs.Portfolio.Domain.Services.Repositories.IServiceRepository">
+            <summary>
+            Repository interface for services.
+            </summary>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Services.Repositories.IServiceRepository.GetByIdAsync(System.Guid,System.Threading.CancellationToken)">
+            <summary>
+            Gets a service by its identifier.
+            </summary>
+            <param name="id">The service identifier.</param>
+            <param name="cancellationToken">A token to cancel the operation.</param>
+            <returns>The service if found; otherwise, null.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Services.Repositories.IServiceRepository.GetAllAsync(System.Threading.CancellationToken)">
+            <summary>
+            Gets all services.
+            </summary>
+            <param name="cancellationToken">A token to cancel the operation.</param>
+            <returns>A read-only list of services.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Services.Repositories.IServiceRepository.GetActiveAsync(System.Threading.CancellationToken)">
+            <summary>
+            Gets all active services.
+            </summary>
+            <param name="cancellationToken">A token to cancel the operation.</param>
+            <returns>A read-only list of active services.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Services.Repositories.IServiceRepository.GetByCategoryAsync(Tfs.Portfolio.Domain.Services.Entities.ServiceCategory,System.Threading.CancellationToken)">
+            <summary>
+            Gets services by category.
+            </summary>
+            <param name="category">The service category.</param>
+            <param name="cancellationToken">A token to cancel the operation.</param>
+            <returns>A read-only list of services in the specified category.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Services.Repositories.IServiceRepository.AddAsync(Tfs.Portfolio.Domain.Services.Entities.Service,System.Threading.CancellationToken)">
+            <summary>
+            Adds a new service.
+            </summary>
+            <param name="service">The service to add.</param>
+            <param name="cancellationToken">A token to cancel the operation.</param>
+            <returns>A task representing the asynchronous operation.</returns>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Services.Repositories.IServiceRepository.Update(Tfs.Portfolio.Domain.Services.Entities.Service)">
+            <summary>
+            Updates an existing service.
+            </summary>
+            <param name="service">The service to update.</param>
+        </member>
+        <member name="M:Tfs.Portfolio.Domain.Services.Repositories.IServiceRepository.Delete(Tfs.Portfolio.Domain.Services.Entities.Service)">
+            <summary>
+            Deletes a service.
+            </summary>
+            <param name="service">The service to delete.</param>
+        </member>
+    </members>
+</doc>

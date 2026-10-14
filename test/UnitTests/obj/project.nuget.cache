@@ -1,0 +1,17 @@
+{
+  "version": 2,
+  "dgSpecHash": "Cx0lmamoX3k=",
+  "success": false,
+  "projectFilePath": "D:\\dev\\Tfs\\Portfolio\\tfs-portfolio\\test\\UnitTests\\Tfs.Portfolio.UnitTests.csproj",
+  "expectedPackageFiles": [],
+  "logs": [
+    {
+      "code": "NU1105",
+      "level": "Error",
+      "message": "Unable to read project information for 'Tfs.Portfolio.UnitTests': Invalid framework identifier ''.",
+      "projectPath": "D:\\dev\\Tfs\\Portfolio\\tfs-portfolio\\test\\UnitTests\\Tfs.Portfolio.UnitTests.csproj",
+      "filePath": "D:\\dev\\Tfs\\Portfolio\\tfs-portfolio\\test\\UnitTests\\Tfs.Portfolio.UnitTests.csproj",
+      "targetGraphs": []
+    }
+  ]
+}
