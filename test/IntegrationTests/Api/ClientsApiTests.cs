@@ -88,7 +88,7 @@ public sealed class ClientsApiTests : IntegrationTestBase
                 System.Console.WriteLine($"DEBUG: Diff at index {i}: actual='{logoUrlValue[i]}' expected='{expectedUrl[i]}'");
             }
         }
-        client.LogoUrl!.Value.Should().Be(expectedUrl);
+        logoUrlValue.Should().Be(expectedUrl);
         client.Phone.Should().Be("+1234567890");
         client.Address.Should().Be("123 Client St");
         client.IsActive.Should().BeTrue();

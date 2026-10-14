@@ -5,6 +5,7 @@
 
 namespace Tfs.Portfolio.Application.CompanyProfile.Dtos;
 
+using Newtonsoft.Json;
 using Tfs.Portfolio.Domain.Common.ValueObjects;
 
 /// <summary>
@@ -15,9 +16,11 @@ public sealed record CompanyProfileDto(
     string CompanyName,
     string ContactEmail,
     string? ContactPhone,
+    [JsonConverter(typeof(TfsWebUrlJsonConverter))]
     TfsWebUrl? TfsWebUrl,
     string? Address,
     string? Description,
+    [JsonConverter(typeof(TfsWebUrlJsonConverter))]
     TfsWebUrl? LogoUrl,
     DateTime CreatedAt,
     DateTime? UpdatedAt
@@ -30,8 +33,10 @@ public sealed record UpdateCompanyProfileRequest(
     string CompanyName,
     string ContactEmail,
     string? ContactPhone,
+    [JsonConverter(typeof(TfsWebUrlJsonConverter))]
     TfsWebUrl? TfsWebUrl,
     string? Address,
     string? Description,
+    [JsonConverter(typeof(TfsWebUrlJsonConverter))]
     TfsWebUrl? LogoUrl
 );
