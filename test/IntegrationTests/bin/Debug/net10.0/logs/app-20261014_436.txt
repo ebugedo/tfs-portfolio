@@ -1,0 +1,3 @@
+2026-10-14 23:25:45.397 +02:00 [WRN] Failed to determine the https port for redirect.
+2026-10-14 23:25:45.423 +02:00 [WRN] The query uses the 'First'/'FirstOrDefault' operator without 'OrderBy' and filter operators. This may lead to unpredictable results.
+2026-10-14 23:25:45.428 +02:00 [INF] HTTP PUT /api/v1/company-profile responded 404 in 31.4189 ms

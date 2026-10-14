@@ -1,0 +1,4 @@
+2026-10-14 23:26:05.387 +02:00 [INF] HTTP POST /api/v1/projects responded 201 in 102.5501 ms
+2026-10-14 23:26:05.403 +02:00 [INF] HTTP POST /api/v1/projects responded 201 in 5.9001 ms
+2026-10-14 23:26:05.429 +02:00 [INF] HTTP PATCH /api/v1/projects/0e3d04f1-dfc3-4440-a5f5-6ceee65a6f24/status responded 204 in 23.5740 ms
+2026-10-14 23:26:05.442 +02:00 [INF] HTTP GET /api/v1/projects responded 200 in 12.3393 ms
