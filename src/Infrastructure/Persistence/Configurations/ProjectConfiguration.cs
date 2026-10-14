@@ -7,6 +7,8 @@ namespace Tfs.Portfolio.Infrastructure.Persistence.Configurations;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Newtonsoft.Json;
 using Tfs.Portfolio.Domain.Clients.Entities;
 using Tfs.Portfolio.Domain.Common.ValueObjects;
 using Tfs.Portfolio.Domain.Projects.Entities;
@@ -41,12 +43,14 @@ public sealed class ProjectConfiguration : IEntityTypeConfiguration<Project>
             .HasColumnType("text")
             .HasMaxLength(2000);
 
+        var yearMonthConverter = new ValueConverter<YearMonth, string>(
+            v => JsonConvert.SerializeObject($"{v.Month:D2}/{v.Year}"),
+            v => JsonConvert.DeserializeObject<string>(v) != null ? ParseYearMonth(JsonConvert.DeserializeObject<string>(v)!) : new YearMonth(1, 2024));
+
         builder.Property(p => p.StartDate)
             .HasColumnName("StartDate")
             .HasColumnType("jsonb")
-            .HasConversion(
-                v => new { Month = v.Month, Year = v.Year },
-                v => new YearMonth(v.Month, v.Year));
+            .HasConversion(yearMonthConverter);
 
         builder.Property(p => p.DurationMonths)
             .HasColumnName("DurationMonths")
@@ -124,5 +128,18 @@ public sealed class ProjectConfiguration : IEntityTypeConfiguration<Project>
 
         builder.HasIndex(p => p.Status)
             .HasDatabaseName("IX_Projects_Status");
+    }
+
+    private static YearMonth ParseYearMonth(string v)
+    {
+        if (v.Length < 5)
+        {
+            return new YearMonth(1, 2024);
+        }
+        var monthStr = v.Substring(0, 2);
+        var yearStr = v.Substring(3);
+        return int.TryParse(monthStr, out var month) && int.TryParse(yearStr, out var year)
+            ? new YearMonth(month, year)
+            : new YearMonth(1, 2024);
     }
 }

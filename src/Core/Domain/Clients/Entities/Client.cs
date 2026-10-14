@@ -5,6 +5,7 @@
 
 namespace Tfs.Portfolio.Domain.Clients.Entities;
 
+using System.Text.RegularExpressions;
 using Tfs.Portfolio.Domain.Common;
 using Tfs.Portfolio.Domain.Common.ValueObjects;
 using Tfs.Portfolio.Domain.Clients.Events;
@@ -15,6 +16,8 @@ using Tfs.Portfolio.Domain.Clients.Exceptions;
 /// </summary>
 public sealed class Client : AggregateRoot<Guid>
 {
+    private static readonly Regex EmailRegex = new(@"^[^@\s]+@[^@\s]+\.[^@\s]+$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+
     /// <summary>
     /// Initializes a new instance of the <see cref="Client"/> class.
     /// </summary>
@@ -108,6 +111,8 @@ public sealed class Client : AggregateRoot<Guid>
             throw new InvalidClientStateException("Client name must not exceed 200 characters");
         }
 
+        ValidateEmail(email);
+
         var client = new Client(Guid.NewGuid(), trimmedName, logoUrl, email.Trim(), phone?.Trim(), address?.Trim(), true, DateTime.UtcNow);
         client.AddDomainEvent(new ClientCreatedEvent(client.Id, client.Name));
         return client;
@@ -135,6 +140,8 @@ public sealed class Client : AggregateRoot<Guid>
             throw new InvalidClientStateException("Client name must not exceed 200 characters");
         }
 
+        ValidateEmail(email);
+
         this.Name = trimmedName;
         this.Email = email.Trim();
         this.LogoUrl = logoUrl;
@@ -152,5 +159,19 @@ public sealed class Client : AggregateRoot<Guid>
         this.IsActive = false;
         this.UpdatedAt = DateTime.UtcNow;
         this.AddDomainEvent(new ClientDeactivatedEvent(this.Id));
+    }
+
+    private static void ValidateEmail(string email)
+    {
+        if (string.IsNullOrWhiteSpace(email))
+        {
+            throw new InvalidClientStateException("Email is required");
+        }
+
+        var trimmedEmail = email.Trim();
+        if (!EmailRegex.IsMatch(trimmedEmail))
+        {
+            throw new InvalidClientStateException("Invalid email format");
+        }
     }
 }

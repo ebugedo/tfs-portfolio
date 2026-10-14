@@ -7,12 +7,13 @@ namespace Tfs.Portfolio.IntegrationTests.Api;
 
 using System;
 using System.Net;
-using System.Net.Http.Json;
-using System.Text.Json;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Tfs.Portfolio.Application.Services.Commands;
 using Tfs.Portfolio.Application.Services.Dtos;
 using Tfs.Portfolio.Domain.Services.Entities;
 using Tfs.Portfolio.IntegrationTests;
+using Tfs.Portfolio.IntegrationTests.Common;
 using Xunit;
 using FluentAssertions;
 
@@ -34,7 +35,7 @@ public sealed class ServicesApiTests : IntegrationTestBase
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);
-        var services = await response.Content.ReadFromJsonAsync<IReadOnlyList<ServiceListItemDto>>();
+        var services = await response.Content.ReadFromJsonNewtonsoftAsync<IReadOnlyList<ServiceListItemDto>>();
         services.Should().NotBeNull();
         services.Should().BeEmpty();
     }
@@ -50,7 +51,7 @@ public sealed class ServicesApiTests : IntegrationTestBase
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);
-        var services = await response.Content.ReadFromJsonAsync<IReadOnlyList<ServiceListItemDto>>();
+        var services = await response.Content.ReadFromJsonNewtonsoftAsync<IReadOnlyList<ServiceListItemDto>>();
         services.Should().NotBeNull();
         services.Should().BeEmpty();
     }
@@ -66,7 +67,7 @@ public sealed class ServicesApiTests : IntegrationTestBase
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);
-        var services = await response.Content.ReadFromJsonAsync<IReadOnlyList<ServiceListItemDto>>();
+        var services = await response.Content.ReadFromJsonNewtonsoftAsync<IReadOnlyList<ServiceListItemDto>>();
         services.Should().NotBeNull();
         services.Should().BeEmpty();
     }
@@ -81,14 +82,14 @@ public sealed class ServicesApiTests : IntegrationTestBase
         var request = new CreateServiceCommand("Web Development", "Custom web application development", ServiceCategory.Development);
 
         // Act
-        var response = await Client.PostAsJsonAsync(BaseUrl, request);
+        var response = await Client.PostAsJsonNewtonsoftAsync(BaseUrl, request);
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.Created);
         response.Headers.Location.Should().NotBeNull();
         response.Headers.Location!.ToString().Should().StartWith($"{BaseUrl}/");
 
-        var service = await response.Content.ReadFromJsonAsync<ServiceDto>();
+        var service = await response.Content.ReadFromJsonNewtonsoftAsync<ServiceDto>();
         service.Should().NotBeNull();
         service!.Name.Should().Be("Web Development");
         service.Description.Should().Be("Custom web application development");
@@ -108,11 +109,11 @@ public sealed class ServicesApiTests : IntegrationTestBase
         var request = new CreateServiceCommand("Minimal Service", null, ServiceCategory.Consulting);
 
         // Act
-        var response = await Client.PostAsJsonAsync(BaseUrl, request);
+        var response = await Client.PostAsJsonNewtonsoftAsync(BaseUrl, request);
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.Created);
-        var service = await response.Content.ReadFromJsonAsync<ServiceDto>();
+        var service = await response.Content.ReadFromJsonNewtonsoftAsync<ServiceDto>();
         service.Should().NotBeNull();
         service!.Name.Should().Be("Minimal Service");
         service.Description.Should().BeNull();
@@ -128,15 +129,15 @@ public sealed class ServicesApiTests : IntegrationTestBase
     {
         // Arrange - create a service first
         var createRequest = new CreateServiceCommand("Get By ID Service", "Service for get by ID test", ServiceCategory.Design);
-        var createResponse = await Client.PostAsJsonAsync(BaseUrl, createRequest);
-        var createdService = await createResponse.Content.ReadFromJsonAsync<ServiceDto>();
+        var createResponse = await Client.PostAsJsonNewtonsoftAsync(BaseUrl, createRequest);
+        var createdService = await createResponse.Content.ReadFromJsonNewtonsoftAsync<ServiceDto>();
 
         // Act
         var response = await Client.GetAsync(new Uri($"{BaseUrl}/{createdService!.Id}", UriKind.Relative));
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);
-        var service = await response.Content.ReadFromJsonAsync<ServiceDto>();
+        var service = await response.Content.ReadFromJsonNewtonsoftAsync<ServiceDto>();
         service.Should().NotBeNull();
         service!.Id.Should().Be(createdService.Id);
         service.Name.Should().Be("Get By ID Service");
@@ -152,19 +153,19 @@ public sealed class ServicesApiTests : IntegrationTestBase
     {
         // Arrange - create a service first
         var createRequest = new CreateServiceCommand("Update Test", "Original description", ServiceCategory.DevOps);
-        var createResponse = await Client.PostAsJsonAsync(BaseUrl, createRequest);
-        var createdService = await createResponse.Content.ReadFromJsonAsync<ServiceDto>();
+        var createResponse = await Client.PostAsJsonNewtonsoftAsync(BaseUrl, createRequest);
+        var createdService = await createResponse.Content.ReadFromJsonNewtonsoftAsync<ServiceDto>();
 
         // Act - update the service
         var updateRequest = new UpdateServiceCommand(createdService!.Id, "Updated Service", "Updated description", ServiceCategory.Training);
-        var response = await Client.PutAsJsonAsync($"{BaseUrl}/{createdService.Id}", updateRequest);
+        var response = await Client.PutAsJsonNewtonsoftAsync($"{BaseUrl}/{createdService.Id}", updateRequest);
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.NoContent);
 
         // Verify the update
         var getResponse = await Client.GetAsync(new Uri($"{BaseUrl}/{createdService.Id}", UriKind.Relative));
-        var updatedService = await getResponse.Content.ReadFromJsonAsync<ServiceDto>();
+        var updatedService = await getResponse.Content.ReadFromJsonNewtonsoftAsync<ServiceDto>();
         updatedService!.Name.Should().Be("Updated Service");
         updatedService.Description.Should().Be("Updated description");
         updatedService.Category.Should().Be(ServiceCategory.Training);
@@ -178,8 +179,8 @@ public sealed class ServicesApiTests : IntegrationTestBase
     {
         // Arrange - create a service first
         var createRequest = new CreateServiceCommand("Delete Test", "Service to be deleted", ServiceCategory.Development);
-        var createResponse = await Client.PostAsJsonAsync(BaseUrl, createRequest);
-        var createdService = await createResponse.Content.ReadFromJsonAsync<ServiceDto>();
+        var createResponse = await Client.PostAsJsonNewtonsoftAsync(BaseUrl, createRequest);
+        var createdService = await createResponse.Content.ReadFromJsonNewtonsoftAsync<ServiceDto>();
 
         // Act
         var response = await Client.DeleteAsync(new Uri($"{BaseUrl}/{createdService!.Id}", UriKind.Relative));
@@ -202,14 +203,14 @@ public sealed class ServicesApiTests : IntegrationTestBase
         var request = new CreateServiceCommand(string.Empty, "Test description", ServiceCategory.Development);
 
         // Act
-        var response = await Client.PostAsJsonAsync(BaseUrl, request);
+        var response = await Client.PostAsJsonNewtonsoftAsync(BaseUrl, request);
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
-        var problemDetails = await response.Content.ReadFromJsonAsync<JsonElement>();
-        problemDetails.GetProperty("status").GetInt32().Should().Be(400);
-        problemDetails.GetProperty("title").GetString().Should().Be("Validation Failed");
-        problemDetails.GetProperty("detail").GetString().Should().NotBeNullOrEmpty();
+        var problemDetails = await response.Content.ReadFromJsonNewtonsoftAsync<ProblemDetailsDto>();
+        problemDetails.Status.Should().Be(400);
+        problemDetails.Title.Should().Be("Validation Failed");
+        problemDetails.Detail.Should().NotBeNullOrEmpty();
     }
 
     /// <summary>
@@ -223,9 +224,9 @@ public sealed class ServicesApiTests : IntegrationTestBase
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.NotFound);
-        var problemDetails = await response.Content.ReadFromJsonAsync<JsonElement>();
-        problemDetails.GetProperty("status").GetInt32().Should().Be(404);
-        problemDetails.GetProperty("title").GetString().Should().Be("Not Found");
+        var problemDetails = await response.Content.ReadFromJsonNewtonsoftAsync<ProblemDetailsDto>();
+        problemDetails.Status.Should().Be(404);
+        problemDetails.Title.Should().Be("Not Found");
     }
 
     /// <summary>
@@ -236,12 +237,12 @@ public sealed class ServicesApiTests : IntegrationTestBase
     {
         // Arrange
         var createRequest = new CreateServiceCommand("Mismatch Test", "Test mismatch", ServiceCategory.Development);
-        var createResponse = await Client.PostAsJsonAsync(BaseUrl, createRequest);
-        var createdService = await createResponse.Content.ReadFromJsonAsync<ServiceDto>();
+        var createResponse = await Client.PostAsJsonNewtonsoftAsync(BaseUrl, createRequest);
+        var createdService = await createResponse.Content.ReadFromJsonNewtonsoftAsync<ServiceDto>();
 
         // Act - update with different ID
         var updateRequest = new UpdateServiceCommand(Guid.NewGuid(), "Updated", "Updated description", ServiceCategory.Consulting);
-        var response = await Client.PutAsJsonAsync($"{BaseUrl}/{createdService!.Id}", updateRequest);
+        var response = await Client.PutAsJsonNewtonsoftAsync($"{BaseUrl}/{createdService!.Id}", updateRequest);
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
@@ -255,7 +256,7 @@ public sealed class ServicesApiTests : IntegrationTestBase
     {
         // Act
         var updateRequest = new UpdateServiceCommand(Guid.NewGuid(), "Updated", "Updated description", ServiceCategory.Consulting);
-        var response = await Client.PutAsJsonAsync($"{BaseUrl}/{Guid.NewGuid()}", updateRequest);
+        var response = await Client.PutAsJsonNewtonsoftAsync($"{BaseUrl}/{Guid.NewGuid()}", updateRequest);
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.NotFound);
@@ -281,18 +282,18 @@ public sealed class ServicesApiTests : IntegrationTestBase
     public async Task GetServices_WhenMultipleExist_ReturnsAll()
     {
         // Arrange - create multiple services
-        var project1 = await Client.PostAsJsonAsync(BaseUrl, new CreateServiceCommand("Service 1", "First service", ServiceCategory.Development));
-        var project2 = await Client.PostAsJsonAsync(BaseUrl, new CreateServiceCommand("Service 2", "Second service", ServiceCategory.Consulting));
+        var project1 = await Client.PostAsJsonNewtonsoftAsync(BaseUrl, new CreateServiceCommand("Service 1", "First service", ServiceCategory.Development));
+        var project2 = await Client.PostAsJsonNewtonsoftAsync(BaseUrl, new CreateServiceCommand("Service 2", "Second service", ServiceCategory.Consulting));
 
-        var p1 = await project1.Content.ReadFromJsonAsync<ServiceDto>();
-        var p2 = await project2.Content.ReadFromJsonAsync<ServiceDto>();
+        var p1 = await project1.Content.ReadFromJsonNewtonsoftAsync<ServiceDto>();
+        var p2 = await project2.Content.ReadFromJsonNewtonsoftAsync<ServiceDto>();
 
         // Act
         var response = await Client.GetAsync(new Uri(BaseUrl, UriKind.Relative));
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);
-        var services = await response.Content.ReadFromJsonAsync<IReadOnlyList<ServiceListItemDto>>();
+        var services = await response.Content.ReadFromJsonNewtonsoftAsync<IReadOnlyList<ServiceListItemDto>>();
         services.Should().NotBeNull();
         services!.Should().HaveCount(2);
         services.Should().Contain(c => c.Id == p1!.Id);
@@ -307,12 +308,12 @@ public sealed class ServicesApiTests : IntegrationTestBase
     {
         // Arrange - create services (both are active on creation)
         var activeRequest = new CreateServiceCommand("Active Service", "Active service", ServiceCategory.Development);
-        var activeResponse = await Client.PostAsJsonAsync(BaseUrl, activeRequest);
-        var activeService = await activeResponse.Content.ReadFromJsonAsync<ServiceDto>();
+        var activeResponse = await Client.PostAsJsonNewtonsoftAsync(BaseUrl, activeRequest);
+        var activeService = await activeResponse.Content.ReadFromJsonNewtonsoftAsync<ServiceDto>();
 
         var inactiveRequest = new CreateServiceCommand("Inactive Service", "Inactive service", ServiceCategory.Consulting);
-        var inactiveResponse = await Client.PostAsJsonAsync(BaseUrl, inactiveRequest);
-        var inactiveService = await inactiveResponse.Content.ReadFromJsonAsync<ServiceDto>();
+        var inactiveResponse = await Client.PostAsJsonNewtonsoftAsync(BaseUrl, inactiveRequest);
+        var inactiveService = await inactiveResponse.Content.ReadFromJsonNewtonsoftAsync<ServiceDto>();
 
         // Both are active on creation
         // Act
@@ -320,7 +321,7 @@ public sealed class ServicesApiTests : IntegrationTestBase
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);
-        var services = await response.Content.ReadFromJsonAsync<IReadOnlyList<ServiceListItemDto>>();
+        var services = await response.Content.ReadFromJsonNewtonsoftAsync<IReadOnlyList<ServiceListItemDto>>();
         services.Should().NotBeNull();
         services!.Should().HaveCount(2);
         services.Should().Contain(c => c.Id == activeService!.Id);
@@ -335,23 +336,23 @@ public sealed class ServicesApiTests : IntegrationTestBase
     {
         // Arrange - create services in different categories
         var devRequest = new CreateServiceCommand("Dev Service", "Development service", ServiceCategory.Development);
-        var devResponse = await Client.PostAsJsonAsync(BaseUrl, devRequest);
-        var devService = await devResponse.Content.ReadFromJsonAsync<ServiceDto>();
+        var devResponse = await Client.PostAsJsonNewtonsoftAsync(BaseUrl, devRequest);
+        var devService = await devResponse.Content.ReadFromJsonNewtonsoftAsync<ServiceDto>();
 
         var consultingRequest = new CreateServiceCommand("Consulting Service", "Consulting service", ServiceCategory.Consulting);
-        var consultingResponse = await Client.PostAsJsonAsync(BaseUrl, consultingRequest);
-        var consultingService = await consultingResponse.Content.ReadFromJsonAsync<ServiceDto>();
+        var consultingResponse = await Client.PostAsJsonNewtonsoftAsync(BaseUrl, consultingRequest);
+        var consultingService = await consultingResponse.Content.ReadFromJsonNewtonsoftAsync<ServiceDto>();
 
         var designRequest = new CreateServiceCommand("Design Service", "Design service", ServiceCategory.Design);
-        var designResponse = await Client.PostAsJsonAsync(BaseUrl, designRequest);
-        var designService = await designResponse.Content.ReadFromJsonAsync<ServiceDto>();
+        var designResponse = await Client.PostAsJsonNewtonsoftAsync(BaseUrl, designRequest);
+        var designService = await designResponse.Content.ReadFromJsonNewtonsoftAsync<ServiceDto>();
 
         // Act - get services by Development category
         var response = await Client.GetAsync(new Uri($"{BaseUrl}/category/{ServiceCategory.Development}", UriKind.Relative));
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);
-        var services = await response.Content.ReadFromJsonAsync<IReadOnlyList<ServiceListItemDto>>();
+        var services = await response.Content.ReadFromJsonNewtonsoftAsync<IReadOnlyList<ServiceListItemDto>>();
         services.Should().NotBeNull();
         services!.Should().HaveCount(1);
         services.Should().Contain(c => c.Id == devService!.Id);
@@ -363,7 +364,7 @@ public sealed class ServicesApiTests : IntegrationTestBase
 
         // Assert
         consultingFilterResponse.StatusCode.Should().Be(HttpStatusCode.OK);
-        var consultingServices = await consultingFilterResponse.Content.ReadFromJsonAsync<IReadOnlyList<ServiceListItemDto>>();
+        var consultingServices = await consultingFilterResponse.Content.ReadFromJsonNewtonsoftAsync<IReadOnlyList<ServiceListItemDto>>();
         consultingServices.Should().NotBeNull();
         consultingServices!.Should().HaveCount(1);
         consultingServices.Should().Contain(c => c.Id == consultingService!.Id);

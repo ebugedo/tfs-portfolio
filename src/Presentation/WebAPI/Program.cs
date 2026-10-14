@@ -8,6 +8,8 @@ namespace Tfs.Portfolio.Api;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using AutoMapper;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -15,34 +17,12 @@ using Microsoft.OpenApi.Models;
 using Scalar.AspNetCore;
 using Serilog;
 using Serilog.Events;
-using Tfs.Portfolio.Api.Endpoints;
 using Tfs.Portfolio.Api.Filters;
 using Tfs.Portfolio.Api.Middleware;
 using Tfs.Portfolio.Application.Common.CQRS;
 using Tfs.Portfolio.Application.Common.Modules;
 using Tfs.Portfolio.Application.Common.Services;
-using Tfs.Portfolio.Application.Clients.Commands;
-using Tfs.Portfolio.Application.Clients.Dtos;
-using Tfs.Portfolio.Application.Clients.Handlers;
-using Tfs.Portfolio.Application.Clients.Queries;
-using Tfs.Portfolio.Application.Sectors.Commands;
-using Tfs.Portfolio.Application.Sectors.Handlers;
-using Tfs.Portfolio.Application.Sectors.Queries;
-using Tfs.Portfolio.Application.Services.Commands;
-using Tfs.Portfolio.Application.Services.Handlers;
-using Tfs.Portfolio.Application.Services.Queries;
-using Tfs.Portfolio.Application.CompanyProfile.Commands;
-using Tfs.Portfolio.Application.CompanyProfile.Handlers;
-using Tfs.Portfolio.Application.CompanyProfile.Queries;
-using Tfs.Portfolio.Application.Projects.Commands;
-using Tfs.Portfolio.Application.Projects.Dtos;
-using Tfs.Portfolio.Application.Projects.Handlers;
-using Tfs.Portfolio.Application.Projects.Queries;
-using Tfs.Portfolio.Domain.Clients.Repositories;
-using Tfs.Portfolio.Domain.Sectors.Repositories;
-using Tfs.Portfolio.Domain.Services.Repositories;
-using Tfs.Portfolio.Domain.CompanyProfile.Repositories;
-using Tfs.Portfolio.Domain.Projects.Repositories;
+
 using Tfs.Portfolio.Infrastructure.Persistence;
 using Tfs.Portfolio.Infrastructure.Persistence.Modules;
 
@@ -76,12 +56,17 @@ public sealed class Program
         // Use Autofac as the DI container
         builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 
-        // Add services
+// Add services
         builder.Services.AddControllers()
             .AddNewtonsoftJson(options =>
             {
-                options.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver();
+                options.SerializerSettings.ContractResolver = new Tfs.Portfolio.Api.Json.TfsWebUrlContractResolver();
+                options.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
             });
+
+// Add FluentValidation - register validators from Application assembly in ASP.NET Core DI
+        // This is needed for [FromServices] injection in controllers when using Autofac
+        builder.Services.AddValidatorsFromAssemblyContaining<Tfs.Portfolio.Application.Clients.Validators.CreateClientCommandValidator>();
 
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddOpenApi(options =>
@@ -151,7 +136,7 @@ public sealed class Program
             });
         }
 
-        app.UseExceptionHandler("/error");
+        app.UseErrorHandling();
         app.UseSerilogRequestLogging();
         app.UseHttpsRedirection();
         app.UseRouting();
@@ -166,14 +151,6 @@ public sealed class Program
 
         // Test endpoint simple
         app.MapGet("/test", () => Results.Ok(new { message = "API funcionando - Hot reload works! Updated!", timestamp = DateTime.UtcNow }));
-
-        // Map versioned endpoints
-        var v1 = app.MapGroup("/api/v1").WithTags("v1");
-        v1.MapProjectEndpoints();
-        v1.MapClientEndpoints();
-        v1.MapSectorEndpoints();
-        v1.MapServiceEndpoints();
-        v1.MapCompanyProfileEndpoints();
 
         app.Run();
     }

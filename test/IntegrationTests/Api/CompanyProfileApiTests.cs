@@ -7,12 +7,13 @@ namespace Tfs.Portfolio.IntegrationTests.Api;
 
 using System;
 using System.Net;
-using System.Net.Http.Json;
-using System.Text.Json;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Tfs.Portfolio.Application.CompanyProfile.Commands;
 using Tfs.Portfolio.Application.CompanyProfile.Dtos;
 using Tfs.Portfolio.Domain.Common.ValueObjects;
 using Tfs.Portfolio.IntegrationTests;
+using Tfs.Portfolio.IntegrationTests.Common;
 using Xunit;
 using FluentAssertions;
 
@@ -34,10 +35,10 @@ public sealed class CompanyProfileApiTests : IntegrationTestBase
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.NotFound);
-        var problemDetails = await response.Content.ReadFromJsonAsync<JsonElement>();
-        problemDetails.GetProperty("status").GetInt32().Should().Be(404);
-        problemDetails.GetProperty("title").GetString().Should().Be("Not Found");
-        problemDetails.GetProperty("detail").GetString().Should().Contain("not been created");
+        var problemDetails = await response.Content.ReadFromJsonNewtonsoftAsync<ProblemDetailsDto>();
+        problemDetails.Status.Should().Be(404);
+        problemDetails.Title.Should().Be("Not Found");
+        problemDetails.Detail.Should().Contain("not been created");
     }
 
     /// <summary>
@@ -57,13 +58,13 @@ public sealed class CompanyProfileApiTests : IntegrationTestBase
             null);
 
         // Act
-        var response = await Client.PutAsJsonAsync(BaseUrl, request);
+        var response = await Client.PutAsJsonNewtonsoftAsync(BaseUrl, request);
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.NotFound);
-        var problemDetails = await response.Content.ReadFromJsonAsync<JsonElement>();
-        problemDetails.GetProperty("status").GetInt32().Should().Be(404);
-        problemDetails.GetProperty("title").GetString().Should().Be("Not Found");
+        var problemDetails = await response.Content.ReadFromJsonNewtonsoftAsync<ProblemDetailsDto>();
+        problemDetails.Status.Should().Be(404);
+        problemDetails.Title.Should().Be("Not Found");
     }
 
     /// <summary>
@@ -83,14 +84,14 @@ public sealed class CompanyProfileApiTests : IntegrationTestBase
             null);
 
         // Act
-        var response = await Client.PutAsJsonAsync(BaseUrl, request);
+        var response = await Client.PutAsJsonNewtonsoftAsync(BaseUrl, request);
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
-        var problemDetails = await response.Content.ReadFromJsonAsync<JsonElement>();
-        problemDetails.GetProperty("status").GetInt32().Should().Be(400);
-        problemDetails.GetProperty("title").GetString().Should().Be("Validation Failed");
-        problemDetails.GetProperty("detail").GetString().Should().NotBeNullOrEmpty();
+        var problemDetails = await response.Content.ReadFromJsonNewtonsoftAsync<ProblemDetailsDto>();
+        problemDetails.Status.Should().Be(400);
+        problemDetails.Title.Should().Be("Validation Failed");
+        problemDetails.Detail.Should().NotBeNullOrEmpty();
     }
 
     /// <summary>
@@ -110,12 +111,12 @@ public sealed class CompanyProfileApiTests : IntegrationTestBase
             null);
 
         // Act
-        var response = await Client.PutAsJsonAsync(BaseUrl, request);
+        var response = await Client.PutAsJsonNewtonsoftAsync(BaseUrl, request);
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
-        var problemDetails = await response.Content.ReadFromJsonAsync<JsonElement>();
-        problemDetails.GetProperty("status").GetInt32().Should().Be(400);
+        var problemDetails = await response.Content.ReadFromJsonNewtonsoftAsync<ProblemDetailsDto>();
+        problemDetails.Status.Should().Be(400);
     }
 
     /// <summary>
@@ -141,7 +142,7 @@ public sealed class CompanyProfileApiTests : IntegrationTestBase
             TfsWebUrl.Create("https://updated.com/logo.png"));
 
         // Act
-        var response = await Client.PutAsJsonAsync(BaseUrl, request);
+        var response = await Client.PutAsJsonNewtonsoftAsync(BaseUrl, request);
 
         // Assert - current behavior returns 404 if not created
         response.StatusCode.Should().Be(HttpStatusCode.NotFound);
@@ -166,7 +167,7 @@ public sealed class CompanyProfileApiTests : IntegrationTestBase
 
         if (response.StatusCode == HttpStatusCode.OK)
         {
-            var profile = await response.Content.ReadFromJsonAsync<CompanyProfileDto>();
+            var profile = await response.Content.ReadFromJsonNewtonsoftAsync<CompanyProfileDto>();
             profile.Should().NotBeNull();
             profile!.CompanyName.Should().NotBeNullOrEmpty();
             profile.ContactEmail.Should().NotBeNullOrEmpty();

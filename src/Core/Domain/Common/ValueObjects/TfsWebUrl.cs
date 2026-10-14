@@ -121,30 +121,67 @@ public readonly struct TfsWebUrl : IEquatable<TfsWebUrl>
 }
 
 /// <summary>
-/// JsonConverter for <see cref="TfsWebUrl"/> to handle JSON serialization/deserialization.
+/// JsonConverter for <see cref="TfsWebUrl"/> and nullable <see cref="TfsWebUrl"/> to handle JSON serialization/deserialization.
 /// </summary>
-public sealed class TfsWebUrlJsonConverter : JsonConverter<TfsWebUrl>
+public sealed class TfsWebUrlJsonConverter : JsonConverter
 {
     /// <inheritdoc />
-    public override void WriteJson(JsonWriter writer, TfsWebUrl value, JsonSerializer serializer)
+    public override bool CanRead => true;
+
+    /// <inheritdoc />
+    public override bool CanWrite => true;
+
+    /// <inheritdoc />
+    public override bool CanConvert(Type objectType)
     {
-        writer.WriteValue(value.Value);
+        return objectType == typeof(TfsWebUrl) || objectType == typeof(TfsWebUrl?);
     }
 
     /// <inheritdoc />
-    public override TfsWebUrl ReadJson(JsonReader reader, Type objectType, TfsWebUrl existingValue, bool hasExistingValue, JsonSerializer serializer)
+    public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
+    {
+        // Handle both TfsWebUrl and nullable TfsWebUrl?
+        // If value is TfsWebUrl with null Value, or TfsWebUrl? that is null, write null
+        if (value is TfsWebUrl url)
+        {
+            if (url.Value == null)
+            {
+                writer.WriteNull();
+            }
+            else
+            {
+                writer.WriteValue(url.Value);
+            }
+        }
+        else if (value == null)
+        {
+            writer.WriteNull();
+        }
+        else
+        {
+            writer.WriteNull();
+        }
+    }
+
+    /// <inheritdoc />
+    public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
     {
         if (reader.TokenType == JsonToken.Null)
         {
-            return default;
+            return null;
         }
 
         var value = reader.Value?.ToString();
         if (string.IsNullOrWhiteSpace(value))
         {
-            return default;
+            return null;
         }
 
-        return TfsWebUrl.Create(value);
+        var url = TfsWebUrl.Create(value);
+        if (objectType == typeof(TfsWebUrl?))
+        {
+            return (TfsWebUrl?)url;
+        }
+        return url;
     }
 }

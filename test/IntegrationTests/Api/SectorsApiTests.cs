@@ -7,11 +7,12 @@ namespace Tfs.Portfolio.IntegrationTests.Api;
 
 using System;
 using System.Net;
-using System.Net.Http.Json;
-using System.Text.Json;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Tfs.Portfolio.Application.Sectors.Commands;
 using Tfs.Portfolio.Application.Sectors.Dtos;
 using Tfs.Portfolio.IntegrationTests;
+using Tfs.Portfolio.IntegrationTests.Common;
 using Xunit;
 using FluentAssertions;
 
@@ -33,7 +34,7 @@ public sealed class SectorsApiTests : IntegrationTestBase
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);
-        var sectors = await response.Content.ReadFromJsonAsync<IReadOnlyList<SectorListItemDto>>();
+        var sectors = await response.Content.ReadFromJsonNewtonsoftAsync<IReadOnlyList<SectorListItemDto>>();
         sectors.Should().NotBeNull();
         sectors.Should().BeEmpty();
     }
@@ -49,7 +50,7 @@ public sealed class SectorsApiTests : IntegrationTestBase
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);
-        var sectors = await response.Content.ReadFromJsonAsync<IReadOnlyList<SectorListItemDto>>();
+        var sectors = await response.Content.ReadFromJsonNewtonsoftAsync<IReadOnlyList<SectorListItemDto>>();
         sectors.Should().NotBeNull();
         sectors.Should().BeEmpty();
     }
@@ -64,14 +65,14 @@ public sealed class SectorsApiTests : IntegrationTestBase
         var request = new CreateSectorCommand("Technology", "Technology sector for software projects");
 
         // Act
-        var response = await Client.PostAsJsonAsync(BaseUrl, request);
+        var response = await Client.PostAsJsonNewtonsoftAsync(BaseUrl, request);
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.Created);
         response.Headers.Location.Should().NotBeNull();
         response.Headers.Location!.ToString().Should().StartWith($"{BaseUrl}/");
 
-        var sector = await response.Content.ReadFromJsonAsync<SectorDto>();
+        var sector = await response.Content.ReadFromJsonNewtonsoftAsync<SectorDto>();
         sector.Should().NotBeNull();
         sector!.Name.Should().Be("Technology");
         sector.Description.Should().Be("Technology sector for software projects");
@@ -90,11 +91,11 @@ public sealed class SectorsApiTests : IntegrationTestBase
         var request = new CreateSectorCommand("Minimal Sector", null);
 
         // Act
-        var response = await Client.PostAsJsonAsync(BaseUrl, request);
+        var response = await Client.PostAsJsonNewtonsoftAsync(BaseUrl, request);
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.Created);
-        var sector = await response.Content.ReadFromJsonAsync<SectorDto>();
+        var sector = await response.Content.ReadFromJsonNewtonsoftAsync<SectorDto>();
         sector.Should().NotBeNull();
         sector!.Name.Should().Be("Minimal Sector");
         sector.Description.Should().BeNull();
@@ -109,15 +110,15 @@ public sealed class SectorsApiTests : IntegrationTestBase
     {
         // Arrange - create a sector first
         var createRequest = new CreateSectorCommand("Get By ID Sector", "Sector for get by ID test");
-        var createResponse = await Client.PostAsJsonAsync(BaseUrl, createRequest);
-        var createdSector = await createResponse.Content.ReadFromJsonAsync<SectorDto>();
+        var createResponse = await Client.PostAsJsonNewtonsoftAsync(BaseUrl, createRequest);
+        var createdSector = await createResponse.Content.ReadFromJsonNewtonsoftAsync<SectorDto>();
 
         // Act
         var response = await Client.GetAsync(new Uri($"{BaseUrl}/{createdSector!.Id}", UriKind.Relative));
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);
-        var sector = await response.Content.ReadFromJsonAsync<SectorDto>();
+        var sector = await response.Content.ReadFromJsonNewtonsoftAsync<SectorDto>();
         sector.Should().NotBeNull();
         sector!.Id.Should().Be(createdSector.Id);
         sector.Name.Should().Be("Get By ID Sector");
@@ -132,19 +133,19 @@ public sealed class SectorsApiTests : IntegrationTestBase
     {
         // Arrange - create a sector first
         var createRequest = new CreateSectorCommand("Update Test", "Original description");
-        var createResponse = await Client.PostAsJsonAsync(BaseUrl, createRequest);
-        var createdSector = await createResponse.Content.ReadFromJsonAsync<SectorDto>();
+        var createResponse = await Client.PostAsJsonNewtonsoftAsync(BaseUrl, createRequest);
+        var createdSector = await createResponse.Content.ReadFromJsonNewtonsoftAsync<SectorDto>();
 
         // Act - update the sector
         var updateRequest = new UpdateSectorCommand(createdSector!.Id, "Updated Sector", "Updated description");
-        var response = await Client.PutAsJsonAsync($"{BaseUrl}/{createdSector.Id}", updateRequest);
+        var response = await Client.PutAsJsonNewtonsoftAsync($"{BaseUrl}/{createdSector.Id}", updateRequest);
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.NoContent);
 
         // Verify the update
         var getResponse = await Client.GetAsync(new Uri($"{BaseUrl}/{createdSector.Id}", UriKind.Relative));
-        var updatedSector = await getResponse.Content.ReadFromJsonAsync<SectorDto>();
+        var updatedSector = await getResponse.Content.ReadFromJsonNewtonsoftAsync<SectorDto>();
         updatedSector!.Name.Should().Be("Updated Sector");
         updatedSector.Description.Should().Be("Updated description");
     }
@@ -157,8 +158,8 @@ public sealed class SectorsApiTests : IntegrationTestBase
     {
         // Arrange - create a sector first
         var createRequest = new CreateSectorCommand("Status Test", "Test status change");
-        var createResponse = await Client.PostAsJsonAsync(BaseUrl, createRequest);
-        var createdSector = await createResponse.Content.ReadFromJsonAsync<SectorDto>();
+        var createResponse = await Client.PostAsJsonNewtonsoftAsync(BaseUrl, createRequest);
+        var createdSector = await createResponse.Content.ReadFromJsonNewtonsoftAsync<SectorDto>();
         createdSector!.IsActive.Should().BeTrue();
 
         // Act - deactivate the sector via update
@@ -166,14 +167,14 @@ public sealed class SectorsApiTests : IntegrationTestBase
 
         // Note: UpdateSectorCommand doesn't have IsActive, we just update name/description
         // The sector aggregate handles IsActive through domain logic if needed
-        var response = await Client.PutAsJsonAsync($"{BaseUrl}/{createdSector.Id}", updateRequest);
+        var response = await Client.PutAsJsonNewtonsoftAsync($"{BaseUrl}/{createdSector.Id}", updateRequest);
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.NoContent);
 
         // Verify the update
         var getResponse = await Client.GetAsync(new Uri($"{BaseUrl}/{createdSector.Id}", UriKind.Relative));
-        var updatedSector = await getResponse.Content.ReadFromJsonAsync<SectorDto>();
+        var updatedSector = await getResponse.Content.ReadFromJsonNewtonsoftAsync<SectorDto>();
         updatedSector!.IsActive.Should().BeTrue(); // Still active since we didn't change it
     }
 
@@ -185,8 +186,8 @@ public sealed class SectorsApiTests : IntegrationTestBase
     {
         // Arrange - create a sector first
         var createRequest = new CreateSectorCommand("Delete Test", "Sector to be deleted");
-        var createResponse = await Client.PostAsJsonAsync(BaseUrl, createRequest);
-        var createdSector = await createResponse.Content.ReadFromJsonAsync<SectorDto>();
+        var createResponse = await Client.PostAsJsonNewtonsoftAsync(BaseUrl, createRequest);
+        var createdSector = await createResponse.Content.ReadFromJsonNewtonsoftAsync<SectorDto>();
 
         // Act
         var response = await Client.DeleteAsync(new Uri($"{BaseUrl}/{createdSector!.Id}", UriKind.Relative));
@@ -209,14 +210,14 @@ public sealed class SectorsApiTests : IntegrationTestBase
         var request = new CreateSectorCommand(string.Empty, "Test description");
 
         // Act
-        var response = await Client.PostAsJsonAsync(BaseUrl, request);
+        var response = await Client.PostAsJsonNewtonsoftAsync(BaseUrl, request);
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
-        var problemDetails = await response.Content.ReadFromJsonAsync<JsonElement>();
-        problemDetails.GetProperty("status").GetInt32().Should().Be(400);
-        problemDetails.GetProperty("title").GetString().Should().Be("Validation Failed");
-        problemDetails.GetProperty("detail").GetString().Should().NotBeNullOrEmpty();
+        var problemDetails = await response.Content.ReadFromJsonNewtonsoftAsync<ProblemDetailsDto>();
+        problemDetails.Status.Should().Be(400);
+        problemDetails.Title.Should().Be("Validation Failed");
+        problemDetails.Detail.Should().NotBeNullOrEmpty();
     }
 
     /// <summary>
@@ -230,12 +231,12 @@ public sealed class SectorsApiTests : IntegrationTestBase
         var request = new CreateSectorCommand(longName, "Test description");
 
         // Act
-        var response = await Client.PostAsJsonAsync(BaseUrl, request);
+        var response = await Client.PostAsJsonNewtonsoftAsync(BaseUrl, request);
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
-        var problemDetails = await response.Content.ReadFromJsonAsync<JsonElement>();
-        problemDetails.GetProperty("status").GetInt32().Should().Be(400);
+        var problemDetails = await response.Content.ReadFromJsonNewtonsoftAsync<ProblemDetailsDto>();
+        problemDetails.Status.Should().Be(400);
     }
 
     /// <summary>
@@ -249,9 +250,9 @@ public sealed class SectorsApiTests : IntegrationTestBase
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.NotFound);
-        var problemDetails = await response.Content.ReadFromJsonAsync<JsonElement>();
-        problemDetails.GetProperty("status").GetInt32().Should().Be(404);
-        problemDetails.GetProperty("title").GetString().Should().Be("Not Found");
+        var problemDetails = await response.Content.ReadFromJsonNewtonsoftAsync<ProblemDetailsDto>();
+        problemDetails.Status.Should().Be(404);
+        problemDetails.Title.Should().Be("Not Found");
     }
 
     /// <summary>
@@ -262,12 +263,12 @@ public sealed class SectorsApiTests : IntegrationTestBase
     {
         // Arrange
         var createRequest = new CreateSectorCommand("Mismatch Test", "Test mismatch");
-        var createResponse = await Client.PostAsJsonAsync(BaseUrl, createRequest);
-        var createdSector = await createResponse.Content.ReadFromJsonAsync<SectorDto>();
+        var createResponse = await Client.PostAsJsonNewtonsoftAsync(BaseUrl, createRequest);
+        var createdSector = await createResponse.Content.ReadFromJsonNewtonsoftAsync<SectorDto>();
 
         // Act - update with different ID
         var updateRequest = new UpdateSectorCommand(Guid.NewGuid(), "Updated", "Updated description");
-        var response = await Client.PutAsJsonAsync($"{BaseUrl}/{createdSector!.Id}", updateRequest);
+        var response = await Client.PutAsJsonNewtonsoftAsync($"{BaseUrl}/{createdSector!.Id}", updateRequest);
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
@@ -281,7 +282,7 @@ public sealed class SectorsApiTests : IntegrationTestBase
     {
         // Act
         var updateRequest = new UpdateSectorCommand(Guid.NewGuid(), "Updated", "Updated description");
-        var response = await Client.PutAsJsonAsync($"{BaseUrl}/{Guid.NewGuid()}", updateRequest);
+        var response = await Client.PutAsJsonNewtonsoftAsync($"{BaseUrl}/{Guid.NewGuid()}", updateRequest);
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.NotFound);
@@ -307,18 +308,18 @@ public sealed class SectorsApiTests : IntegrationTestBase
     public async Task GetSectors_WhenMultipleExist_ReturnsAll()
     {
         // Arrange - create multiple sectors
-        var project1 = await Client.PostAsJsonAsync(BaseUrl, new CreateSectorCommand("Sector 1", "First sector"));
-        var project2 = await Client.PostAsJsonAsync(BaseUrl, new CreateSectorCommand("Sector 2", "Second sector"));
+        var project1 = await Client.PostAsJsonNewtonsoftAsync(BaseUrl, new CreateSectorCommand("Sector 1", "First sector"));
+        var project2 = await Client.PostAsJsonNewtonsoftAsync(BaseUrl, new CreateSectorCommand("Sector 2", "Second sector"));
 
-        var p1 = await project1.Content.ReadFromJsonAsync<SectorDto>();
-        var p2 = await project2.Content.ReadFromJsonAsync<SectorDto>();
+        var p1 = await project1.Content.ReadFromJsonNewtonsoftAsync<SectorDto>();
+        var p2 = await project2.Content.ReadFromJsonNewtonsoftAsync<SectorDto>();
 
         // Act
         var response = await Client.GetAsync(new Uri(BaseUrl, UriKind.Relative));
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);
-        var sectors = await response.Content.ReadFromJsonAsync<IReadOnlyList<SectorListItemDto>>();
+        var sectors = await response.Content.ReadFromJsonNewtonsoftAsync<IReadOnlyList<SectorListItemDto>>();
         sectors.Should().NotBeNull();
         sectors!.Should().HaveCount(2);
         sectors.Should().Contain(c => c.Id == p1!.Id);
@@ -336,12 +337,12 @@ public sealed class SectorsApiTests : IntegrationTestBase
         // We create one, then we'd need a way to deactivate it (if such endpoint exists)
         // For now, just test that active returns all since both are active on creation
         var activeRequest = new CreateSectorCommand("Active Sector", "Active sector");
-        var activeResponse = await Client.PostAsJsonAsync(BaseUrl, activeRequest);
-        var activeSector = await activeResponse.Content.ReadFromJsonAsync<SectorDto>();
+        var activeResponse = await Client.PostAsJsonNewtonsoftAsync(BaseUrl, activeRequest);
+        var activeSector = await activeResponse.Content.ReadFromJsonNewtonsoftAsync<SectorDto>();
 
         var inactiveRequest = new CreateSectorCommand("Inactive Sector", "Inactive sector");
-        var inactiveResponse = await Client.PostAsJsonAsync(BaseUrl, inactiveRequest);
-        var inactiveSector = await inactiveResponse.Content.ReadFromJsonAsync<SectorDto>();
+        var inactiveResponse = await Client.PostAsJsonNewtonsoftAsync(BaseUrl, inactiveRequest);
+        var inactiveSector = await inactiveResponse.Content.ReadFromJsonNewtonsoftAsync<SectorDto>();
 
         // Both are active on creation
         // Act
@@ -349,7 +350,7 @@ public sealed class SectorsApiTests : IntegrationTestBase
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);
-        var sectors = await response.Content.ReadFromJsonAsync<IReadOnlyList<SectorListItemDto>>();
+        var sectors = await response.Content.ReadFromJsonNewtonsoftAsync<IReadOnlyList<SectorListItemDto>>();
         sectors.Should().NotBeNull();
         sectors!.Should().HaveCount(2);
         sectors.Should().Contain(c => c.Id == activeSector!.Id);

@@ -52,7 +52,7 @@ public sealed class ProjectRepositoryTests : IntegrationTestBase
         // Arrange - create client and sector via repositories
         var clientId = await CreateTestClientAsync();
         var sectorId = await CreateTestSectorAsync();
-        
+
         var project = Project.Create(
             "Persistence Test",
             "Test Description",
@@ -83,7 +83,7 @@ public sealed class ProjectRepositoryTests : IntegrationTestBase
         // Arrange - create client and sector via repositories
         var clientId = await CreateTestClientAsync();
         var sectorId = await CreateTestSectorAsync();
-        
+
         var project = Project.Create(
             "GetById Test",
             "Test Description",
@@ -126,7 +126,7 @@ public sealed class ProjectRepositoryTests : IntegrationTestBase
         // Arrange - create client and sector via repositories
         var clientId = await CreateTestClientAsync();
         var sectorId = await CreateTestSectorAsync();
-        
+
         var project1 = Project.Create(
             "Project 1",
             "Description 1",
@@ -174,7 +174,7 @@ public sealed class ProjectRepositoryTests : IntegrationTestBase
         // Arrange - create client and sector via repositories
         var clientId = await CreateTestClientAsync();
         var sectorId = await CreateTestSectorAsync();
-        
+
         var project = Project.Create(
             "Original Name",
             "Original Description",
@@ -220,7 +220,7 @@ public sealed class ProjectRepositoryTests : IntegrationTestBase
         // Arrange - create client and sector via repositories
         var clientId = await CreateTestClientAsync();
         var sectorId = await CreateTestSectorAsync();
-        
+
         var project = Project.Create(
             "Transaction Test",
             "Test Description",
@@ -251,7 +251,7 @@ public sealed class ProjectRepositoryTests : IntegrationTestBase
         // Arrange - create client and sector via repositories
         var clientId = await CreateTestClientAsync();
         var sectorId = await CreateTestSectorAsync();
-        
+
         var project1 = Project.Create(
             "Atomic Test 1",
             "Description 1",

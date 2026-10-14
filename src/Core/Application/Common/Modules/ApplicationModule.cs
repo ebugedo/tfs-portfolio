@@ -134,6 +134,11 @@ public sealed class ApplicationModule : Module
             .AsSelf()
             .InstancePerLifetimeScope();
 
+        builder.RegisterType<DeactivateClientCommandHandler>()
+            .As<ICommandHandler<DeactivateClientCommand>>()
+            .AsSelf()
+            .InstancePerLifetimeScope();
+
         builder.RegisterType<DeleteClientCommandHandler>()
             .As<ICommandHandler<DeleteClientCommand>>()
             .AsSelf()

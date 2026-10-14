@@ -236,6 +236,7 @@ public sealed class ExtendedProjectRepositoryTests : IntegrationTestBase
         var activeProject = Project.Create("Active Project", "Desc 2", YearMonth.Create(7, 2024), 8, clientId, sectorId);
         activeProject.ChangeStatus(ProjectStatus.Active);
         var onHoldProject = Project.Create("OnHold Project", "Desc 3", YearMonth.Create(8, 2024), 10, clientId, sectorId);
+
         // Must go through Active first: Draft -> Active -> OnHold
         onHoldProject.ChangeStatus(ProjectStatus.Active);
         onHoldProject.ChangeStatus(ProjectStatus.OnHold);
@@ -293,6 +294,7 @@ public sealed class ExtendedProjectRepositoryTests : IntegrationTestBase
         var activeProject = Project.Create("Active Project", "Desc 2", YearMonth.Create(7, 2024), 8, clientId, sectorId);
         activeProject.ChangeStatus(ProjectStatus.Active);
         var completedProject = Project.Create("Completed Project", "Desc 3", YearMonth.Create(8, 2024), 10, clientId, sectorId);
+
         // Must go through Active first: Draft -> Active -> Completed
         completedProject.ChangeStatus(ProjectStatus.Active);
         completedProject.ChangeStatus(ProjectStatus.Completed);

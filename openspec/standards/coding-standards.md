@@ -54,3 +54,14 @@
 ## Async & Concurrency
 - All I/O operations (database access, external APIs) MUST be asynchronous using `async`/`await`.
 - Append `Async` to all asynchronous method names (e.g., `GetByIdAsync`).
+
+## Using Directives
+- Unused `using` directives MUST be removed from all source files.
+- The `dotnet format` command SHOULD be used to enforce this automatically (removes unused usings and sorts them).
+
+## API Architecture
+- **Controllers MUST be used** for HTTP API endpoints (NOT minimal APIs / endpoints).
+- Controllers MUST be placed in `src/Presentation/WebAPI/Controllers/` following the namespace convention `Tfs.Portfolio.Api.Controllers.<Feature>`.
+- Controllers MUST inherit from `ControllerBase` and use standard `[ApiController]` and `[Route]` attributes.
+- Minimal APIs (MapGet, MapPost, MapPut, MapDelete, MapMethods on IEndpointRouteBuilder) MUST NOT be used for business logic endpoints.
+- Minimal APIs may only be used for simple health checks, redirects, or static content serving.
