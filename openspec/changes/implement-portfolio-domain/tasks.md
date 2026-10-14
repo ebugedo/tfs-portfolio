@@ -350,3 +350,9 @@
 - [x] 37.2 Run all unit tests: `dotnet test test/UnitTests` - verify 100% pass (125/125)
 - [x] 37.3 Run ProblemDetails integration tests: `dotnet test test/IntegrationTests --filter "ProblemDetails"` - verify 100% pass (12/12)
 - [x] 37.4 Mark tasks 28.21 and 29.7 as complete (integration tests pass)
+
+## 38. Fix Test Bug in CreateClient_WithValidBody_ReturnsCreatedWithLocationAndDto
+
+- [x] 38.1 Identify bug in `ClientsApiTests.cs` line 91: `client.LogoUrl!.Value.Should().Be(expectedUrl)` incorrectly accesses `Nullable<TfsWebUrl>.Value` (returns `TfsWebUrl` struct) instead of the string `Value` property
+- [x] 38.2 Fix assertion to use already-extracted `logoUrlValue` variable: `logoUrlValue.Should().Be(expectedUrl)`
+- [x] 38.3 Verify test passes: `dotnet test test/IntegrationTests --filter "CreateClient_WithValidBody_ReturnsCreatedWithLocationAndDto"`
