@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System.Net.Http;
-using System.Net.Http.Json;
+using Tfs.Portfolio.IntegrationTests.Common;
 using Tfs.Portfolio.Infrastructure.Persistence;
 using Tfs.Portfolio.Domain.Projects.Repositories;
 using Tfs.Portfolio.Domain.Clients.Repositories;
@@ -131,9 +131,9 @@ public abstract class IntegrationTestBase : IAsyncLifetime, IDisposable
             TfsWebUrl.Create("https://client.com/logo.png"),
             "+1234567890",
             "123 Client St");
-        var response = await Client.PostAsJsonAsync("/api/v1/clients", request);
+        var response = await Client.PostAsJsonNewtonsoftAsync("/api/v1/clients", request);
         response.StatusCode.Should().Be(System.Net.HttpStatusCode.Created);
-        var client = await response.Content.ReadFromJsonAsync<ClientDto>();
+        var client = await response.Content.ReadFromJsonNewtonsoftAsync<ClientDto>();
         return client!.Id;
     }
 
@@ -146,9 +146,9 @@ public abstract class IntegrationTestBase : IAsyncLifetime, IDisposable
     protected async Task<Guid> CreateTestSectorAsync(string name = "Technology", string description = "Test sector")
     {
         var request = new CreateSectorCommand(name, description);
-        var response = await Client.PostAsJsonAsync("/api/v1/sectors", request);
+        var response = await Client.PostAsJsonNewtonsoftAsync("/api/v1/sectors", request);
         response.StatusCode.Should().Be(System.Net.HttpStatusCode.Created);
-        var sector = await response.Content.ReadFromJsonAsync<SectorDto>();
+        var sector = await response.Content.ReadFromJsonNewtonsoftAsync<SectorDto>();
         return sector!.Id;
     }
 
@@ -162,9 +162,9 @@ public abstract class IntegrationTestBase : IAsyncLifetime, IDisposable
     protected async Task<Guid> CreateTestServiceAsync(string name = "Web Development", string description = "Test service", Tfs.Portfolio.Domain.Services.Entities.ServiceCategory category = Tfs.Portfolio.Domain.Services.Entities.ServiceCategory.Development)
     {
         var request = new CreateServiceCommand(name, description, category);
-        var response = await Client.PostAsJsonAsync("/api/v1/services", request);
+        var response = await Client.PostAsJsonNewtonsoftAsync("/api/v1/services", request);
         response.StatusCode.Should().Be(System.Net.HttpStatusCode.Created);
-        var service = await response.Content.ReadFromJsonAsync<ServiceDto>();
+        var service = await response.Content.ReadFromJsonNewtonsoftAsync<ServiceDto>();
         return service!.Id;
     }
 
@@ -200,9 +200,9 @@ public abstract class IntegrationTestBase : IAsyncLifetime, IDisposable
             sectorId.Value,
             technologies ?? new List<string> { "C#", ".NET" });
 
-        var response = await Client.PostAsJsonAsync("/api/v1/projects", request);
+        var response = await Client.PostAsJsonNewtonsoftAsync("/api/v1/projects", request);
         response.StatusCode.Should().Be(System.Net.HttpStatusCode.Created);
-        var project = await response.Content.ReadFromJsonAsync<ProjectDto>();
+        var project = await response.Content.ReadFromJsonNewtonsoftAsync<ProjectDto>();
         return project!.Id;
     }
 

@@ -21,6 +21,15 @@ using Tfs.Portfolio.Domain.Sectors.Entities;
 using Tfs.Portfolio.Domain.Services.Entities;
 
 /// <summary>
+/// ProblemDetails DTO for deserializing error responses.
+/// </summary>
+internal sealed record ProblemDetailsDto(
+    int Status,
+    string Title,
+    string? Detail,
+    string? Instance);
+
+/// <summary>
 /// Bogus fakers for generating test data in integration tests.
 /// </summary>
 public static class IntegrationTestFakers

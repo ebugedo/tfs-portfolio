@@ -3,7 +3,7 @@
 ## Core Platform
 - **Runtime & Framework:** .NET 10 (ASP.NET Core Web API).
 - **Language:** C# (Latest language features enabled).
-- **JSON Serialization:** Newtonsoft.Json (Json.NET) - Required for all API serialization, configuration, and logging.
+- **JSON Serialization:** Newtonsoft.Json (Json.NET) - Required for all serialization, deserialization, configuration, and logging across the entire solution (domain, application, infrastructure, API, tests).
 
 ## Domain & Application Layer Libraries
 - **Dependency Injection:** Autofac (Used as the IoC/DI container for modular component registration).
@@ -27,6 +27,7 @@
 - **Test Framework:** xUnit.
 - **Mocking Library:** Moq.
 - **TestData Generation:** Bogus (For fake data creation in unit tests, integration tests, and database seeding).
+- **Validation:** FluentValidation - Used for request/command validation across all layers (API, Application, Domain) with automatic integration in ASP.NET Core Controllers and Minimal APIs.
 
 ## Repository & Solution Layout Conventions
 - **Production Code:** All production source code projects MUST be located exclusively under `src/`.

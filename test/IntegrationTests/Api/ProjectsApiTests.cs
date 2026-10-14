@@ -7,10 +7,9 @@ namespace Tfs.Portfolio.IntegrationTests.Api;
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Net.Http.Json;
-using System.Text.Json;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Tfs.Portfolio.Application.Clients.Commands;
 using Tfs.Portfolio.Application.Clients.Dtos;
 using Tfs.Portfolio.Application.Projects.Commands;
@@ -23,66 +22,76 @@ using Tfs.Portfolio.Domain.Common.ValueObjects;
 using Tfs.Portfolio.Domain.Projects.Entities;
 using Tfs.Portfolio.Domain.Services.Entities;
 using Tfs.Portfolio.IntegrationTests;
+using Tfs.Portfolio.IntegrationTests.Common;
 using Xunit;
 using FluentAssertions;
 
 /// <summary>
-    /// Integration tests for the Projects API endpoints.
+/// ProblemDetails DTO for deserializing error responses.
+/// </summary>
+internal sealed record ProblemDetailsDto(
+    int Status,
+    string Title,
+    string? Detail,
+    string? Instance);
+
+/// <summary>
+/// Integration tests for the Projects API endpoints.
+/// </summary>
+public sealed class ProjectsApiTests : IntegrationTestBase
+{
+    private const string BaseUrl = "/api/v1/projects";
+
+    /// <summary>
+    /// Tests that GET /api/v1/projects returns 200 with empty array initially.
     /// </summary>
-    public sealed class ProjectsApiTests : IntegrationTestBase
+    [Fact]
+    public async Task GetProjects_WhenEmpty_ReturnsEmptyArray()
     {
-        private const string BaseUrl = "/api/v1/projects";
+        // Act
+        var response = await Client.GetAsync(new Uri(BaseUrl, UriKind.Relative));
 
-        /// <summary>
-        /// Tests that GET /api/v1/projects returns 200 with empty array initially.
-        /// </summary>
-        [Fact]
-        public async Task GetProjects_WhenEmpty_ReturnsEmptyArray()
-        {
-            // Act
-            var response = await Client.GetAsync(new Uri(BaseUrl, UriKind.Relative));
+        // Assert
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+        var projects = await response.Content.ReadFromJsonNewtonsoftAsync<IReadOnlyList<ProjectListItemDto>>();
+        projects.Should().NotBeNull();
+        projects.Should().BeEmpty();
+    }
 
-            // Assert
-            response.StatusCode.Should().Be(HttpStatusCode.OK);
-            var projects = await response.Content.ReadFromJsonAsync<IReadOnlyList<ProjectListItemDto>>();
-            projects.Should().NotBeNull();
-            projects.Should().BeEmpty();
-        }
+    /// <summary>
+    /// Tests that POST /api/v1/projects with valid body returns 201 with Location header and ProjectDto.
+    /// </summary>
+    [Fact]
+    public async Task CreateProject_WithValidBody_ReturnsCreatedWithLocationAndDto()
+    {
+        // Arrange - create client and sector first
+        var clientId = await CreateTestClientAsync();
+        var sectorId = await CreateTestSectorAsync();
 
-        /// <summary>
-        /// Tests that POST /api/v1/projects with valid body returns 201 with Location header and ProjectDto.
-        /// </summary>
-        [Fact]
-        public async Task CreateProject_WithValidBody_ReturnsCreatedWithLocationAndDto()
-        {
-            // Arrange - create client and sector first
-            var clientId = await CreateTestClientAsync();
-            var sectorId = await CreateTestSectorAsync();
+        var request = new CreateProjectCommand(
+            "Test Project",
+            "Test Description",
+            YearMonth.Create(6, 2024),
+            6,
+            clientId,
+            sectorId,
+            new List<string> { "C#", ".NET" });
 
-            var request = new CreateProjectCommand(
-                "Test Project",
-                "Test Description",
-                YearMonth.Create(6, 2024),
-                6,
-                clientId,
-                sectorId,
-                new List<string> { "C#", ".NET" });
+        // Act
+        var response = await Client.PostAsJsonNewtonsoftAsync(BaseUrl, request);
 
-            // Act
-            var response = await Client.PostAsJsonAsync(BaseUrl, request);
+        // Assert
+        response.StatusCode.Should().Be(HttpStatusCode.Created);
+        response.Headers.Location.Should().NotBeNull();
+        response.Headers.Location!.ToString().Should().StartWith($"{BaseUrl}/");
 
-            // Assert
-            response.StatusCode.Should().Be(HttpStatusCode.Created);
-            response.Headers.Location.Should().NotBeNull();
-            response.Headers.Location!.ToString().Should().StartWith($"{BaseUrl}/");
-
-            var project = await response.Content.ReadFromJsonAsync<ProjectDto>();
-            project.Should().NotBeNull();
-            project!.Name.Should().Be("Test Project");
-            project.Description.Should().Be("Test Description");
-            project.Id.Should().NotBeEmpty();
-            project.CreatedAt.Should().BeCloseTo(DateTime.UtcNow, TimeSpan.FromSeconds(10));
-        }
+        var project = await response.Content.ReadFromJsonNewtonsoftAsync<ProjectDto>();
+        project.Should().NotBeNull();
+        project!.Name.Should().Be("Test Project");
+        project.Description.Should().Be("Test Description");
+        project.Id.Should().NotBeEmpty();
+        project.CreatedAt.Should().BeCloseTo(DateTime.UtcNow, TimeSpan.FromSeconds(10));
+    }
 
     /// <summary>
     /// Tests that GET /api/v1/projects/{id} returns 200 with ProjectDto.
@@ -93,7 +102,7 @@ using FluentAssertions;
         // Arrange - create a project first
         var clientId = await CreateTestClientAsync();
         var sectorId = await CreateTestSectorAsync();
-        
+
         var createRequest = new CreateProjectCommand(
             "Get By ID Test",
             "Description",
@@ -102,8 +111,8 @@ using FluentAssertions;
             clientId,
             sectorId,
             new List<string> { "C#", ".NET" });
-        var createResponse = await Client.PostAsJsonAsync(BaseUrl, createRequest);
-        var createdProject = await createResponse.Content.ReadFromJsonAsync<ProjectDto>();
+        var createResponse = await Client.PostAsJsonNewtonsoftAsync(BaseUrl, createRequest);
+        var createdProject = await createResponse.Content.ReadFromJsonNewtonsoftAsync<ProjectDto>();
 
         // Act
         var response = await Client.GetAsync(
@@ -111,7 +120,7 @@ using FluentAssertions;
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);
-        var project = await response.Content.ReadFromJsonAsync<ProjectDto>();
+        var project = await response.Content.ReadFromJsonNewtonsoftAsync<ProjectDto>();
         project.Should().NotBeNull();
         project!.Id.Should().Be(createdProject.Id);
         project.Name.Should().Be("Get By ID Test");
@@ -126,7 +135,7 @@ using FluentAssertions;
         // Arrange - create a project first
         var clientId = await CreateTestClientAsync();
         var sectorId = await CreateTestSectorAsync();
-        
+
         var createRequest = new CreateProjectCommand(
             "Update Test",
             "Original Description",
@@ -135,8 +144,8 @@ using FluentAssertions;
             clientId,
             sectorId,
             new List<string> { "C#", ".NET" });
-        var createResponse = await Client.PostAsJsonAsync(BaseUrl, createRequest);
-        var createdProject = await createResponse.Content.ReadFromJsonAsync<ProjectDto>();
+        var createResponse = await Client.PostAsJsonNewtonsoftAsync(BaseUrl, createRequest);
+        var createdProject = await createResponse.Content.ReadFromJsonNewtonsoftAsync<ProjectDto>();
 
         // Act - update the project
         var updateRequest = new UpdateProjectCommand(
@@ -149,7 +158,7 @@ using FluentAssertions;
             sectorId,
             new List<string> { "C#", ".NET" },
             ProjectStatus.Draft);
-        var response = await Client.PutAsJsonAsync(
+        var response = await Client.PutAsJsonNewtonsoftAsync(
             new Uri($"{BaseUrl}/{createdProject.Id}", UriKind.Relative),
             updateRequest);
 
@@ -159,7 +168,7 @@ using FluentAssertions;
         // Verify the update
         var getResponse = await Client.GetAsync(
             new Uri($"{BaseUrl}/{createdProject.Id}", UriKind.Relative));
-        var updatedProject = await getResponse.Content.ReadFromJsonAsync<ProjectDto>();
+        var updatedProject = await getResponse.Content.ReadFromJsonNewtonsoftAsync<ProjectDto>();
         updatedProject!.Name.Should().Be("Updated Name");
         updatedProject.Description.Should().Be("Updated Description");
     }
@@ -173,7 +182,7 @@ using FluentAssertions;
         // Arrange - create a project first
         var clientId = await CreateTestClientAsync();
         var sectorId = await CreateTestSectorAsync();
-        
+
         var createRequest = new CreateProjectCommand(
             "Delete Test",
             "To be deleted",
@@ -182,8 +191,8 @@ using FluentAssertions;
             clientId,
             sectorId,
             new List<string> { "C#" });
-        var createResponse = await Client.PostAsJsonAsync(BaseUrl, createRequest);
-        var createdProject = await createResponse.Content.ReadFromJsonAsync<ProjectDto>();
+        var createResponse = await Client.PostAsJsonNewtonsoftAsync(BaseUrl, createRequest);
+        var createdProject = await createResponse.Content.ReadFromJsonNewtonsoftAsync<ProjectDto>();
 
         // Act
         var response = await Client.DeleteAsync(
@@ -207,7 +216,7 @@ using FluentAssertions;
         // Arrange - create client and sector first
         var clientId = await CreateTestClientAsync();
         var sectorId = await CreateTestSectorAsync();
-        
+
         // Arrange - empty name should fail validation
         var request = new CreateProjectCommand(
             string.Empty,
@@ -219,14 +228,14 @@ using FluentAssertions;
             new List<string> { "C#" });
 
         // Act
-        var response = await Client.PostAsJsonAsync(BaseUrl, request);
+        var response = await Client.PostAsJsonNewtonsoftAsync(BaseUrl, request);
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
-        var problemDetails = await response.Content.ReadFromJsonAsync<JsonElement>();
-        problemDetails.GetProperty("status").GetInt32().Should().Be(400);
-        problemDetails.GetProperty("title").GetString().Should().Be("Validation Failed");
-        problemDetails.GetProperty("detail").GetString().Should().NotBeNullOrEmpty();
+        var problemDetails = await response.Content.ReadFromJsonNewtonsoftAsync<ProblemDetailsDto>();
+        problemDetails.Status.Should().Be(400);
+        problemDetails.Title.Should().Be("Validation Failed");
+        problemDetails.Detail.Should().NotBeNullOrEmpty();
     }
 
     /// <summary>
@@ -241,9 +250,9 @@ using FluentAssertions;
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.NotFound);
-        var problemDetails = await response.Content.ReadFromJsonAsync<JsonElement>();
-        problemDetails.GetProperty("status").GetInt32().Should().Be(404);
-        problemDetails.GetProperty("title").GetString().Should().Be("Not Found");
+        var problemDetails = await response.Content.ReadFromJsonNewtonsoftAsync<ProblemDetailsDto>();
+        problemDetails.Status.Should().Be(404);
+        problemDetails.Title.Should().Be("Not Found");
     }
 
     /// <summary>
@@ -255,7 +264,7 @@ using FluentAssertions;
         // Arrange - create client, sector, and project first
         var clientId = await CreateTestClientAsync();
         var sectorId = await CreateTestSectorAsync();
-        
+
         var createRequest = new CreateProjectCommand(
             "Mismatch Test",
             "Test",
@@ -264,8 +273,8 @@ using FluentAssertions;
             clientId,
             sectorId,
             new List<string> { "C#" });
-        var createResponse = await Client.PostAsJsonAsync(BaseUrl, createRequest);
-        var createdProject = await createResponse.Content.ReadFromJsonAsync<ProjectDto>();
+        var createResponse = await Client.PostAsJsonNewtonsoftAsync(BaseUrl, createRequest);
+        var createdProject = await createResponse.Content.ReadFromJsonNewtonsoftAsync<ProjectDto>();
 
         // Act - update with different ID
         var updateRequest = new UpdateProjectCommand(
@@ -278,7 +287,7 @@ using FluentAssertions;
             sectorId,
             new List<string> { "C#" },
             ProjectStatus.Draft);
-        var response = await Client.PutAsJsonAsync(
+        var response = await Client.PutAsJsonNewtonsoftAsync(
             $"{BaseUrl}/{createdProject!.Id}",
             updateRequest);
 
@@ -295,9 +304,9 @@ using FluentAssertions;
         // Arrange - create client and sector first
         var clientId = await CreateTestClientAsync();
         var sectorId = await CreateTestSectorAsync();
-        
+
         // Arrange - create multiple projects
-        var project1 = await Client.PostAsJsonAsync(
+        var project1 = await Client.PostAsJsonNewtonsoftAsync(
             BaseUrl,
             new CreateProjectCommand(
                 "Project 1",
@@ -307,7 +316,7 @@ using FluentAssertions;
                 clientId,
                 sectorId,
                 new List<string> { "C#" }));
-        var project2 = await Client.PostAsJsonAsync(
+        var project2 = await Client.PostAsJsonNewtonsoftAsync(
             BaseUrl,
             new CreateProjectCommand(
                 "Project 2",
@@ -318,15 +327,15 @@ using FluentAssertions;
                 sectorId,
                 new List<string> { "Java" }));
 
-        var p1 = await project1.Content.ReadFromJsonAsync<ProjectDto>();
-        var p2 = await project2.Content.ReadFromJsonAsync<ProjectDto>();
+        var p1 = await project1.Content.ReadFromJsonNewtonsoftAsync<ProjectDto>();
+        var p2 = await project2.Content.ReadFromJsonNewtonsoftAsync<ProjectDto>();
 
         // Act
         var response = await Client.GetAsync(new Uri(BaseUrl, UriKind.Relative));
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);
-        var projects = await response.Content.ReadFromJsonAsync<IReadOnlyList<ProjectListItemDto>>();
+        var projects = await response.Content.ReadFromJsonNewtonsoftAsync<IReadOnlyList<ProjectListItemDto>>();
         projects.Should().NotBeNull();
         projects!.Should().HaveCount(2);
         projects.Should().Contain(p => p.Id == p1!.Id);
@@ -354,7 +363,7 @@ using FluentAssertions;
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);
-        var projects = await response.Content.ReadFromJsonAsync<IReadOnlyList<ProjectListItemDto>>();
+        var projects = await response.Content.ReadFromJsonNewtonsoftAsync<IReadOnlyList<ProjectListItemDto>>();
         projects.Should().NotBeNull();
         projects!.Should().HaveCount(2);
         projects.Should().AllSatisfy(p => p.ClientId.Should().Be(client1Id));
@@ -381,7 +390,7 @@ using FluentAssertions;
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);
-        var projects = await response.Content.ReadFromJsonAsync<IReadOnlyList<ProjectListItemDto>>();
+        var projects = await response.Content.ReadFromJsonNewtonsoftAsync<IReadOnlyList<ProjectListItemDto>>();
         projects.Should().NotBeNull();
         projects!.Should().HaveCount(2);
         projects.Should().AllSatisfy(p => p.SectorId.Should().Be(sector1Id));
@@ -406,7 +415,7 @@ using FluentAssertions;
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);
-        var projects = await response.Content.ReadFromJsonAsync<IReadOnlyList<ProjectListItemDto>>();
+        var projects = await response.Content.ReadFromJsonNewtonsoftAsync<IReadOnlyList<ProjectListItemDto>>();
         projects.Should().NotBeNull();
         projects!.Should().HaveCount(2);
     }
@@ -426,14 +435,14 @@ using FluentAssertions;
 
         // Change one project to Active status
         var changeStatusRequest = new ChangeProjectStatusCommand(activeProjectId, ProjectStatus.Active);
-        await Client.PatchAsJsonAsync(new Uri($"{BaseUrl}/{activeProjectId}/status", UriKind.Relative), changeStatusRequest);
+        await Client.PatchAsJsonNewtonsoftAsync(new Uri($"{BaseUrl}/{activeProjectId}/status", UriKind.Relative), changeStatusRequest);
 
         // Act - filter by Draft status
         var response = await Client.GetAsync(new Uri($"{BaseUrl}?status={ProjectStatus.Draft}", UriKind.Relative));
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);
-        var projects = await response.Content.ReadFromJsonAsync<IReadOnlyList<ProjectListItemDto>>();
+        var projects = await response.Content.ReadFromJsonNewtonsoftAsync<IReadOnlyList<ProjectListItemDto>>();
         projects.Should().NotBeNull();
         projects!.Should().HaveCount(1);
         projects.Should().Contain(p => p.Id == draftProjectId);
@@ -459,14 +468,14 @@ using FluentAssertions;
 
         // Change Client1 Active projects to Active status
         var changeStatusRequest1 = new ChangeProjectStatusCommand(client1ActiveId, ProjectStatus.Active);
-        await Client.PatchAsJsonAsync(new Uri($"{BaseUrl}/{client1ActiveId}/status", UriKind.Relative), changeStatusRequest1);
+        await Client.PatchAsJsonNewtonsoftAsync(new Uri($"{BaseUrl}/{client1ActiveId}/status", UriKind.Relative), changeStatusRequest1);
 
         // Act - filter by client1, C# technology, and Active status
         var response = await Client.GetAsync(new Uri($"{BaseUrl}?clientId={client1Id}&technology=C%23&status={ProjectStatus.Active}", UriKind.Relative));
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);
-        var projects = await response.Content.ReadFromJsonAsync<IReadOnlyList<ProjectListItemDto>>();
+        var projects = await response.Content.ReadFromJsonNewtonsoftAsync<IReadOnlyList<ProjectListItemDto>>();
         projects.Should().NotBeNull();
         projects!.Should().HaveCount(1);
         projects.Should().Contain(p => p.Id == client1ActiveId);
@@ -485,19 +494,19 @@ using FluentAssertions;
 
         // Verify initial status is Draft
         var getResponse = await Client.GetAsync(new Uri($"{BaseUrl}/{projectId}", UriKind.Relative));
-        var project = await getResponse.Content.ReadFromJsonAsync<ProjectDto>();
+        var project = await getResponse.Content.ReadFromJsonNewtonsoftAsync<ProjectDto>();
         project!.Status.Should().Be(ProjectStatus.Draft);
 
         // Act - change status from Draft to Active
         var request = new ChangeProjectStatusCommand(projectId, ProjectStatus.Active);
-        var response = await Client.PatchAsJsonAsync(new Uri($"{BaseUrl}/{projectId}/status", UriKind.Relative), request);
+        var response = await Client.PatchAsJsonNewtonsoftAsync(new Uri($"{BaseUrl}/{projectId}/status", UriKind.Relative), request);
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.NoContent);
 
         // Verify status changed
         var verifyResponse = await Client.GetAsync(new Uri($"{BaseUrl}/{projectId}", UriKind.Relative));
-        var updatedProject = await verifyResponse.Content.ReadFromJsonAsync<ProjectDto>();
+        var updatedProject = await verifyResponse.Content.ReadFromJsonNewtonsoftAsync<ProjectDto>();
         updatedProject!.Status.Should().Be(ProjectStatus.Active);
     }
 
@@ -514,16 +523,16 @@ using FluentAssertions;
 
         // First change to Active
         var toActiveRequest = new ChangeProjectStatusCommand(projectId, ProjectStatus.Active);
-        await Client.PatchAsJsonAsync(new Uri($"{BaseUrl}/{projectId}/status", UriKind.Relative), toActiveRequest);
+        await Client.PatchAsJsonNewtonsoftAsync(new Uri($"{BaseUrl}/{projectId}/status", UriKind.Relative), toActiveRequest);
 
         // Act - try invalid transition Active to Draft
         var invalidRequest = new ChangeProjectStatusCommand(projectId, ProjectStatus.Draft);
-        var response = await Client.PatchAsJsonAsync(new Uri($"{BaseUrl}/{projectId}/status", UriKind.Relative), invalidRequest);
+        var response = await Client.PatchAsJsonNewtonsoftAsync(new Uri($"{BaseUrl}/{projectId}/status", UriKind.Relative), invalidRequest);
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
-        var problemDetails = await response.Content.ReadFromJsonAsync<JsonElement>();
-        problemDetails.GetProperty("status").GetInt32().Should().Be(400);
+        var problemDetails = await response.Content.ReadFromJsonNewtonsoftAsync<ProblemDetailsDto>();
+        problemDetails.Status.Should().Be(400);
     }
 
     /// <summary>
@@ -539,7 +548,7 @@ using FluentAssertions;
 
         // Act - request with different ID
         var request = new ChangeProjectStatusCommand(Guid.NewGuid(), ProjectStatus.Active);
-        var response = await Client.PatchAsJsonAsync(new Uri($"{BaseUrl}/{projectId}/status", UriKind.Relative), request);
+        var response = await Client.PatchAsJsonNewtonsoftAsync(new Uri($"{BaseUrl}/{projectId}/status", UriKind.Relative), request);
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
@@ -553,7 +562,7 @@ using FluentAssertions;
     {
         // Act
         var request = new ChangeProjectStatusCommand(Guid.NewGuid(), ProjectStatus.Active);
-        var response = await Client.PatchAsJsonAsync(new Uri($"{BaseUrl}/{Guid.NewGuid()}/status", UriKind.Relative), request);
+        var response = await Client.PatchAsJsonNewtonsoftAsync(new Uri($"{BaseUrl}/{Guid.NewGuid()}/status", UriKind.Relative), request);
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.NotFound);
@@ -579,7 +588,7 @@ using FluentAssertions;
 
         // Verify association
         var getResponse = await Client.GetAsync(new Uri($"{BaseUrl}/{projectId}", UriKind.Relative));
-        var project = await getResponse.Content.ReadFromJsonAsync<ProjectDto>();
+        var project = await getResponse.Content.ReadFromJsonNewtonsoftAsync<ProjectDto>();
         project!.ServiceIds.Should().Contain(serviceId);
     }
 
@@ -634,7 +643,7 @@ using FluentAssertions;
 
         // Verify association exists
         var getBeforeResponse = await Client.GetAsync(new Uri($"{BaseUrl}/{projectId}", UriKind.Relative));
-        var projectBefore = await getBeforeResponse.Content.ReadFromJsonAsync<ProjectDto>();
+        var projectBefore = await getBeforeResponse.Content.ReadFromJsonNewtonsoftAsync<ProjectDto>();
         projectBefore!.ServiceIds.Should().Contain(serviceId);
 
         // Act - remove the service
@@ -645,7 +654,7 @@ using FluentAssertions;
 
         // Verify association removed
         var getAfterResponse = await Client.GetAsync(new Uri($"{BaseUrl}/{projectId}", UriKind.Relative));
-        var projectAfter = await getAfterResponse.Content.ReadFromJsonAsync<ProjectDto>();
+        var projectAfter = await getAfterResponse.Content.ReadFromJsonNewtonsoftAsync<ProjectDto>();
         projectAfter!.ServiceIds.Should().NotContain(serviceId);
     }
 
@@ -704,7 +713,7 @@ using FluentAssertions;
 
         // Verify all associations
         var getResponse = await Client.GetAsync(new Uri($"{BaseUrl}/{projectId}", UriKind.Relative));
-        var project = await getResponse.Content.ReadFromJsonAsync<ProjectDto>();
+        var project = await getResponse.Content.ReadFromJsonNewtonsoftAsync<ProjectDto>();
         project!.ServiceIds.Should().HaveCount(3);
         project.ServiceIds.Should().Contain(service1Id);
         project.ServiceIds.Should().Contain(service2Id);
@@ -715,7 +724,7 @@ using FluentAssertions;
 
         // Verify remaining associations
         var getAfterResponse = await Client.GetAsync(new Uri($"{BaseUrl}/{projectId}", UriKind.Relative));
-        var projectAfter = await getAfterResponse.Content.ReadFromJsonAsync<ProjectDto>();
+        var projectAfter = await getAfterResponse.Content.ReadFromJsonNewtonsoftAsync<ProjectDto>();
         projectAfter!.ServiceIds.Should().HaveCount(2);
         projectAfter.ServiceIds.Should().Contain(service1Id);
         projectAfter.ServiceIds.Should().Contain(service3Id);
@@ -742,7 +751,7 @@ using FluentAssertions;
             new List<string> { "C#" });
 
         // Act
-        var response = await Client.PostAsJsonAsync(BaseUrl, request);
+        var response = await Client.PostAsJsonNewtonsoftAsync(BaseUrl, request);
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
@@ -768,7 +777,7 @@ using FluentAssertions;
             new List<string> { "C#" });
 
         // Act
-        var response = await Client.PostAsJsonAsync(BaseUrl, request);
+        var response = await Client.PostAsJsonNewtonsoftAsync(BaseUrl, request);
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.BadRequest);

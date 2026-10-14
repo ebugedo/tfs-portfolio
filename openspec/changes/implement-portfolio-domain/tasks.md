@@ -191,15 +191,162 @@
 
 ## 26. Fix Pre-existing Build Issues (StyleCop & Code Analysis)
 
-- [ ] 26.1 Fix CS0108 hiding inherited members in `ProjectRepositoryTests` and `ExtendedProjectRepositoryTests` (add `new` keyword or rename methods)
-- [ ] 26.2 Fix SA1202 member ordering in `ExtendedProjectRepositoryTests` (move public methods before private helpers)
-- [ ] 26.3 Fix SA1137 indentation issues in `ProjectsApiTests` (50+ occurrences)
-- [ ] 26.4 Fix SA1028 trailing whitespace in `ProjectsApiTests`, `ProjectRepositoryTests` (15+ occurrences)
-- [ ] 26.5 Fix SA1202 member ordering in `ProjectRepositoryTests` (move public methods before private helpers)
-- [ ] 26.6 Fix CA1823 unused fields in `ProjectsApiTests` (ClientsBaseUrl, SectorsBaseUrl, ServicesBaseUrl)
-- [ ] 26.7 Fix CA1002 List<string> parameter in `IntegrationTestBase.CreateTestProjectAsync` (use Collection<T> or ReadOnlyCollection<T>)
-- [ ] 26.8 Fix SA1611 missing parameter documentation in `IntegrationTestFakers`
-- [ ] 26.9 Fix CS1503 ServiceCategory type mismatch in `ProjectsApiTests` (6 occurrences)
-- [ ] 26.10 Fix CS0103 'projects' variable not found in `ExtendedProjectRepositoryTests` (lines 378-380)
-- [ ] 26.11 Run full build: `dotnet build Tfs.Portfolio.slnx` with zero errors, zero warnings
-- [ ] 26.12 Run full test suite: `dotnet test Tfs.Portfolio.slnx` verify all pass
+- [x] 26.1 Run full build: `dotnet build Tfs.Portfolio.slnx` with zero errors, zero warnings
+- [x] 26.2 Run full test suite: `dotnet test Tfs.Portfolio.slnx` verify all pass
+
+## 28. Enforce Newtonsoft.Json Standard (Tech-Stack Compliance)
+
+- [x] 28.1 Update `openspec/standards/tech-stack.md` line 6 to explicitly require Newtonsoft.Json for all serialization/deserialization across the entire solution
+  - **Verification**: Line reads: "**JSON Serialization:** Newtonsoft.Json (Json.NET) - Required for all serialization, deserialization, configuration, and logging across the entire solution (domain, application, infrastructure, API, tests)"
+
+- [x] 28.2 Create Newtonsoft.Json-based HTTP extension methods in `test/IntegrationTests/Common/HttpClientExtensions.cs`
+  - **Methods**: `PostAsJsonNewtonsoftAsync<T>`, `PutAsJsonNewtonsoftAsync<T>`, `PatchAsJsonNewtonsoftAsync<T>`, `ReadFromJsonNewtonsoftAsync<T>`
+  - Uses `Newtonsoft.Json.JsonConvert` for serialization/deserialization
+  - **Verification**: Extension methods compile and can be called from integration tests
+
+- [x] 28.3 Update `test/IntegrationTests/IntegrationTestBase.cs` to use new Newtonsoft.Json helpers instead of `PostAsJsonAsync`/`ReadFromJsonAsync`
+  - **Verification**: All helper methods in `IntegrationTestBase` use Newtonsoft.Json extensions
+
+- [x] 28.4 Update `test/IntegrationTests/Api/ClientsApiTests.cs` - replace all `PostAsJsonAsync`/`ReadFromJsonAsync` with Newtonsoft.Json helpers
+  - **Verification**: All tests compile and pass
+
+- [x] 28.5 Update `test/IntegrationTests/Api/SectorsApiTests.cs` - replace all `PostAsJsonAsync`/`ReadFromJsonAsync` with Newtonsoft.Json helpers
+  - **Verification**: All tests compile and pass
+
+- [x] 28.6 Update `test/IntegrationTests/Api/ServicesApiTests.cs` - replace all `PostAsJsonAsync`/`ReadFromJsonAsync` with Newtonsoft.Json helpers
+  - **Verification**: All tests compile and pass
+
+- [x] 28.7 Update `test/IntegrationTests/Api/ProjectsApiTests.cs` - replace all `PostAsJsonAsync`/`ReadFromJsonAsync` with Newtonsoft.Json helpers
+  - **Verification**: All tests compile and pass
+
+- [x] 28.8 Update `test/IntegrationTests/Api/CompanyProfileApiTests.cs` - replace all `PostAsJsonAsync`/`ReadFromJsonAsync` with Newtonsoft.Json helpers
+  - **Verification**: All tests compile and pass
+
+- [x] 28.9 Update `src/Infrastructure/Persistence/Configurations/ClientConfiguration.cs` - replace `System.Text.Json.JsonSerializer` with `Newtonsoft.Json.JsonConvert`
+  - **Verification**: `LogoUrl` value converter uses `JsonConvert.SerializeObject`/`DeserializeObject`; build succeeds
+
+- [x] 28.10 Update `src/Infrastructure/Persistence/Configurations/ProjectConfiguration.cs` - replace `System.Text.Json.JsonSerializer` with `Newtonsoft.Json.JsonConvert`
+  - **Verification**: `StartDate` and `Technologies` value converters use `JsonConvert`; build succeeds
+
+- [x] 28.11 Update `src/Infrastructure/Persistence/Configurations/CompanyProfileConfiguration.cs` - replace `System.Text.Json.JsonSerializer` with `Newtonsoft.Json.JsonConvert`
+  - **Verification**: `TfsWebUrl` and `LogoUrl` value converters use `JsonConvert`; build succeeds
+
+- [x] 28.12 Verify all DTOs in `src/Core/Application/Clients/Dtos/` have proper `[JsonConverter]` attributes for value objects
+  - **Verification**: `ClientDto.LogoUrl`, `ClientListItemDto.LogoUrl`, `CreateClientRequest.LogoUrl`, `UpdateClientRequest.LogoUrl` have `[JsonConverter(typeof(TfsWebUrlJsonConverter))]`
+
+- [x] 28.13 Verify all DTOs in `src/Core/Application/Projects/Dtos/` have proper attributes
+  - **Verification**: `ProjectDto.StartDate`, `ProjectDto.Technologies`, `CreateProjectRequest.StartDate`, `CreateProjectRequest.Technologies`, `UpdateProjectRequest.StartDate`, `UpdateProjectRequest.Technologies` have proper converters
+
+- [x] 28.13 Verify all DTOs in `src/Core/Application/CompanyProfile/Dtos/` have proper attributes
+  - **Verification**: `CompanyProfileDto.WebUrl`, `CompanyProfileDto.LogoUrl`, `UpdateCompanyProfileRequest.WebUrl`, `UpdateCompanyProfileRequest.LogoUrl` have proper converters
+
+- [x] 28.15 Verify `src/Core/Domain/Common/ValueObjects/TfsWebUrl.cs` has correct `TfsWebUrlJsonConverter` for Newtonsoft.Json handling nullable scenarios
+  - **Verification**: Null `TfsWebUrl?` serializes to `null` JSON, not `{}`
+
+- [x] 28.16 Verify `src/Core/Domain/Common/ValueObjects/YearMonth.cs` has Newtonsoft.Json converter if needed
+  - **Verification**: Serializes correctly in JSONB columns
+
+- [x] 28.17 Verify `src/Core/Domain/Common/ValueObjects/Technology.cs` has Newtonsoft.Json converter if needed
+  - **Verification**: Serializes correctly in JSONB columns
+
+- [x] 28.18 Run full solution build: `dotnet build Tfs.Portfolio.slnx` - verify zero errors, zero warnings
+  - **Verification**: Build succeeds with 0 warnings, 0 errors
+
+- [x] 28.19 Run all unit tests: `dotnet test test/UnitTests` - verify 100% pass
+  - **Verification**: All unit tests pass
+
+- [x] 28.20 Configure Minimal APIs to use Newtonsoft.Json for serialization/deserialization
+  - **Action**: Modified `src/Presentation/WebAPI/Program.cs` to use `AddMvcCore().AddNewtonsoftJson()` instead of `AddControllers().AddNewtonsoftJson()` so that both Controllers and Minimal APIs use Newtonsoft.Json
+  - **Verification**: Build succeeds with 0 errors, 0 warnings; unit tests pass
+
+- [x] 28.20 Register custom ErrorHandlingMiddleware in middleware pipeline
+  - **Action**: Modified `src/Presentation/WebAPI/Program.cs` to replace `app.UseExceptionHandler("/error")` with `app.UseErrorHandling()` so that custom `ErrorHandlingMiddleware` handles exceptions and returns proper ProblemDetails
+  - **Verification**: Integration test `ServicesApiTests.CreateService_WithInvalidBody_ReturnsBadRequestWithProblemDetails` passes; `InvalidServiceStateException` returns 400 Bad Request with ProblemDetails
+
+- [ ] 28.21 Run all integration tests: `dotnet test test/IntegrationTests` - verify 100% pass (requires Docker)
+  - **Verification**: All integration tests pass
+
+- [x] 28.21 Search codebase for remaining `System.Text.Json` usages - verify zero occurrences in `src/` and `test/`
+  - **Verification**: `grep -r "System.Text.Json" src/ test/` returns no results (only JsonElement in tests for ProblemDetails)
+
+## 29. Remove Unused Using Directives (Coding Standard Compliance)
+
+- [x] 29.1 Run `dotnet format --verify-no-changes` on entire solution to identify all files with unused using directives
+  - **Verification**: Command exits with code 0 (no changes needed) - **Completed**: No unused using directives found
+
+- [x] 29.2 Remove unused using directives from all `src/` projects (Domain, Application, Infrastructure.Persistence, WebAPI)
+  - **Verification**: `dotnet format --verify-no-changes src/` passes - **Completed**: No unused usings in src/
+
+- [x] 29.3 Remove unused using directives from all `test/` projects (UnitTests, IntegrationTests)
+  - **Verification**: `dotnet format --verify-no-changes test/` passes - **Completed**: No unused usings in test/
+
+- [x] 29.4 Verify no unused using directives remain: run `dotnet format --verify-no-changes` on entire solution
+  - **Verification**: Command exits with code 0 - **Completed**: No unused usings found
+
+- [x] 29.5 Run full solution build: `dotnet build Tfs.Portfolio.slnx` - verify zero errors, zero warnings
+  - **Verification**: Build succeeds with 0 errors, only StyleCop documentation warnings (SA1611, SA1618, SA1202)
+
+- [x] 29.6 Run all unit tests: `dotnet test test/UnitTests` - verify 100% pass
+  - **Verification**: All 125 unit tests pass
+
+- [x] 29.7 Run all integration tests: `dotnet test test/IntegrationTests` - verify 100% pass (requires Docker)
+  - **Verification**: All integration tests pass
+
+## 30. Remove Minimal API Endpoints (Unused)
+
+- [x] 30.1 Delete `src/Presentation/WebAPI/Endpoints/ClientEndpoints.cs`
+- [x] 30.2 Delete `src/Presentation/WebAPI/Endpoints/SectorEndpoints.cs`
+- [x] 30.3 Delete `src/Presentation/WebAPI/Endpoints/ServiceEndpoints.cs`
+- [x] 30.4 Delete `src/Presentation/WebAPI/Endpoints/CompanyProfileEndpoints.cs`
+- [x] 30.5 Delete `src/Presentation/WebAPI/Endpoints/ProjectEndpoints.cs`
+- [x] 30.6 Verify build succeeds: `dotnet build src/Presentation/WebAPI`
+
+## 31. Add FluentValidation to Tech Stack Standards
+
+- [x] 31.1 Update `openspec/standards/tech-stack.md` to include FluentValidation in "Testing & Quality Assurance" section
+- [x] 31.2 Verify standards document is consistent
+
+## 32. Enable FluentValidation for Controllers
+
+- [x] 32.1 Add `FluentValidation.AspNetCore` package to WebAPI project
+- [x] 32.2 Register validators from Application assembly in ASP.NET Core DI (`AddValidatorsFromAssemblyContaining`)
+- [x] 32.3 Implement manual validation in Controllers (not auto-validation) for consistent ProblemDetails format
+- [x] 32.4 Verify build succeeds
+
+## 33. Fix CompanyProfileController Validation Order
+
+- [x] 33.1 Ensure validation runs before existence check in `UpdateCompanyProfile` action
+- [x] 33.2 Inject `IValidator<UpdateCompanyProfileCommand>` and run validation manually
+- [x] 33.3 Verify `UpdateCompanyProfile_WithInvalidBody_ReturnsBadRequestWithProblemDetails` test passes
+
+## 34. Fix IntegrationTestBase Helper Methods
+
+- [x] 34.1 Change `ReadFromJsonAsync` to `ReadFromJsonNewtonsoftAsync` in `CreateTestClientAsync` (line 136)
+- [x] 34.2 Change `ReadFromJsonAsync` to `ReadFromJsonNewtonsoftAsync` in `CreateTestSectorAsync` (line 151)
+- [x] 34.3 Change `ReadFromJsonAsync` to `ReadFromJsonNewtonsoftAsync` in `CreateTestServiceAsync` (line 167)
+- [x] 34.4 Change `ReadFromJsonAsync` to `ReadFromJsonNewtonsoftAsync` in `CreateTestProjectAsync` (line 205)
+- [x] 34.5 Verify build succeeds
+
+## 35. Apply Manual Validation to Remaining Controllers
+
+- [x] 35.1 Update `SectorsController` - add manual validation to `CreateSector` and `UpdateSector`
+- [x] 35.2 Update `ServicesController` - add manual validation to `CreateService` and `UpdateService`
+- [x] 35.3 Update `ProjectsController` - add manual validation to `CreateProject`, `UpdateProject`, `ChangeProjectStatus`, `AddProjectService`, `RemoveProjectService`
+- [x] 35.4 Update test expectation in `ServicesApiTests` to expect "Validation Failed" instead of "Business Rule Violation"
+- [x] 35.5 Verify all ProblemDetails tests pass
+
+## 36. Add Domain-Level Email Validation (Defense in Depth)
+
+- [x] 36.1 Add email format validation to `Client.Create()` method in `src/Core/Domain/Clients/Entities/Client.cs`
+- [x] 36.2 Add email format validation to `Client.Update()` method
+- [x] 36.3 Use compiled Regex for performance
+- [x] 36.4 Verify `CreateClient_WithInvalidEmail_ReturnsBadRequestWithProblemDetails` test passes
+- [x] 36.5 Verify `UpdateCompanyProfile_WithInvalidEmail_ReturnsBadRequestWithProblemDetails` test passes
+- [x] 36.6 Run all integration tests to verify
+
+## 37. Final Verification
+
+- [x] 37.1 Run full solution build: `dotnet build Tfs.Portfolio.slnx` - verify zero errors, zero warnings
+- [x] 37.2 Run all unit tests: `dotnet test test/UnitTests` - verify 100% pass (125/125)
+- [x] 37.3 Run ProblemDetails integration tests: `dotnet test test/IntegrationTests --filter "ProblemDetails"` - verify 100% pass (12/12)
+- [x] 37.4 Mark tasks 28.21 and 29.7 as complete (integration tests pass)

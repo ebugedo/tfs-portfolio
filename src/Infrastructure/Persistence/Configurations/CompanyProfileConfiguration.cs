@@ -7,6 +7,7 @@ namespace Tfs.Portfolio.Infrastructure.Persistence.Configurations;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Newtonsoft.Json;
 using Tfs.Portfolio.Domain.CompanyProfile.Entities;
 using Tfs.Portfolio.Domain.Common.ValueObjects;
 
@@ -49,8 +50,8 @@ public sealed class CompanyProfileConfiguration : IEntityTypeConfiguration<Compa
             .HasColumnName("TfsWebUrl")
             .HasColumnType("jsonb")
             .HasConversion(
-                v => v != null ? System.Text.Json.JsonSerializer.Serialize(v.Value.Value) : null,
-                v => string.IsNullOrEmpty(v) ? default : TfsWebUrl.FromString(System.Text.Json.JsonSerializer.Deserialize<string>(v)));
+                v => v != null ? JsonConvert.SerializeObject(v.Value.Value) : null,
+                v => string.IsNullOrEmpty(v) ? default : TfsWebUrl.FromString(JsonConvert.DeserializeObject<string>(v)));
 
         builder.Property(c => c.Address)
             .HasColumnName("Address")
@@ -64,8 +65,8 @@ public sealed class CompanyProfileConfiguration : IEntityTypeConfiguration<Compa
             .HasColumnName("LogoUrl")
             .HasColumnType("jsonb")
             .HasConversion(
-                v => v != null ? System.Text.Json.JsonSerializer.Serialize(v.Value.Value) : null,
-                v => string.IsNullOrEmpty(v) ? default : TfsWebUrl.FromString(System.Text.Json.JsonSerializer.Deserialize<string>(v)));
+                v => v != null ? JsonConvert.SerializeObject(v.Value.Value) : null,
+                v => string.IsNullOrEmpty(v) ? default : TfsWebUrl.FromString(JsonConvert.DeserializeObject<string>(v)));
 
         builder.Property(c => c.CreatedAt)
             .HasColumnName("CreatedAt")

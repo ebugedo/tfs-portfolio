@@ -14,7 +14,7 @@ using System.Collections.Generic;
 public abstract class AggregateRoot<TId> : Entity<TId>
     where TId : notnull
 {
-    private readonly List<IDomainEvent> domainEvents = new ();
+    private readonly List<IDomainEvent> domainEvents = new();
 
     /// <summary>
     /// Initializes a new instance of the <see cref="AggregateRoot{TId}"/> class.

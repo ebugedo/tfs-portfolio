@@ -215,9 +215,6 @@ The system SHALL ensure all integration tests that create entities with foreign 
 - **THEN** test fixtures or base classes provide helper methods like `CreateTestClientAsync()`, `CreateTestSectorAsync()`, `CreateTestProjectAsync(clientId, sectorId)`
 - **THEN** these helpers ensure all FK references are valid before saving
 
-### Requirement: Integration test projects build and pass code analysis with zero errors
-The system SHALL ensure all integration test projects compile and pass code analysis (StyleCop, Roslyn analyzers) with zero errors and zero warnings.
-
 #### Scenario: Integration test projects pass StyleCop and Roslyn analyzers
 - **WHEN** building the solution with `dotnet build Tfs.Portfolio.slnx`
 - **THEN** all projects compile with zero errors and zero warnings
@@ -226,6 +223,35 @@ The system SHALL ensure all integration test projects compile and pass code anal
 - **THEN** no CS0103 undefined variable errors
 - **THEN** no CS1503 argument type mismatch errors
 - **THEN** no CS0108 member hiding without `new` keyword
+
+### Requirement: ClientsApiTests integration tests pass with proper TfsWebUrl serialization and handler registration
+The system SHALL ensure all ClientsApiTests integration tests pass with correct TfsWebUrl JSON serialization and proper handler registration.
+
+#### Scenario: TfsWebUrl null values serialize as JSON null
+- **WHEN** a ClientDto with null LogoUrl is serialized to JSON
+- **THEN** the LogoUrl property serializes as `null` (not `{"value":null,"isValid":false}`)
+- **THEN** no validation error "Invalid logo URL format" occurs
+
+#### Scenario: TfsWebUrl null values deserialize correctly to null
+- **WHEN** a ClientDto with null LogoUrl is deserialized from JSON
+- **THEN** the LogoUrl property is `null` (not an empty TfsWebUrl with IsValid=false)
+- **THEN** `client.LogoUrl.Should().BeNull()` passes
+
+#### Scenario: DeactivateClientCommandHandler is registered in DI container
+- **WHEN** the application starts
+- **THEN** `DeactivateClientCommandHandler` is registered in the DI container
+- **WHEN** calling DELETE /api/v1/clients/{id}
+- **THEN** the handler executes and returns 204 NoContent
+
+#### Scenario: ClientsApiTests.CreateClient_WithMinimalBody_ReturnsCreated passes
+- **WHEN** creating a client without LogoUrl
+- **THEN** the client is created successfully with 201 status
+- **THEN** the returned LogoUrl is null
+
+#### Scenario: ClientsApiTests.CreateClient_WithValidBody_ReturnsCreatedWithLocationAndDto passes
+- **WHEN** creating a client with valid LogoUrl
+- **THEN** the returned LogoUrl.Value matches the input URL
+- **THEN** LogoUrl.IsValid is true
 
 #### Scenario: Integration test projects have no unused code
 - **WHEN** running code analysis

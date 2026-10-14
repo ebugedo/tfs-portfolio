@@ -147,4 +147,40 @@ The following StyleCop and code analysis issues were discovered during implement
 | CS0103 (undefined variable) | `ExtendedProjectRepositoryTests.cs` lines 378-380 | 1 | Fix undefined `projects` variable |
 | CS1503 (argument type mismatch) | `ProjectsApiTests.cs` | 6 | Fix `ServiceCategory` enum usage |
 
-**Mitigation**: These issues are pre-existing and do not block the FK constraint fix. They will be addressed in a dedicated refactoring sprint (Section 26 tasks).
+## ClientsApiTests Fixes (New)
+
+The following fixes are required to resolve the failing ClientsApiTests integration tests:
+
+### 1. TfsWebUrl JSON Serialization - Null Values
+**Issue**: Null `TfsWebUrl?` values serialize as `{"value":null,"isValid":false}` instead of `null`.
+**Location**: `TfsWebUrlJsonConverter.WriteJson`
+**Root Cause**: Converter receives `TfsWebUrl` with `Value=null` (not null reference) and writes object instead of null.
+**Fix**: Modify `WriteJson` to check `url.Value == null` and write null.
+**Status**: In progress - converter updated but test still failing.
+
+### 2. TfsWebUrl Null Deserialization
+**Issue**: Null JSON values deserialize to `TfsWebUrl{Value=null, IsValid=false}` instead of `null`.
+**Location**: `TfsWebUrlJsonConverter.ReadJson`
+**Root Cause**: `ReadJson` returns `default(TfsWebUrl)` for null input instead of `null`.
+**Fix**: Return `null` for null/empty input when target type is `TfsWebUrl?`.
+**Status**: In progress - converter updated but test still failing.
+
+### 3. Missing DeactivateClientCommandHandler Registration
+**Issue**: `DeactivateClientCommandHandler` not registered in Autofac container.
+**Location**: `src/Core/Application/Common/Modules/ApplicationModule.cs`
+**Fix**: Register handler in `ApplicationModule.Load()`.
+**Status**: Not started.
+
+### 4. LogoUrl Null Serialization in ClientDto
+**Issue**: Null `LogoUrl` serializes as `{"value":null,"isValid":false}` instead of `null`.
+**Location**: `ClientDto.LogoUrl`, `ClientListItemDto.LogoUrl`, `CompanyProfileDto.TfsWebUrl`, `CompanyProfileDto.LogoUrl`
+**Fix**: Ensure `TfsWebUrlJsonConverter` handles null correctly; verify `[JsonConverter]` attributes on DTO properties.
+**Status**: In progress - attributes added to DTOs, global converter registered.
+
+### 5. Missing DeactivateClientCommandHandler Registration in Autofac
+**Issue**: `DeactivateClientCommandHandler` not registered in Autofac container.
+**Location**: `src/Core/Application/Common/Modules/ApplicationModule.cs`
+**Fix**: Add `builder.RegisterType<DeactivateClientCommandHandler>().As<IDeactivateClientCommandHandler>();` (or similar).
+**Status**: Not started.
+
+**Mitigation**: These issues block ClientsApiTests (37 failing). They will be addressed in Section 27 tasks.
