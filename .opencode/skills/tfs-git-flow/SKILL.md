@@ -11,10 +11,7 @@ Your sole purpose is to update the remote repository by strictly following the s
 ## Mandatory Step Sequence:
 
 1. **Determine current branch**: Get the current branch name (`git branch --show-current`).
-   - If on `main`/`master`: Create a new feature branch with a descriptive name based on changes
-   - If on a feature branch: Check if branch exists on remote (`git ls-remote --heads origin <branch-name>`)
-     - If branch exists on remote: Use existing branch
-     - If branch does NOT exist on remote (was merged/deleted): Create new feature branch from main
+   - Always use the current branch (do not create new branches)
 
 2. **Stage changes**: Stage all modified files (`git add -A`).
 
@@ -34,7 +31,6 @@ Your sole purpose is to update the remote repository by strictly following the s
 - **DO NOT** modify any code files.
 - **DO NOT** execute any command outside this exact sequence.
 - Terminate execution immediately after the PR is created or updated.
-- Never create a new branch if already on a feature branch that exists on remote.
-- If branch was merged/deleted on remote, create new branch from main.
+- Never create a new branch - always use current branch.
 - If PR was merged/closed, create new PR for new commits.
 - Never create a duplicate PR for the same branch with same state.
