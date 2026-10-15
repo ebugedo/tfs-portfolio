@@ -103,6 +103,10 @@ The system SHALL provide SectorConfiguration mapping to "Sectors" table with Id 
 ### Requirement: Service entity configuration
 The system SHALL provide ServiceConfiguration mapping to "Services" table with Id (uuid PK), Name (varchar 150 required), Description (text), Category (integer enum), IsActive (boolean), CreatedAt (timestamp with time zone), index on Category.
 
+#### Scenario: ServiceConfiguration defines schema correctly
+- **WHEN** inspecting migration for Services table
+- **THEN** columns match specification with correct types and constraints
+
 ### Requirement: CompanyProfile entity configuration (singleton)
 The system SHALL provide CompanyProfileConfiguration mapping to "CompanyProfiles" table with Id (uuid PK), CompanyName (varchar 200 required), ContactEmail (varchar 255), ContactPhone (varchar 50), WebUrl (jsonb), Address (text), Description (text), LogoUrl (jsonb), CreatedAt/UpdatedAt (timestamp with time zone), unique constraint ensuring single row.
 

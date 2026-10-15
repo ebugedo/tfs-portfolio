@@ -67,3 +67,90 @@ The system SHALL ensure `dotnet build` on `Tfs.Portfolio.Application` succeeds w
 #### Scenario: Application builds with Domain only
 - **WHEN** running `dotnet build src/Core/Application/Tfs.Portfolio.Application.csproj`
 - **THEN** build succeeds with zero errors
+
+### Requirement: Client commands and queries
+The system SHALL provide CreateClientCommand (returns Guid), UpdateClientCommand, DeleteClientCommand, GetClientByIdQuery (returns ClientDto), GetClientsQuery (returns IReadOnlyList<ClientListItemDto>), GetActiveClientsQuery, with corresponding handlers.
+
+#### Scenario: CreateClientCommandHandler creates client
+- **WHEN** CreateClientCommand with valid data is handled
+- **THEN** Client aggregate created, saved via repository, ClientDto returned with new Id
+
+#### Scenario: GetClientsQuery returns paginated list
+- **WHEN** GetClientsQuery with optional filters is handled
+- **THEN** returns IReadOnlyList<ClientListItemDto> with Name, Email, IsActive
+
+### Requirement: Sector commands and queries
+The system SHALL provide CreateSectorCommand (returns Guid), UpdateSectorCommand, DeleteSectorCommand, GetSectorByIdQuery (returns SectorDto), GetSectorsQuery, GetActiveSectorsQuery, with corresponding handlers.
+
+#### Scenario: CreateSectorCommandHandler creates sector
+- **WHEN** CreateSectorCommand with valid data is handled
+- **THEN** Sector aggregate created, saved, SectorDto returned
+
+### Requirement: Service commands and queries
+The system SHALL provide CreateServiceCommand (returns Guid), UpdateServiceCommand, DeleteServiceCommand, GetServiceByIdQuery (returns ServiceDto), GetServicesQuery, GetActiveServicesQuery, GetServicesByCategoryQuery, with corresponding handlers.
+
+#### Scenario: GetServicesByCategoryQuery filters by category
+- **WHEN** GetServicesByCategoryQuery with ServiceCategory.Development is handled
+- **THEN** returns only Development services
+
+### Requirement: CompanyProfile commands and queries (singleton)
+The system SHALL provide UpdateCompanyProfileCommand, GetCompanyProfileQuery (returns CompanyProfileDto), with handlers. No Create/Delete commands (singleton managed by domain).
+
+#### Scenario: GetCompanyProfileQuery returns singleton
+- **WHEN** GetCompanyProfileQuery is handled
+- **THEN** returns CompanyProfileDto if exists, null otherwise
+
+#### Scenario: UpdateCompanyProfileCommand updates singleton
+- **WHEN** UpdateCompanyProfileCommand with valid data is handled
+- **THEN** singleton updated, CompanyProfileDto returned
+
+### Requirement: Enhanced Project commands and queries
+The system SHALL extend with CreateProjectCommand (includes StartDate, DurationMonths, ClientId, SectorId, Technologies), UpdateProjectCommand (includes Status), ChangeProjectStatusCommand, AddProjectServiceCommand, RemoveProjectServiceCommand, GetProjectsQuery with filters (clientId, sectorId, technology, status), GetProjectByIdQuery, GetProjectsByClientQuery, GetProjectsBySectorQuery, GetProjectsByTechnologyQuery, GetProjectsByStatusQuery.
+
+#### Scenario: CreateProjectCommandHandler validates relationships
+- **WHEN** CreateProjectCommand with non-existent ClientId is handled
+- **THEN** throws ClientNotFoundException
+
+#### Scenario: ChangeProjectStatusCommandHandler enforces transitions
+- **WHEN** ChangeProjectStatusCommand with invalid transition is handled
+- **THEN** throws InvalidProjectStateException
+
+#### Scenario: GetProjectsQuery filters by multiple criteria
+- **WHEN** GetProjectsQuery with clientId and status is handled
+- **THEN** returns only projects matching both filters
+
+### Requirement: Client, Sector, Service, CompanyProfile DTOs
+The system SHALL provide DTOs: ClientDto, ClientListItemDto, CreateClientRequest, UpdateClientRequest, SectorDto, SectorListItemDto, CreateSectorRequest, UpdateSectorRequest, ServiceDto, ServiceListItemDto, CreateServiceRequest, UpdateServiceRequest, CompanyProfileDto, UpdateCompanyProfileRequest, all using camelCase properties.
+
+#### Scenario: DTOs use camelCase for JSON serialization
+- **WHEN** inspecting ClientDto properties
+- **THEN** uses clientId, clientName, logoUrl, contactEmail, isActive, createdAt
+
+### Requirement: AutoMapper profiles for all new aggregates
+The system SHALL provide ClientMappingProfile, SectorMappingProfile, ServiceMappingProfile, CompanyProfileMappingProfile, and extend ProjectMappingProfile for new properties and relationships.
+
+#### Scenario: Client mapping includes value objects
+- **WHEN** mapper.Map<ClientDto>(clientEntity) is called
+- **THEN** LogoUrl, ContactInfo mapped correctly to DTO
+
+#### Scenario: Project mapping includes technologies and relations
+- **WHEN** mapper.Map<ProjectDto>(projectEntity) is called
+- **THEN** Technologies, ClientId, SectorId, Status, Services mapped
+
+### Requirement: FluentValidation validators for all new commands/queries
+The system SHALL provide validators: CreateClientCommandValidator, UpdateClientCommandValidator, GetClientByIdQueryValidator, CreateSectorCommandValidator, UpdateSectorCommandValidator, GetSectorByIdQueryValidator, CreateServiceCommandValidator, UpdateServiceCommandValidator, GetServiceByIdQueryValidator, UpdateCompanyProfileCommandValidator, CreateProjectCommandValidator (extended), UpdateProjectCommandValidator (extended), ChangeProjectStatusCommandValidator, AddProjectServiceCommandValidator, GetProjectsQueryValidator.
+
+#### Scenario: CreateClientCommandValidator validates required fields
+- **WHEN** CreateClientCommand with empty Name is validated
+- **THEN** fails with "Client name is required"
+
+#### Scenario: CreateProjectCommandValidator validates relationships
+- **WHEN** CreateProjectCommand with DurationMonths > 120 is validated
+- **THEN** fails with "Duration must be between 1 and 120 months"
+
+### Requirement: ApplicationModule registers all new handlers, validators, mappers
+The system SHALL extend ApplicationModule to register all new command/query handlers, validators, and AutoMapper profiles for Clients, Sectors, Services, CompanyProfile, and enhanced Projects.
+
+#### Scenario: All new handlers resolvable via Autofac
+- **WHEN** ApplicationModule.Load is executed
+- **THEN** CreateClientCommandHandler, GetClientsQueryHandler, etc. registered as interfaces and concrete types
