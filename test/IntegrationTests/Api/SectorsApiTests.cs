@@ -281,8 +281,9 @@ public sealed class SectorsApiTests : IntegrationTestBase
     public async Task UpdateSector_WhenNotFound_ReturnsNotFound()
     {
         // Act
-        var updateRequest = new UpdateSectorCommand(Guid.NewGuid(), "Updated", "Updated description");
-        var response = await Client.PutAsJsonNewtonsoftAsync($"{BaseUrl}/{Guid.NewGuid()}", updateRequest);
+        var nonExistentId = Guid.NewGuid();
+        var updateRequest = new UpdateSectorCommand(nonExistentId, "Updated", "Updated description");
+        var response = await Client.PutAsJsonNewtonsoftAsync($"{BaseUrl}/{nonExistentId}", updateRequest);
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.NotFound);

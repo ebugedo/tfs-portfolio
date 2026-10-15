@@ -460,15 +460,19 @@ public sealed class ProjectsApiTests : IntegrationTestBase
         var client2Id = await CreateTestClientAsync("Client 2", "client2@test.com");
         var sectorId = await CreateTestSectorAsync("Technology");
 
-        await CreateTestProjectAsync("Client1 Active C# Project", clientId: client1Id, sectorId: sectorId, technologies: new List<string> { "C#" });
+        var client1ActiveCSharpId = await CreateTestProjectAsync("Client1 Active C# Project", clientId: client1Id, sectorId: sectorId, technologies: new List<string> { "C#" });
         var client1DraftId = await CreateTestProjectAsync("Client1 Draft C# Project", clientId: client1Id, sectorId: sectorId, technologies: new List<string> { "C#" });
         await CreateTestProjectAsync("Client2 Active C# Project", clientId: client2Id, sectorId: sectorId, technologies: new List<string> { "C#" });
 
-        var client1ActiveId = await CreateTestProjectAsync("Client1 Active Java Project", clientId: client1Id, sectorId: sectorId, technologies: new List<string> { "Java" });
+        var client1ActiveJavaId = await CreateTestProjectAsync("Client1 Active Java Project", clientId: client1Id, sectorId: sectorId, technologies: new List<string> { "Java" });
 
-        // Change Client1 Active projects to Active status
-        var changeStatusRequest1 = new ChangeProjectStatusCommand(client1ActiveId, ProjectStatus.Active);
-        await Client.PatchAsJsonNewtonsoftAsync(new Uri($"{BaseUrl}/{client1ActiveId}/status", UriKind.Relative), changeStatusRequest1);
+        // Set Client1 Active C# Project to Active status
+        var changeStatusRequest1 = new ChangeProjectStatusCommand(client1ActiveCSharpId, ProjectStatus.Active);
+        await Client.PatchAsJsonNewtonsoftAsync(new Uri($"{BaseUrl}/{client1ActiveCSharpId}/status", UriKind.Relative), changeStatusRequest1);
+
+        // Set Client1 Active Java Project to Active status
+        var changeStatusRequest2 = new ChangeProjectStatusCommand(client1ActiveJavaId, ProjectStatus.Active);
+        await Client.PatchAsJsonNewtonsoftAsync(new Uri($"{BaseUrl}/{client1ActiveJavaId}/status", UriKind.Relative), changeStatusRequest2);
 
         // Act - filter by client1, C# technology, and Active status
         var response = await Client.GetAsync(new Uri($"{BaseUrl}?clientId={client1Id}&technology=C%23&status={ProjectStatus.Active}", UriKind.Relative));
@@ -478,7 +482,7 @@ public sealed class ProjectsApiTests : IntegrationTestBase
         var projects = await response.Content.ReadFromJsonNewtonsoftAsync<IReadOnlyList<ProjectListItemDto>>();
         projects.Should().NotBeNull();
         projects!.Should().HaveCount(1);
-        projects.Should().Contain(p => p.Id == client1ActiveId);
+        projects.Should().Contain(p => p.Id == client1ActiveCSharpId);
     }
 
     /// <summary>
@@ -561,8 +565,9 @@ public sealed class ProjectsApiTests : IntegrationTestBase
     public async Task ChangeProjectStatus_WhenNotFound_ReturnsNotFound()
     {
         // Act
-        var request = new ChangeProjectStatusCommand(Guid.NewGuid(), ProjectStatus.Active);
-        var response = await Client.PatchAsJsonNewtonsoftAsync(new Uri($"{BaseUrl}/{Guid.NewGuid()}/status", UriKind.Relative), request);
+        var nonExistentId = Guid.NewGuid();
+        var request = new ChangeProjectStatusCommand(nonExistentId, ProjectStatus.Active);
+        var response = await Client.PatchAsJsonNewtonsoftAsync(new Uri($"{BaseUrl}/{nonExistentId}/status", UriKind.Relative), request);
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.NotFound);

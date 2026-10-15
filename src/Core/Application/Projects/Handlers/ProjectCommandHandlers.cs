@@ -13,6 +13,10 @@ using Tfs.Portfolio.Domain.Common.ValueObjects;
 using Tfs.Portfolio.Domain.Projects.Entities;
 using Tfs.Portfolio.Domain.Projects.Exceptions;
 using Tfs.Portfolio.Domain.Projects.Repositories;
+using Tfs.Portfolio.Domain.Clients.Repositories;
+using Tfs.Portfolio.Domain.Sectors.Repositories;
+using Tfs.Portfolio.Domain.Services.Exceptions;
+using Tfs.Portfolio.Domain.Services.Repositories;
 
 /// <summary>
 /// Handler for <see cref="CreateProjectCommand"/>.
@@ -20,6 +24,8 @@ using Tfs.Portfolio.Domain.Projects.Repositories;
 public sealed class CreateProjectCommandHandler : CommandHandlerBase<CreateProjectCommand, Guid>
 {
     private readonly IProjectRepository projectRepository;
+    private readonly IClientRepository clientRepository;
+    private readonly ISectorRepository sectorRepository;
     private readonly IUnitOfWork unitOfWork;
     private readonly IMapper mapper;
 
@@ -27,14 +33,20 @@ public sealed class CreateProjectCommandHandler : CommandHandlerBase<CreateProje
     /// Initializes a new instance of the <see cref="CreateProjectCommandHandler"/> class.
     /// </summary>
     /// <param name="projectRepository">The project repository.</param>
+    /// <param name="clientRepository">The client repository.</param>
+    /// <param name="sectorRepository">The sector repository.</param>
     /// <param name="unitOfWork">The unit of work.</param>
     /// <param name="mapper">The mapper.</param>
     public CreateProjectCommandHandler(
         IProjectRepository projectRepository,
+        IClientRepository clientRepository,
+        ISectorRepository sectorRepository,
         IUnitOfWork unitOfWork,
         IMapper mapper)
     {
         this.projectRepository = projectRepository;
+        this.clientRepository = clientRepository;
+        this.sectorRepository = sectorRepository;
         this.unitOfWork = unitOfWork;
         this.mapper = mapper;
     }
@@ -42,6 +54,18 @@ public sealed class CreateProjectCommandHandler : CommandHandlerBase<CreateProje
     /// <inheritdoc />
     public override async Task<Guid> HandleAsync(CreateProjectCommand command, CancellationToken cancellationToken = default)
     {
+        var client = await this.clientRepository.GetByIdAsync(command.ClientId, cancellationToken);
+        if (client is null)
+        {
+            throw new InvalidProjectStateException($"Client with ID '{command.ClientId}' was not found");
+        }
+
+        var sector = await this.sectorRepository.GetByIdAsync(command.SectorId, cancellationToken);
+        if (sector is null)
+        {
+            throw new InvalidProjectStateException($"Sector with ID '{command.SectorId}' was not found");
+        }
+
         var project = Project.Create(command.Name, command.Description, command.StartDate, command.DurationMonths, command.ClientId, command.SectorId, command.Technologies);
         await this.projectRepository.AddAsync(project, cancellationToken);
         await this.unitOfWork.SaveChangesAsync(cancellationToken);
@@ -187,18 +211,22 @@ public sealed class ChangeProjectStatusCommandHandler : CommandHandlerBase<Chang
 public sealed class AddProjectServiceCommandHandler : CommandHandlerBase<AddProjectServiceCommand>
 {
     private readonly IProjectRepository projectRepository;
+    private readonly IServiceRepository serviceRepository;
     private readonly IUnitOfWork unitOfWork;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="AddProjectServiceCommandHandler"/> class.
     /// </summary>
     /// <param name="projectRepository">The project repository.</param>
+    /// <param name="serviceRepository">The service repository.</param>
     /// <param name="unitOfWork">The unit of work.</param>
     public AddProjectServiceCommandHandler(
         IProjectRepository projectRepository,
+        IServiceRepository serviceRepository,
         IUnitOfWork unitOfWork)
     {
         this.projectRepository = projectRepository;
+        this.serviceRepository = serviceRepository;
         this.unitOfWork = unitOfWork;
     }
 
@@ -209,6 +237,12 @@ public sealed class AddProjectServiceCommandHandler : CommandHandlerBase<AddProj
         if (project is null)
         {
             throw new ProjectNotFoundException(command.ProjectId);
+        }
+
+        var service = await this.serviceRepository.GetByIdAsync(command.ServiceId, cancellationToken);
+        if (service is null)
+        {
+            throw new ServiceNotFoundException(command.ServiceId);
         }
 
         project.AddService(command.ServiceId);

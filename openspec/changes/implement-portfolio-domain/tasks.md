@@ -263,7 +263,7 @@
   - **Action**: Modified `src/Presentation/WebAPI/Program.cs` to replace `app.UseExceptionHandler("/error")` with `app.UseErrorHandling()` so that custom `ErrorHandlingMiddleware` handles exceptions and returns proper ProblemDetails
   - **Verification**: Integration test `ServicesApiTests.CreateService_WithInvalidBody_ReturnsBadRequestWithProblemDetails` passes; `InvalidServiceStateException` returns 400 Bad Request with ProblemDetails
 
-- [ ] 28.21 Run all integration tests: `dotnet test test/IntegrationTests` - verify 100% pass (requires Docker)
+- [x] 28.21 Run all integration tests: `dotnet test test/IntegrationTests` - verify 100% pass (requires Docker)
   - **Verification**: All integration tests pass
 
 - [x] 28.21 Search codebase for remaining `System.Text.Json` usages - verify zero occurrences in `src/` and `test/`
