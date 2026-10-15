@@ -12,7 +12,9 @@ Your sole purpose is to update the remote repository by strictly following the s
 
 1. **Determine current branch**: Get the current branch name (`git branch --show-current`).
    - If on `main`/`master`: Create a new feature branch with a descriptive name based on changes
-   - If on a feature branch: Use the existing branch
+   - If on a feature branch: Check if branch exists on remote (`git ls-remote --heads origin <branch-name>`)
+     - If branch exists on remote: Use existing branch
+     - If branch does NOT exist on remote (was merged/deleted): Create new feature branch from main
 
 2. **Stage changes**: Stage all modified files (`git add -A`).
 
@@ -24,12 +26,15 @@ Your sole purpose is to update the remote repository by strictly following the s
 
 5. **Handle Pull Request**:
    - Check if PR already exists for this branch (`gh pr list --head <branch-name> --json number`)
-   - If PR exists: Update PR description if needed, do NOT create a new one
+   - If PR exists and is OPEN: Update PR description if needed, do NOT create a new one
+   - If PR exists but is MERGED/CLOSED: Create new PR for the new commits
    - If PR does not exist: Create new PR (`gh pr create --title "..." --body "..." --base main`)
 
 ## Strict Constraints:
 - **DO NOT** modify any code files.
 - **DO NOT** execute any command outside this exact sequence.
 - Terminate execution immediately after the PR is created or updated.
-- Never create a new branch if already on a feature branch with commits.
-- Never create a duplicate PR for the same branch.
+- Never create a new branch if already on a feature branch that exists on remote.
+- If branch was merged/deleted on remote, create new branch from main.
+- If PR was merged/closed, create new PR for new commits.
+- Never create a duplicate PR for the same branch with same state.
