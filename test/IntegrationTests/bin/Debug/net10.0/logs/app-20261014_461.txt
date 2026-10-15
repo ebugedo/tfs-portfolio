@@ -1,2 +1,0 @@
-2026-10-14 23:25:53.043 +02:00 [INF] HTTP GET /api/v1/clients/63231d92-d4d0-400f-878b-37daa9ab8ed0 responded 404 in 210.0487 ms
-2026-10-14 23:25:53.083 +02:00 [WRN] Failed to determine the https port for redirect.

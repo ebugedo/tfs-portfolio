@@ -1,9 +1,0 @@
-2026-10-14 23:25:48.846 +02:00 [WRN] Failed to determine the https port for redirect.
-2026-10-14 23:25:48.847 +02:00 [WRN] Failed to determine the https port for redirect.
-2026-10-14 23:25:48.874 +02:00 [WRN] The query uses the 'First'/'FirstOrDefault' operator without 'OrderBy' and filter operators. This may lead to unpredictable results.
-2026-10-14 23:25:48.878 +02:00 [INF] HTTP GET /api/v1/company-profile responded 404 in 32.0323 ms
-2026-10-14 23:25:48.921 +02:00 [INF] HTTP POST /api/v1/services responded 201 in 74.4034 ms
-2026-10-14 23:25:48.983 +02:00 [INF] HTTP POST /api/v1/services responded 201 in 60.4741 ms
-2026-10-14 23:25:48.997 +02:00 [INF] HTTP POST /api/v1/services responded 201 in 13.2904 ms
-2026-10-14 23:25:49.013 +02:00 [INF] HTTP GET /api/v1/services/category/Development responded 200 in 13.6361 ms
-2026-10-14 23:25:49.018 +02:00 [INF] HTTP GET /api/v1/services/category/Consulting responded 200 in 2.7820 ms
