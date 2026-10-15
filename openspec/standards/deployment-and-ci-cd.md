@@ -33,7 +33,11 @@ All sensitive deployment parameters MUST be stored exclusively as GitHub Reposit
 - `VPS_USERNAME`: SSH system user for executing deployment commands on the VPS.
 - `VPS_SSH_KEY`: Private SSH key authorized for passwordless authentication to the VPS.
 - `VPS_PORT`: SSH connection port (defaults to 22 if omitted).
-- `GHCR_PAT` / `GITHUB_TOKEN`: Access token used for pushing and pulling images from GitHub Container Registry.
+- `GHCR_PAT`: Access token with `write:packages`, `read:packages`, `delete:packages` scopes for pushing and pulling images from GitHub Container Registry.
+- `POSTGRES_PASSWORD`: PostgreSQL superuser password.
+- `POSTGRES_DB`: Database name (e.g., `portfolio`).
+- `POSTGRES_USER`: PostgreSQL user (e.g., `postgres`).
+- `API_PORT`: Host port for API container (e.g., `8080`).
 
 ## 5. Continuous Integration & Continuous Deployment (GitHub Actions)
 - **CI/CD Platform:** GitHub Actions workflows located in `.github/workflows/`.
@@ -44,32 +48,48 @@ All sensitive deployment parameters MUST be stored exclusively as GitHub Reposit
 
 ## 6. VPS Production Deployment (Direct Docker CLI via SSH)
 - **Environment:** Production only. Contrasts with development (Docker Compose) — no Compose on VPS.
-- **Deployment Approach:** Direct Docker CLI commands executed over SSH without using Docker Compose.
-- **Workflow Executed on the VPS via SSH:**
-  1. **Authenticate to GHCR:**
-     ```bash
-     echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
-     ```
-  2. **Pull Updated Container Image:**
-     ```bash
-     docker pull ghcr.io/<owner>/<repo>:latest
-     ```
-  3. **Stop & Remove Existing Container (if active):**
-     ```bash
-     docker stop <container-name> || true
-     docker rm <container-name> || true
-     ```
-  4. **Run New Container:**
-     ```bash
-     docker run -d \
-       --name <container-name> \
-       --restart unless-stopped \
-       -p <host-port>:<container-port> \
-       -e ASPNETCORE_ENVIRONMENT=Production \
-       --env-file /path/to/vps/.env \
-       ghcr.io/<owner>/<repo>:latest
-     ```
-  5. **Prune Unused Images:**
-     ```bash
-     docker image prune -f
-     ```
+- **Infrastructure:** PostgreSQL runs as separate container on same Docker network (`nginx-net`).
+- **Logging:** Console only (Seq omitted in production).
+- **Migrations:** Automatic on container startup (`context.Database.Migrate()` runs in all environments).
+- **GHCR:** Private registry; VPS authenticates via `docker login` with PAT.
+- **Secrets:** All configuration via `docker run -e` from GitHub Secrets; no `.env` file on VPS.
+
+### One-Time VPS Setup (Manual)
+```bash
+docker network create nginx-net
+docker run -d --name postgres --network nginx-net --restart unless-stopped \
+  -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=<secret> -e POSTGRES_DB=portfolio \
+  -v postgres_data:/var/lib/postgresql/data postgres:16-alpine
+```
+
+### Deployment Workflow (Executed via SSH from GitHub Actions)
+1. **Authenticate to GHCR:**
+   ```bash
+   echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+   ```
+2. **Pull Image:**
+   ```bash
+   docker pull ghcr.io/<owner>/<repo>:latest
+   ```
+3. **Stop/Remove Old Container:**
+   ```bash
+   docker stop portfolio-api || true
+   docker rm portfolio-api || true
+   ```
+4. **Run New Container:**
+   ```bash
+   docker run -d \
+     --name portfolio-api \
+     --network nginx-net \
+     --restart unless-stopped \
+     -p 127.0.0.1:${{ secrets.API_PORT }}:8080 \
+     -e ASPNETCORE_ENVIRONMENT=Production \
+     -e ConnectionStrings__DefaultConnection="Host=postgres;Port=5432;Database=${{ secrets.POSTGRES_DB }};Username=${{ secrets.POSTGRES_USER }};Password=${{ secrets.POSTGRES_PASSWORD }}" \
+     -e Seq__ServerUrl="" \
+     -e Seq__ApiKey="" \
+     ghcr.io/<owner>/<repo>:latest
+   ```
+5. **Prune:**
+   ```bash
+   docker image prune -f
+   ```
