@@ -1,4 +1,0 @@
-2026-10-14 23:25:45.559 +02:00 [INF] HTTP POST /api/v1/sectors responded 201 in 55.3193 ms
-2026-10-14 23:25:45.561 +02:00 [INF] HTTP POST /api/v1/services responded 201 in 67.7361 ms
-2026-10-14 23:25:45.564 +02:00 [INF] HTTP POST /api/v1/clients responded 201 in 70.8348 ms
-2026-10-14 23:25:45.567 +02:00 [WRN] Failed to determine the https port for redirect.

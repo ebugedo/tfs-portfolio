@@ -1,2 +1,0 @@
-2026-10-14 23:26:15.720 +02:00 [WRN] Failed to determine the https port for redirect.
-2026-10-14 23:26:15.756 +02:00 [INF] HTTP GET /api/v1/services/active responded 200 in 35.2498 ms

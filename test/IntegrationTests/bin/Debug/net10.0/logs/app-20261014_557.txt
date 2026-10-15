@@ -1,3 +1,0 @@
-2026-10-14 23:26:39.989 +02:00 [WRN] Failed to determine the https port for redirect.
-2026-10-14 23:26:40.030 +02:00 [INF] HTTP POST /api/v1/clients responded 201 in 41.0677 ms
-2026-10-14 23:26:40.079 +02:00 [INF] HTTP GET /api/v1/clients/4df60463-2809-40c9-8289-e2809cd34196 responded 200 in 47.9931 ms

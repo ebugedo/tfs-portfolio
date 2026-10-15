@@ -1,2 +1,0 @@
-2026-10-14 23:27:24.932 +02:00 [WRN] Failed to determine the https port for redirect.
-2026-10-14 23:27:24.973 +02:00 [INF] HTTP GET /api/v1/projects/a8589a29-71e8-40ce-acab-0988a3f45729 responded 404 in 41.0981 ms
