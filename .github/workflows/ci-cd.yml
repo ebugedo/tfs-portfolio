@@ -38,9 +38,9 @@ jobs:
       - name: Build Solution
         run: dotnet build Tfs.Portfolio.slnx --configuration Release
       - name: Run Unit Tests
-        run: dotnet test test/UnitTests/Tfs.Portfolio.UnitTests.csproj --no-build --verbosity normal
+        run: dotnet test test/UnitTests/Tfs.Portfolio.UnitTests.csproj --no-build --configuration Release --verbosity normal
       - name: Run Integration Tests
-        run: dotnet test test/IntegrationTests/Tfs.Portfolio.IntegrationTests.csproj --no-build --verbosity normal
+        run: dotnet test test/IntegrationTests/Tfs.Portfolio.IntegrationTests.csproj --no-build --configuration Release --verbosity normal
         env:
           ConnectionStrings__DefaultConnection: Host=localhost;Port=5432;Database=portfolio_test;Username=postgres;Password=postgres
       - name: Build & Push Docker Image
