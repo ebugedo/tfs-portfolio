@@ -118,16 +118,16 @@ public sealed class Program
 
         var app = builder.Build();
 
+        // Apply pending migrations automatically on startup (all environments)
+        using (var scope = app.Services.CreateScope())
+        {
+            var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            context.Database.Migrate();
+        }
+
         // Configure middleware pipeline
         if (app.Environment.IsDevelopment())
         {
-            // Apply pending migrations automatically in Development
-            using (var scope = app.Services.CreateScope())
-            {
-                var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-                context.Database.Migrate();
-            }
-
             app.MapOpenApi();
             app.MapScalarApiReference(options =>
             {
