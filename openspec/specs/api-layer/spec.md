@@ -81,3 +81,93 @@ The system SHALL ensure `dotnet build` on `Tfs.Portfolio.Api` succeeds with Appl
 #### Scenario: API builds with dependencies
 - **WHEN** running `dotnet build src/Presentation/WebAPI/Tfs.Portfolio.Api.csproj`
 - **THEN** build succeeds with zero errors
+
+### Requirement: Client endpoints
+The system SHALL provide endpoints under `/api/v1/clients`:
+- GET /clients → returns 200 with IReadOnlyList<ClientListItemDto>
+- GET /clients/{id:guid} → returns 200 with ClientDto or 404 ProblemDetails
+- POST /clients → returns 201 with ClientDto and Location header, or 400 ProblemDetails
+- PUT /clients/{id:guid} → returns 204 or 400/404 ProblemDetails
+- DELETE /clients/{id:guid} → returns 204 or 404 ProblemDetails
+
+#### Scenario: GET /clients returns paginated list
+- **WHEN** GET /api/v1/clients is called
+- **THEN** returns 200 with array of ClientListItemDto (id, name, email, isActive, createdAt)
+
+#### Scenario: POST /clients with invalid data returns 400
+- **WHEN** POST /api/v1/clients with empty name
+- **THEN** returns 400 ProblemDetails with validation errors
+
+### Requirement: Sector endpoints
+The system SHALL provide endpoints under `/api/v1/sectors`:
+- GET /sectors → returns 200 with IReadOnlyList<SectorListItemDto>
+- GET /sectors/{id:guid} → returns 200 with SectorDto or 404 ProblemDetails
+- POST /sectors → returns 201 with SectorDto and Location header, or 400 ProblemDetails
+- PUT /sectors/{id:guid} → returns 204 or 400/404 ProblemDetails
+- DELETE /sectors/{id:guid} → returns 204 or 404 ProblemDetails
+
+#### Scenario: GET /sectors returns list of sectors
+- **WHEN** GET /api/v1/sectors is called
+- **THEN** returns 200 with array of SectorListItemDto (id, name, description, isActive)
+
+#### Scenario: POST /sectors with invalid data returns 400
+- **WHEN** POST /api/v1/sectors with empty name
+- **THEN** returns 400 ProblemDetails with validation errors
+
+### Requirement: Service endpoints
+The system SHALL provide endpoints under `/api/v1/services`:
+- GET /services → returns 200 with IReadOnlyList<ServiceListItemDto>
+- GET /services/{id:guid} → returns 200 with ServiceDto or 404 ProblemDetails
+- POST /services → returns 201 with ServiceDto and Location header, or 400 ProblemDetails
+- PUT /services/{id:guid} → returns 204 or 400/404 ProblemDetails
+- DELETE /services/{id:guid} → returns 204 or 404 ProblemDetails
+- GET /services/category/{category} → returns 200 with filtered services
+
+#### Scenario: GET /services returns list of services
+- **WHEN** GET /api/v1/services is called
+- **THEN** returns 200 with array of ServiceListItemDto (id, name, category, isActive)
+
+#### Scenario: POST /services with invalid data returns 400
+- **WHEN** POST /api/v1/services with empty name
+- **THEN** returns 400 ProblemDetails with validation errors
+
+### Requirement: CompanyProfile endpoint (singleton)
+The system SHALL provide endpoints under `/api/v1/company-profile`:
+- GET /company-profile → returns 200 with CompanyProfileDto or 404 if not created
+- PUT /company-profile → returns 200 with updated CompanyProfileDto or 400 ProblemDetails
+
+#### Scenario: GET /company-profile returns singleton
+- **WHEN** GET /api/v1/company-profile is called after creation
+- **THEN** returns 200 with CompanyProfileDto
+
+#### Scenario: PUT /company-profile updates singleton
+- **WHEN** PUT /api/v1/company-profile with valid data
+- **THEN** returns 200 with updated CompanyProfileDto
+
+### Requirement: Enhanced Project endpoints with filters
+The system SHALL extend `/api/v1/projects` with query parameters:
+- GET /projects?clientId={guid}&sectorId={guid}&technology={string}&status={enum} → filtered results
+- POST /projects accepts StartDate, DurationMonths, ClientId, SectorId, Technologies
+- PUT /projects/{id} accepts Status change
+- PATCH /projects/{id}/status → ChangeProjectStatusCommand (alternative to PUT for status)
+- POST /projects/{id}/services/{serviceId} → associates service (204)
+- DELETE /projects/{id}/services/{serviceId} → removes association (204)
+
+#### Scenario: GET /projects filters by client and status
+- **WHEN** GET /api/v1/projects?clientId=xxx&status=Active
+- **THEN** returns 200 with projects matching both filters
+
+#### Scenario: POST /projects validates relationships
+- **WHEN** POST /api/v1/projects with non-existent ClientId
+- **THEN** returns 400 ProblemDetails with "Client not found"
+
+#### Scenario: Project-service association endpoints
+- **WHEN** POST /api/v1/projects/{id}/services/{serviceId}
+- **THEN** returns 204 if successful, 404 if project or service not found
+
+### Requirement: All new endpoints registered in ApplicationModule and Program.cs
+The system SHALL register ClientEndpoints, SectorEndpoints, ServiceEndpoints, CompanyProfileEndpoints, and extended ProjectEndpoints in the v1 MapGroup via extension methods.
+
+#### Scenario: All endpoints documented in Scalar
+- **WHEN** navigating to /scalar/v1
+- **THEN** all new endpoints visible with request/response schemas

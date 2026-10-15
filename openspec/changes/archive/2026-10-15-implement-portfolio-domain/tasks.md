@@ -237,7 +237,7 @@
 - [x] 28.13 Verify all DTOs in `src/Core/Application/Projects/Dtos/` have proper attributes
   - **Verification**: `ProjectDto.StartDate`, `ProjectDto.Technologies`, `CreateProjectRequest.StartDate`, `CreateProjectRequest.Technologies`, `UpdateProjectRequest.StartDate`, `UpdateProjectRequest.Technologies` have proper converters
 
-- [x] 28.13 Verify all DTOs in `src/Core/Application/CompanyProfile/Dtos/` have proper attributes
+- [x] 28.14 Verify all DTOs in `src/Core/Application/CompanyProfile/Dtos/` have proper attributes
   - **Verification**: `CompanyProfileDto.WebUrl`, `CompanyProfileDto.LogoUrl`, `UpdateCompanyProfileRequest.WebUrl`, `UpdateCompanyProfileRequest.LogoUrl` have proper converters
 
 - [x] 28.15 Verify `src/Core/Domain/Common/ValueObjects/TfsWebUrl.cs` has correct `TfsWebUrlJsonConverter` for Newtonsoft.Json handling nullable scenarios
@@ -259,14 +259,14 @@
   - **Action**: Modified `src/Presentation/WebAPI/Program.cs` to use `AddMvcCore().AddNewtonsoftJson()` instead of `AddControllers().AddNewtonsoftJson()` so that both Controllers and Minimal APIs use Newtonsoft.Json
   - **Verification**: Build succeeds with 0 errors, 0 warnings; unit tests pass
 
-- [x] 28.20 Register custom ErrorHandlingMiddleware in middleware pipeline
+- [x] 28.21 Register custom ErrorHandlingMiddleware in middleware pipeline
   - **Action**: Modified `src/Presentation/WebAPI/Program.cs` to replace `app.UseExceptionHandler("/error")` with `app.UseErrorHandling()` so that custom `ErrorHandlingMiddleware` handles exceptions and returns proper ProblemDetails
   - **Verification**: Integration test `ServicesApiTests.CreateService_WithInvalidBody_ReturnsBadRequestWithProblemDetails` passes; `InvalidServiceStateException` returns 400 Bad Request with ProblemDetails
 
-- [x] 28.21 Run all integration tests: `dotnet test test/IntegrationTests` - verify 100% pass (requires Docker)
+- [x] 28.22 Run all integration tests: `dotnet test test/IntegrationTests` - verify 100% pass (requires Docker)
   - **Verification**: All integration tests pass
 
-- [x] 28.21 Search codebase for remaining `System.Text.Json` usages - verify zero occurrences in `src/` and `test/`
+- [x] 28.23 Search codebase for remaining `System.Text.Json` usages - verify zero occurrences in `src/` and `test/`
   - **Verification**: `grep -r "System.Text.Json" src/ test/` returns no results (only JsonElement in tests for ProblemDetails)
 
 ## 29. Remove Unused Using Directives (Coding Standard Compliance)

@@ -105,6 +105,14 @@ The system SHALL provide endpoints under `/api/v1/sectors`:
 - PUT /sectors/{id:guid} → returns 204 or 400/404 ProblemDetails
 - DELETE /sectors/{id:guid} → returns 204 or 404 ProblemDetails
 
+#### Scenario: GET /sectors returns list of sectors
+- **WHEN** GET /api/v1/sectors is called
+- **THEN** returns 200 with array of SectorListItemDto (id, name, description, isActive)
+
+#### Scenario: POST /sectors with invalid data returns 400
+- **WHEN** POST /api/v1/sectors with empty name
+- **THEN** returns 400 ProblemDetails with validation errors
+
 ### Requirement: Service endpoints
 The system SHALL provide endpoints under `/api/v1/services`:
 - GET /services → returns 200 with IReadOnlyList<ServiceListItemDto>
@@ -113,6 +121,14 @@ The system SHALL provide endpoints under `/api/v1/services`:
 - PUT /services/{id:guid} → returns 204 or 400/404 ProblemDetails
 - DELETE /services/{id:guid} → returns 204 or 404 ProblemDetails
 - GET /services/category/{category} → returns 200 with filtered services
+
+#### Scenario: GET /services returns list of services
+- **WHEN** GET /api/v1/services is called
+- **THEN** returns 200 with array of ServiceListItemDto (id, name, category, isActive)
+
+#### Scenario: POST /services with invalid data returns 400
+- **WHEN** POST /api/v1/services with empty name
+- **THEN** returns 400 ProblemDetails with validation errors
 
 ### Requirement: CompanyProfile endpoint (singleton)
 The system SHALL provide endpoints under `/api/v1/company-profile`:

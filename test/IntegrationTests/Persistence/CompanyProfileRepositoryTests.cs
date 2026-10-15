@@ -17,8 +17,14 @@ using FluentAssertions;
 /// <summary>
 /// Integration tests for the CompanyProfileRepository.
 /// </summary>
+[Collection("CompanyProfileTests")]
 public sealed class CompanyProfileRepositoryTests : IntegrationTestBase
 {
+    public CompanyProfileRepositoryTests()
+    {
+        // Reset singleton instance for test isolation
+        CompanyProfileEntity.ResetInstance();
+    }
     /// <summary>
     /// Tests that AddAsync persists a company profile to the database.
     /// </summary>
@@ -95,9 +101,6 @@ public sealed class CompanyProfileRepositoryTests : IntegrationTestBase
     [Fact]
     public async Task AddAsync_WhenAlreadyExists_ThrowsCompanyProfileAlreadyExistsException()
     {
-        // Reset static instance for test isolation
-        typeof(CompanyProfileEntity).GetField("_instance", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static)!.SetValue(null, null);
-
         // Arrange
         var profile1 = CompanyProfileEntity.Create(
             companyName: "First Company",
