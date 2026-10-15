@@ -60,6 +60,11 @@ internal sealed class ErrorHandlingMiddleware
         switch (exception)
         {
             case Tfs.Portfolio.Domain.Projects.Exceptions.ProjectNotFoundException:
+            case Tfs.Portfolio.Domain.Projects.Exceptions.ProjectServiceNotFoundException:
+            case Tfs.Portfolio.Domain.Clients.Exceptions.ClientNotFoundException:
+            case Tfs.Portfolio.Domain.Sectors.Exceptions.SectorNotFoundException:
+            case Tfs.Portfolio.Domain.Services.Exceptions.ServiceNotFoundException:
+            case Tfs.Portfolio.Domain.CompanyProfile.Exceptions.CompanyProfileNotFoundException:
                 problemDetails.Status = StatusCodes.Status404NotFound;
                 problemDetails.Title = "Not Found";
                 problemDetails.Detail = exception.Message;

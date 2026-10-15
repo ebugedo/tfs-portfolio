@@ -255,8 +255,9 @@ public sealed class ServicesApiTests : IntegrationTestBase
     public async Task UpdateService_WhenNotFound_ReturnsNotFound()
     {
         // Act
-        var updateRequest = new UpdateServiceCommand(Guid.NewGuid(), "Updated", "Updated description", ServiceCategory.Consulting);
-        var response = await Client.PutAsJsonNewtonsoftAsync($"{BaseUrl}/{Guid.NewGuid()}", updateRequest);
+        var nonExistentId = Guid.NewGuid();
+        var updateRequest = new UpdateServiceCommand(nonExistentId, "Updated", "Updated description", ServiceCategory.Consulting);
+        var response = await Client.PutAsJsonNewtonsoftAsync($"{BaseUrl}/{nonExistentId}", updateRequest);
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.NotFound);

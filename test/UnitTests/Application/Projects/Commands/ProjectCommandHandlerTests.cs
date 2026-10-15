@@ -15,6 +15,8 @@ using Tfs.Portfolio.Application.Projects.Handlers;
 using Tfs.Portfolio.Domain.Common;
 using Tfs.Portfolio.Domain.Projects.Entities;
 using Tfs.Portfolio.Domain.Projects.Repositories;
+using Tfs.Portfolio.Domain.Clients.Repositories;
+using Tfs.Portfolio.Domain.Sectors.Repositories;
 using Tfs.Portfolio.UnitTests.Common;
 using Xunit;
 
@@ -24,6 +26,8 @@ using Xunit;
 public class CreateProjectCommandHandlerTests
 {
     private readonly Mock<IProjectRepository> projectRepositoryMock = new();
+    private readonly Mock<IClientRepository> clientRepositoryMock = new();
+    private readonly Mock<ISectorRepository> sectorRepositoryMock = new();
     private readonly Mock<IUnitOfWork> unitOfWorkMock = new();
     private readonly Mock<IMapper> mapperMock = new();
     private readonly CreateProjectCommandHandler handler;
@@ -35,6 +39,8 @@ public class CreateProjectCommandHandlerTests
     {
         this.handler = new CreateProjectCommandHandler(
             this.projectRepositoryMock.Object,
+            this.clientRepositoryMock.Object,
+            this.sectorRepositoryMock.Object,
             this.unitOfWorkMock.Object,
             this.mapperMock.Object);
     }
@@ -47,6 +53,32 @@ public class CreateProjectCommandHandlerTests
     {
         // Arrange
         var command = ApplicationFakers.GenerateCreateProjectCommand();
+
+        var client = Tfs.Portfolio.Domain.Clients.Entities.Client.Create(
+            "Test Client",
+            "test@client.com",
+            null,
+            null,
+            null);
+
+        var sector = Tfs.Portfolio.Domain.Sectors.Entities.Sector.Create(
+            "Test Sector",
+            "Test Description");
+
+        // Override the generated IDs to match the command
+        var clientIdProperty = typeof(Tfs.Portfolio.Domain.Clients.Entities.Client).GetProperty("Id");
+        clientIdProperty!.SetValue(client, command.ClientId);
+
+        var sectorIdProperty = typeof(Tfs.Portfolio.Domain.Sectors.Entities.Sector).GetProperty("Id");
+        sectorIdProperty!.SetValue(sector, command.SectorId);
+
+        this.clientRepositoryMock
+            .Setup(r => r.GetByIdAsync(command.ClientId, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(client);
+
+        this.sectorRepositoryMock
+            .Setup(r => r.GetByIdAsync(command.SectorId, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(sector);
 
         this.projectRepositoryMock
             .Setup(r => r.AddAsync(It.IsAny<Project>(), It.IsAny<CancellationToken>()))

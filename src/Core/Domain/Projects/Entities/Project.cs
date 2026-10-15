@@ -273,8 +273,14 @@ public sealed class Project : AggregateRoot<Guid>
     /// Removes a service from the project.
     /// </summary>
     /// <param name="serviceId">The service identifier to remove.</param>
+    /// <exception cref="ProjectServiceNotFoundException">Thrown when the service is not associated with the project.</exception>
     public void RemoveService(Guid serviceId)
     {
+        if (!this.ServiceIds.Contains(serviceId))
+        {
+            throw new ProjectServiceNotFoundException(this.Id, serviceId);
+        }
+
         var serviceIds = this.ServiceIds.Where(id => id != serviceId).ToList();
         this.ServiceIds = serviceIds;
         this.UpdatedAt = DateTime.UtcNow;

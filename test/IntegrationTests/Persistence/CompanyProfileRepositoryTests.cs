@@ -95,6 +95,9 @@ public sealed class CompanyProfileRepositoryTests : IntegrationTestBase
     [Fact]
     public async Task AddAsync_WhenAlreadyExists_ThrowsCompanyProfileAlreadyExistsException()
     {
+        // Reset static instance for test isolation
+        typeof(CompanyProfileEntity).GetField("_instance", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static)!.SetValue(null, null);
+
         // Arrange
         var profile1 = CompanyProfileEntity.Create(
             companyName: "First Company",
