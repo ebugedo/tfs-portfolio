@@ -19,3 +19,7 @@
 
 - [x] 7.1 Update README.md with deployment overview and secret requirements — verify README renders correctly
 - [x] 7.2 Verify `.dockerignore` excludes `.env*`, `docker-compose.override.yml` — verify with `docker build` context size
+
+## 8. PostgreSQL Host and Port Secrets
+
+- [x] 8.1 Update CI/CD workflow to use `POSTGRES_HOST` and `POSTGRES_PORT` secrets instead of hardcoded `postgres` and `5432` — verify workflow runs successfully
