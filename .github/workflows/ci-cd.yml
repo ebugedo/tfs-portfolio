@@ -63,6 +63,8 @@ jobs:
           cache-to: type=gha,mode=max
 
   cd:
+    needs: ci
+    if: success()
     runs-on: ubuntu-latest
     permissions:
       contents: read
