@@ -25,3 +25,4 @@
 - [x] 8.1 Update CI/CD workflow to use `POSTGRES_HOST` and `POSTGRES_PORT` secrets instead of hardcoded `postgres` and `5432` — verify workflow runs successfully
 - [x] 8.2 Remove `docker network create` and `docker network connect` from CI/CD workflow — the `nginx-net` network is created manually on the VPS and not managed by the pipeline
 - [x] 8.3 Remove `needs: ci` and `if: github.ref == 'refs/heads/main'` from CD job so it runs on every push to main after a PR is merged
+- [x] 9.1 Check for pending EF Core migrations — no new migration needed; existing migrations (`InitialCreate`, `AddPortfolioDomainEntities`) already cover all domain entities (Clients, CompanyProfiles, Sectors, Services, Projects, ProjectServices)

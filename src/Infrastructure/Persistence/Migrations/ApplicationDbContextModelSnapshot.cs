@@ -6,7 +6,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using Tfs.Portfolio.Domain.Common.ValueObjects;
 using Tfs.Portfolio.Infrastructure.Persistence;
 
 #nullable disable
@@ -51,7 +50,7 @@ namespace Tfs.Portfolio.Infrastructure.Persistence.Migrations
                         .HasDefaultValue(true)
                         .HasColumnName("IsActive");
 
-                    b.Property<TfsWebUrl?>("LogoUrl")
+                    b.Property<string>("LogoUrl")
                         .HasColumnType("jsonb")
                         .HasColumnName("LogoUrl");
 
@@ -116,11 +115,11 @@ namespace Tfs.Portfolio.Infrastructure.Persistence.Migrations
                         .HasColumnType("text")
                         .HasColumnName("Description");
 
-                    b.Property<TfsWebUrl?>("LogoUrl")
+                    b.Property<string>("LogoUrl")
                         .HasColumnType("jsonb")
                         .HasColumnName("LogoUrl");
 
-                    b.Property<TfsWebUrl?>("TfsWebUrl")
+                    b.Property<string>("TfsWebUrl")
                         .HasColumnType("jsonb")
                         .HasColumnName("TfsWebUrl");
 
@@ -175,7 +174,7 @@ namespace Tfs.Portfolio.Infrastructure.Persistence.Migrations
                         .HasColumnType("uuid[]")
                         .HasColumnName("ServiceIds");
 
-                    b.Property<<>f__AnonymousType0<int, int>>("StartDate")
+                    b.Property<string>("StartDate")
                         .IsRequired()
                         .HasColumnType("jsonb")
                         .HasColumnName("StartDate");
@@ -184,7 +183,7 @@ namespace Tfs.Portfolio.Infrastructure.Persistence.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("Status");
 
-                    b.Property<List<<>f__AnonymousType1<string, string, string>>>("Technologies")
+                    b.Property<List<<>f__AnonymousType0<string, string, string>>>("Technologies")
                         .IsRequired()
                         .HasColumnType("jsonb")
                         .HasColumnName("Technologies");
