@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using ;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Tfs.Portfolio.Domain.Common.ValueObjects;
 
 #nullable disable
 
 namespace Tfs.Portfolio.Infrastructure.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class AddPortfolioDomainEntities : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -20,7 +18,7 @@ namespace Tfs.Portfolio.Infrastructure.Persistence.Migrations
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Name = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: false),
-                    LogoUrl = table.Column<Url>(type: "jsonb", nullable: true),
+                    LogoUrl = table.Column<string>(type: "jsonb", nullable: true),
                     Email = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false),
                     Phone = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true),
                     Address = table.Column<string>(type: "text", nullable: true),
@@ -41,10 +39,10 @@ namespace Tfs.Portfolio.Infrastructure.Persistence.Migrations
                     CompanyName = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: false),
                     ContactEmail = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false),
                     ContactPhone = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true),
-                    TfsWebUrl = table.Column<Url>(type: "jsonb", nullable: true),
+                    TfsWebUrl = table.Column<string>(type: "jsonb", nullable: true),
                     Address = table.Column<string>(type: "text", nullable: true),
                     Description = table.Column<string>(type: "text", nullable: true),
-                    LogoUrl = table.Column<Url>(type: "jsonb", nullable: true),
+                    LogoUrl = table.Column<string>(type: "jsonb", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
@@ -93,9 +91,9 @@ namespace Tfs.Portfolio.Infrastructure.Persistence.Migrations
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Name = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: false),
                     Description = table.Column<string>(type: "text", maxLength: 2000, nullable: true),
-                    StartDate = table.Column<<>f__AnonymousType0<int, int>>(type: "jsonb", nullable: false),
+                    StartDate = table.Column<string>(type: "jsonb", nullable: false),
                     DurationMonths = table.Column<int>(type: "integer", nullable: false),
-                    Technologies = table.Column<List<<>f__AnonymousType1<string, string, string>>>(type: "jsonb", nullable: false),
+                    Technologies = table.Column<string>(type: "jsonb", nullable: false),
                     ClientId = table.Column<Guid>(type: "uuid", nullable: false),
                     SectorId = table.Column<Guid>(type: "uuid", nullable: false),
                     Status = table.Column<int>(type: "integer", nullable: false),
