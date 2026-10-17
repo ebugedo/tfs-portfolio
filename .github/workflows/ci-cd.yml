@@ -63,8 +63,6 @@ jobs:
           cache-to: type=gha,mode=max
 
   cd:
-    needs: ci
-    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     permissions:
       contents: read
