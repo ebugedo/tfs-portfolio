@@ -1,30 +1,30 @@
-# Restricción de Operaciones Git Automatizadas
+# Git Automation Restrictions
 
-## Propósito
+## Purpose
 
-Evitar que cualquier agente, skill, script o proceso automatizado realice operaciones de escritura contra el repositorio remoto sin intervención humana explícita.
+Prevent any agent, skill, script, or automated process from performing write operations against the remote repository without explicit human intervention.
 
-### Operaciones prohibidas de forma automática
+### Automatically prohibited operations
 
 - `git commit`
-- `git push` (a cualquier rama o remoto)
-- `git push origin <rama>`
+- `git push` (to any branch or remote)
+- `git push origin <branch>`
 - `gh pr create`
 - `gh pr merge`
-- Cualquier comando que modifique el estado del repositorio remoto
+- Any command that modifies the remote repository state
 
-### Requisito de ejecución manual
+### Manual execution requirement
 
-Todas las operaciones de commit, push y creación de Pull Request deben ser ejecutadas **manualmente por el usuario**, bien a través de la terminal o de cualquier herramienta Git ejecutada deliberadamente por el usuario.
+All commit, push, and Pull Request creation operations MUST be executed **manually by the user**, either through the terminal or any Git tool deliberately run by the user.
 
-### Alcance
+### Scope
 
-Esta restricción aplica a:
+This restriction applies to:
 
-- Cualquier agente de IA o skill instalado en el proyecto (OpenSpec u otros)
-- Scripts de automatización, CI/CD locales o procesos derivados del repositorio
-- Cualquier herramienta que interactúe con el repositorio Git de este proyecto
+- Any AI agent or skill installed in the project (OpenSpec or others)
+- Automation scripts, local CI/CD, or processes derived from the repository
+- Any tool that interacts with this project's Git repository
 
-### Excepciones
+### Exceptions
 
-Ninguna. Toda modificación al repositorio remoto requiere intervención manual explícita del usuario.
+None. Any modification to the remote repository requires explicit manual intervention by the user.
