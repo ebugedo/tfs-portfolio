@@ -118,11 +118,14 @@ public sealed class Program
 
         var app = builder.Build();
 
-        // Apply pending migrations automatically on startup (all environments)
-        using (var scope = app.Services.CreateScope())
+        // Apply pending migrations automatically on startup (all environments except Testing)
+        if (!app.Environment.IsEnvironment("Testing"))
         {
-            var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-            context.Database.Migrate();
+            using (var scope = app.Services.CreateScope())
+            {
+                var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+                context.Database.Migrate();
+            }
         }
 
         // Configure middleware pipeline
