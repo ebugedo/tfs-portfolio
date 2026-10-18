@@ -13,7 +13,7 @@ using Tfs.Portfolio.Infrastructure.Persistence;
 namespace Tfs.Portfolio.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20261018085542_InitialCreate")]
+    [Migration("20261018095227_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
