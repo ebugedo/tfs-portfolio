@@ -185,7 +185,7 @@ namespace Tfs.Portfolio.Infrastructure.Persistence.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("Status");
 
-                    b.Property<List<<>f__AnonymousType0<string, string, string>>>("Technologies")
+                    b.Property<string>("Technologies")
                         .IsRequired()
                         .HasColumnType("jsonb")
                         .HasColumnName("Technologies");
