@@ -25,5 +25,5 @@
 - [x] 8.1 Update CI/CD workflow to use `POSTGRES_HOST` and `POSTGRES_PORT` secrets instead of hardcoded `postgres` and `5432` — verify workflow runs successfully
 - [x] 8.2 Remove `docker network create` and `docker network connect` from CI/CD workflow — the `nginx-net` network is created manually on the VPS and not managed by the pipeline
 - [x] 8.3 Add `needs: ci` and `if: success()` to CD job so CD runs only after CI succeeds on push to main
-- [x] 9.1 Delete all EF Core migrations and model snapshot (including VS-created XXXXX migrations)
-- [x] 9.2 Create new initial EF Core migration `20261018095227_InitialCreate` + `ApplicationDbContextModelSnapshot.cs` with all tables (Clients, CompanyProfiles, Sectors, Services, Projects, ProjectServices) — fixed broken `using ;` and anonymous type column `Technologies`
+- [x] 9.1 Delete all EF Core migrations and model snapshot (including VS-created XXXXX migrations); fix .csproj to include Migrations\*.cs in compilation (was excluded, causing Migrate() to not find migrations)
+- [x] 9.2 Create new initial EF Core migration `20261018102041_InitialCreate` + `ApplicationDbContextModelSnapshot.cs` with all tables (Clients, CompanyProfiles, Sectors, Services, Projects, ProjectServices) — fixed broken `using ;` and anonymous type column `Technologies`
