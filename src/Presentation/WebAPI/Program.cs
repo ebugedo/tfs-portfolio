@@ -129,15 +129,12 @@ public sealed class Program
         }
 
         // Configure middleware pipeline
-        if (app.Environment.IsDevelopment())
+        app.MapOpenApi();
+        app.MapScalarApiReference(options =>
         {
-            app.MapOpenApi();
-            app.MapScalarApiReference(options =>
-            {
-                options.Title = "Tfs.Portfolio API";
-                options.Theme = ScalarTheme.DeepSpace;
-            });
-        }
+            options.Title = "Tfs.Portfolio API";
+            options.Theme = ScalarTheme.DeepSpace;
+        });
 
         app.UseErrorHandling();
         app.UseSerilogRequestLogging();
