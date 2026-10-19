@@ -43,6 +43,7 @@ EXPOSE 8080
 # Set environment variables
 ENV ASPNETCORE_URLS=http://0.0.0.0:8080
 ENV ASPNETCORE_ENVIRONMENT=Production
+ENV ApiKeySettings__MasterKey=""
 
 # Entry point
 ENTRYPOINT ["dotnet", "Tfs.Portfolio.Api.dll"]

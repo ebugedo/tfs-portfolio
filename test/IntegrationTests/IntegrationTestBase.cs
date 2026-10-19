@@ -36,9 +36,10 @@ using Xunit;
 /// </summary>
 [SuppressMessage("Microsoft.Usage", "CA2213", Justification = "Factory is disposed by the test framework after all tests complete")]
 [SuppressMessage("StyleCop.CSharp.OrderingRules", "SA1202", Justification = "Members ordered by logical grouping")]
+[SuppressMessage("Design", "CA1051: Do not declare visible instance fields", Justification = "Test base class needs protected factory access for derived auth test classes")]
 public abstract class IntegrationTestBase : IAsyncLifetime, IDisposable
 {
-    private readonly CustomWebApplicationFactory _factory;
+    protected readonly CustomWebApplicationFactory _factory;
     private IServiceScope _scope = null!;
 
     /// <summary>
@@ -97,6 +98,7 @@ public abstract class IntegrationTestBase : IAsyncLifetime, IDisposable
 
         // Create HTTP client to trigger host creation and migrations
         Client = _factory.CreateClient();
+        Client.DefaultRequestHeaders.Add("X-API-Key", "test-api-key-12345");
 
         // Create a scope for scoped services
         _scope = _factory.Services.CreateScope();

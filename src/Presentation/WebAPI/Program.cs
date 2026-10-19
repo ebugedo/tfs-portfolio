@@ -79,6 +79,50 @@ public sealed class Program
                     Version = "v1",
                     Description = "Portfolio Management API"
                 };
+
+                // Add X-API-Key security scheme
+                if (document.Components == null)
+                {
+                    document.Components = new OpenApiComponents();
+                }
+
+                document.Components.SecuritySchemes["X-API-Key"] = new OpenApiSecurityScheme
+                {
+                    Type = SecuritySchemeType.ApiKey,
+                    Name = "X-API-Key",
+                    In = ParameterLocation.Header,
+                    Description = "API Key required for protected endpoints (POST, PUT, DELETE, PATCH)"
+                };
+
+                // Apply security requirement to write operations only
+                var writeMethods = new HashSet<string> { "POST", "PUT", "DELETE", "PATCH" };
+                var apiKeyRequirement = new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "X-API-Key"
+                            }
+                        },
+                        Array.Empty<string>()
+                    }
+                };
+
+                foreach (var (path, pathItem) in document.Paths)
+                {
+                    foreach (var (httpMethod, operation) in pathItem.Operations)
+                    {
+                        if (writeMethods.Contains(httpMethod.ToString().ToUpperInvariant()))
+                        {
+                            operation.Security ??= new List<OpenApiSecurityRequirement>();
+                            operation.Security.Add(apiKeyRequirement);
+                        }
+                    }
+                }
+
                 return Task.CompletedTask;
             });
         });
@@ -116,6 +160,18 @@ public sealed class Program
                 .InstancePerLifetimeScope();
         });
 
+        // Validate API Key configuration in Production environments
+        if (builder.Environment.IsProduction())
+        {
+            var apiKey = builder.Configuration["ApiKeySettings:MasterKey"];
+            if (string.IsNullOrEmpty(apiKey))
+            {
+                throw new InvalidOperationException(
+                    "ApiKeySettings:MasterKey is required in Production environments. " +
+                    "Set the ApiKeySettings__MasterKey environment variable.");
+            }
+        }
+
         var app = builder.Build();
 
         // Apply pending migrations automatically on startup (all environments except Testing)
@@ -141,7 +197,9 @@ public sealed class Program
         app.UseHttpsRedirection();
         app.UseRouting();
 
-        // Comentado hasta implementar autenticación
+        app.UseApiKey();
+
+        // Comentado hasta implementar autenticación basada en tokens
         // app.UseAuthorization();
 
         // Map endpoints

@@ -75,5 +75,6 @@ jobs:
               -e ConnectionStrings__DefaultConnection="Host=${{ secrets.POSTGRES_HOST }};Port=${{ secrets.POSTGRES_PORT }};Database=${{ secrets.POSTGRES_DB }};Username=${{ secrets.POSTGRES_USER }};Password=${{ secrets.POSTGRES_PASSWORD }}" \
               -e Seq__ServerUrl="" \
               -e Seq__ApiKey="" \
+              -e ApiKeySettings__MasterKey="${{ secrets.API_KEY }}" \
               ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
             docker image prune -f
