@@ -18,6 +18,7 @@ using Testcontainers.PostgreSql;
 using Tfs.Portfolio.Api;
 using Tfs.Portfolio.Infrastructure.Persistence;
 using Xunit;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 /// <summary>
@@ -70,6 +71,10 @@ public sealed class CustomWebApplicationFactory : WebApplicationFactory<Program>
         builder.ConfigureAppConfiguration((context, config) =>
         {
             config.AddJsonFile("appsettings.Testing.json", optional: true, reloadOnChange: true);
+            config.AddInMemoryCollection(new Dictionary<string, string?>
+            {
+                ["ApiKeySettings:MasterKey"] = "test-api-key-12345"
+            });
             config.AddEnvironmentVariables();
         });
 

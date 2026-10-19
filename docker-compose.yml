@@ -10,6 +10,7 @@ services:
       - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Database=portfolio;Username=postgres;Password=postgres
       - Seq__ServerUrl=http://seq:5341
       - Seq__ApiKey=
+      - ApiKeySettings__MasterKey=dev-api-key-change-me
     volumes:
       - ./src/Presentation/WebAPI:/app/src/Presentation/WebAPI
     depends_on:
