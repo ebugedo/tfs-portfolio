@@ -1,0 +1,107 @@
+@startuml
+skinparam componentStyle rectangle
+skinparam sequenceMessageAlign center
+
+skinparam rectangle {
+    BackgroundColor<<Component>> #08427B
+    BackgroundColor<<Database>> #7B61FF
+    BorderColor #FFFFFF
+}
+
+title Component Diagram - Tfs.Portfolio API Container
+
+rectangle "Tfs.Portfolio API Container" {
+
+    rectangle "Presentation Layer" {
+        rectangle "ClientsController\nASP.NET Core Controller" as clients_controller <<Component>>
+        rectangle "SectorsController\nASP.NET Core Controller" as sectors_controller <<Component>>
+        rectangle "ServicesController\nASP.NET Core Controller" as services_controller <<Component>>
+        rectangle "ProjectsController\nASP.NET Core Controller" as projects_controller <<Component>>
+        rectangle "CompanyProfileController\nASP.NET Core Controller" as company_profile_controller <<Component>>
+        rectangle "ApiKeyMiddleware\nValidates X-API-Key header on non-GET requests" as api_key_middleware <<Component>>
+        rectangle "OpenAPI Configuration\nMapOpenApi + MapScalarApiReference at /scalar/v1" as openapi_config <<Component>>
+    }
+
+    rectangle "Application Layer" {
+        rectangle "CreateClientHandler\nC# / MediatR Handler" as create_client_handler <<Component>>
+        rectangle "UpdateClientHandler\nC# / MediatR Handler" as update_client_handler <<Component>>
+        rectangle "DeleteClientHandler\nC# / MediatR Handler" as delete_client_handler <<Component>>
+        rectangle "GetClientsHandler\nC# / MediatR Handler" as get_clients_handler <<Component>>
+        rectangle "CreateSectorHandler\nC# / MediatR Handler" as create_sector_handler <<Component>>
+        rectangle "UpdateSectorHandler\nC# / MediatR Handler" as update_sector_handler <<Component>>
+        rectangle "DeleteSectorHandler\nC# / MediatR Handler" as delete_sector_handler <<Component>>
+        rectangle "CreateServiceHandler\nC# / MediatR Handler" as create_service_handler <<Component>>
+        rectangle "UpdateServiceHandler\nC# / MediatR Handler" as update_service_handler <<Component>>
+        rectangle "DeleteServiceHandler\nC# / MediatR Handler" as delete_service_handler <<Component>>
+        rectangle "CreateProjectHandler\nC# / MediatR Handler" as create_project_handler <<Component>>
+        rectangle "UpdateProjectHandler\nC# / MediatR Handler" as update_project_handler <<Component>>
+        rectangle "ChangeProjectStatusHandler\nC# / MediatR Handler" as change_project_status_handler <<Component>>
+        rectangle "GetProjectsHandler\nC# / MediatR Handler" as get_projects_handler <<Component>>
+        rectangle "GetCompanyProfileHandler\nC# / MediatR Handler" as get_company_profile_handler <<Component>>
+        rectangle "UpdateCompanyProfileHandler\nC# / MediatR Handler" as update_company_profile_handler <<Component>>
+    }
+
+    rectangle "Domain Layer" {
+        rectangle "Client\nC# Entity (aggregate root)" as client_entity <<Component>>
+        rectangle "Sector\nC# Entity (aggregate root)" as sector_entity <<Component>>
+        rectangle "Service\nC# Entity (aggregate root)" as service_entity <<Component>>
+        rectangle "Project\nC# Entity (aggregate root)" as project_entity <<Component>>
+        rectangle "CompanyProfile\nC# Entity (singleton)" as company_profile_entity <<Component>>
+        rectangle "Value Objects\nC# (e.g., Money, Email)" as value_objects <<Component>>
+        rectangle "Domain Events\nC# (event types and handlers)" as domain_events <<Component>>
+    }
+
+    rectangle "Infrastructure Layer" {
+        rectangle "PortfolioDbContext\nEntity Framework Core DbContext" as portfolio_db_context <<Component>>
+        rectangle "ClientRepository\nCRUD operations for Client" as client_repository <<Component>>
+        rectangle "SectorRepository\nCRUD operations for Sector" as sector_repository <<Component>>
+        rectangle "ServiceRepository\nCRUD operations for Service" as service_repository <<Component>>
+        rectangle "ProjectRepository\nCRUD operations for Project" as project_repository <<Component>>
+        rectangle "CompanyProfileRepository\nCRUD operations for CompanyProfile" as company_profile_repository <<Component>>
+        rectangle "EF Core Migrations\nDatabase migration scripts" as migrations <<Component>>
+    }
+}
+
+rectangle "PostgreSQL Database" as db <<Database>>
+
+clients_controller --> create_client_handler : Calls : In-process
+sectors_controller --> create_sector_handler : Calls : In-process
+services_controller --> create_service_handler : Calls : In-process
+projects_controller --> create_project_handler : Calls : In-process
+company_profile_controller --> get_company_profile_handler : Calls : In-process
+
+create_client_handler --> client_entity : Uses : In-process
+update_client_handler --> client_entity : Uses : In-process
+delete_client_handler --> client_entity : Uses : In-process
+get_clients_handler --> client_entity : Uses : In-process
+
+create_sector_handler --> sector_entity : Uses : In-process
+update_sector_handler --> sector_entity : Uses : In-process
+delete_sector_handler --> sector_entity : Uses : In-process
+
+create_service_handler --> service_entity : Uses : In-process
+update_service_handler --> service_entity : Uses : In-process
+delete_service_handler --> service_entity : Uses : In-process
+
+create_project_handler --> project_entity : Uses : In-process
+update_project_handler --> project_entity : Uses : In-process
+change_project_status_handler --> project_entity : Uses : In-process
+get_projects_handler --> project_entity : Uses : In-process
+
+get_company_profile_handler --> company_profile_entity : Uses : In-process
+update_company_profile_handler --> company_profile_entity : Uses : In-process
+
+create_client_handler --> client_repository : Persists through : In-process
+update_client_handler --> client_repository : Persists through : In-process
+delete_client_handler --> client_repository : Persists through : In-process
+get_clients_handler --> client_repository : Reads through : In-process
+
+client_repository --> portfolio_db_context : Uses : In-process
+sector_repository --> portfolio_db_context : Uses : In-process
+service_repository --> portfolio_db_context : Uses : In-process
+project_repository --> portfolio_db_context : Uses : In-process
+company_profile_repository --> portfolio_db_context : Uses : In-process
+
+portfolio_db_context --> db : Executes SQL against : TCP/5432
+
+@enduml
