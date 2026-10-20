@@ -1,0 +1,43 @@
+@startuml
+skinparam componentStyle rectangle
+skinparam sequenceMessageAlign center
+
+skinparam rectangle {
+    BackgroundColor<<Person>> #438DD5
+    BackgroundColor<<Container>> #FFAA00
+    BackgroundColor<<Database>> #7B61FF
+    BackgroundColor<<External>> #999999
+    BorderColor #FFFFFF
+}
+
+title Container Diagram - Tfs.Portfolio API
+
+rectangle "API Consumer" as api_consumer <<Person>>
+
+rectangle "Tfs.Portfolio System" {
+    rectangle "Application Host (Docker)" {
+        rectangle "Tfs.Portfolio API\nASP.NET Core .NET 10\nExposes REST API on port 8080/8082\nServes Scalar/OpenAPI docs at /scalar/v1" as api <<Container>>
+
+        rectangle "API Process" {
+            rectangle "Presentation Layer\nASP.NET Core Web API\nControllers, middleware, OpenAPI/Scalar" as presentation <<Container>>
+            rectangle "Application Layer\nC# / MediatR\nCQRS commands/queries, handlers, validators, DTOs" as application <<Container>>
+            rectangle "Infrastructure Layer\nC# / Entity Framework Core 9\nDbContext, repositories, migrations, Npgsql" as infrastructure <<Container>>
+            rectangle "Domain Layer\nC#\nEntities, value objects, domain events, business rules" as domain <<Container>>
+        }
+    }
+
+    rectangle "PostgreSQL Database\nPostgreSQL 16\nPersistent storage" as db <<Database>>
+}
+
+rectangle "Nginx Reverse Proxy\nTLS termination and request routing\nPort 443/80" as nginx <<External>>
+rectangle "GHCR Container Registry\nStores and distributes Docker images" as ghcr <<External>>
+
+api_consumer --> nginx : Calls API over HTTPS : HTTPS
+nginx --> api : Forwards requests to API container : HTTP
+api --> presentation : Routes to : In-process
+presentation --> application : Sends commands/queries to : In-process
+application --> domain : Invokes business logic on : In-process
+application --> infrastructure : Persists data through : In-process
+infrastructure --> db : Executes SQL queries and commands : TCP/5432
+
+@enduml

@@ -1,0 +1,215 @@
+@startuml
+skinparam componentStyle rectangle
+skinparam sequenceMessageAlign center
+
+title Code Diagram - Key Classes and Interfaces
+
+package "Presentation Layer" {
+    class ClientsController {
+        + GetClients()
+        + GetClientById(id)
+        + CreateClient(command)
+        + UpdateClient(id, command)
+        + DeleteClient(id)
+    }
+    class SectorsController {
+        + GetSectors()
+        + GetSectorById(id)
+        + CreateSector(command)
+        + UpdateSector(id, command)
+        + DeleteSector(id)
+    }
+    class ServicesController {
+        + GetServices()
+        + GetServiceById(id)
+        + CreateService(command)
+        + UpdateService(id, command)
+        + DeleteService(id)
+        + GetServicesByCategory(category)
+    }
+    class ProjectsController {
+        + GetProjects(filters)
+        + CreateProject(command)
+        + UpdateProject(id, command)
+        + ChangeProjectStatus(id, command)
+        + AssociateService(projectId, serviceId)
+        + DisassociateService(projectId, serviceId)
+    }
+    class CompanyProfileController {
+        + GetCompanyProfile()
+        + UpdateCompanyProfile(command)
+    }
+    class ApiKeyMiddleware {
+        + ValidateApiKey()
+    }
+}
+
+package "Application Layer" {
+    interface IRequestHandler {
+        + Handle(request)
+    }
+    class CreateClientHandler {
+        + Handle(CreateClientCommand)
+    }
+    class UpdateClientHandler {
+        + Handle(UpdateClientCommand)
+    }
+    class DeleteClientHandler {
+        + Handle(DeleteClientCommand)
+    }
+    class GetClientsHandler {
+        + Handle(GetClientsQuery)
+    }
+    class CreateSectorHandler {
+        + Handle(CreateSectorCommand)
+    }
+    class UpdateSectorHandler {
+        + Handle(UpdateSectorCommand)
+    }
+    class DeleteSectorHandler {
+        + Handle(DeleteSectorCommand)
+    }
+    class CreateServiceHandler {
+        + Handle(CreateServiceCommand)
+    }
+    class UpdateServiceHandler {
+        + Handle(UpdateServiceCommand)
+    }
+    class DeleteServiceHandler {
+        + Handle(DeleteServiceCommand)
+    }
+    class GetServicesHandler {
+        + Handle(GetServicesQuery)
+    }
+    class CreateProjectHandler {
+        + Handle(CreateProjectCommand)
+    }
+    class UpdateProjectHandler {
+        + Handle(UpdateProjectCommand)
+    }
+    class ChangeProjectStatusHandler {
+        + Handle(ChangeProjectStatusCommand)
+    }
+    class GetProjectsHandler {
+        + Handle(GetProjectsQuery)
+    }
+    class GetCompanyProfileHandler {
+        + Handle(GetCompanyProfileQuery)
+    }
+    class UpdateCompanyProfileHandler {
+        + Handle(UpdateCompanyProfileCommand)
+    }
+    class CreateClientCommand
+    class UpdateClientCommand
+    class DeleteClientCommand
+    class GetClientsQuery
+    class CreateSectorCommand
+    class UpdateSectorCommand
+    class DeleteSectorCommand
+    class CreateServiceCommand
+    class UpdateServiceCommand
+    class DeleteServiceCommand
+    class GetServicesQuery
+    class CreateProjectCommand
+    class UpdateProjectCommand
+    class ChangeProjectStatusCommand
+    class GetProjectsQuery
+    class GetCompanyProfileQuery
+    class UpdateCompanyProfileCommand
+}
+
+package "Domain Layer" {
+    class Client {
+        + Id: Guid
+        + Name: string
+        + Email: string
+        + IsActive: bool
+        + CreatedAt: DateTime
+    }
+    class Sector {
+        + Id: Guid
+        + Name: string
+        + Description: string
+        + IsActive: bool
+    }
+    class Service {
+        + Id: Guid
+        + Name: string
+        + Category: string
+        + IsActive: bool
+    }
+    class Project {
+        + Id: Guid
+        + StartDate: DateOnly
+        + DurationMonths: int
+        + ClientId: Guid
+        + SectorId: Guid
+        + Technologies: string
+        + Status: ProjectStatus
+    }
+    class CompanyProfile {
+        + Id: Guid
+        + Name: string
+        + Description: string
+        + ContactEmail: string
+    }
+    class ProjectStatus <<enumeration>> {
+        Active
+        Completed
+        OnHold
+        Cancelled
+    }
+    interface IValueObject
+}
+
+package "Infrastructure Layer" {
+    class PortfolioDbContext {
+        + Clients: DbSet
+        + Sectors: DbSet
+        + Services: DbSet
+        + Projects: DbSet
+        + CompanyProfiles: DbSet
+    }
+    interface IClientRepository {
+        + GetById(id)
+        + GetAll()
+        + Add(client)
+        + Update(client)
+        + Delete(id)
+    }
+    class ClientRepository {
+        + GetById(id)
+        + GetAll()
+        + Add(client)
+        + Update(client)
+        + Delete(id)
+    }
+    interface ISectorRepository
+    class SectorRepository
+    interface IServiceRepository
+    class ServiceRepository
+    interface IProjectRepository
+    class ProjectRepository
+    interface ICompanyProfileRepository
+    class CompanyProfileRepository
+}
+
+ClientsController --> CreateClientHandler : uses
+ClientsController --> UpdateClientHandler : uses
+ClientsController --> DeleteClientHandler : uses
+ClientsController --> GetClientsHandler : uses
+
+CreateClientHandler --> IClientRepository : depends on
+UpdateClientHandler --> IClientRepository : depends on
+DeleteClientHandler --> IClientRepository : depends on
+GetClientsHandler --> IClientRepository : depends on
+
+IClientRepository <|.. ClientRepository : implements
+ClientRepository --> PortfolioDbContext : uses
+
+CreateClientHandler --> Client : uses
+UpdateClientHandler --> Client : uses
+DeleteClientHandler --> Client : uses
+GetClientsHandler --> Client : uses
+
+@enduml

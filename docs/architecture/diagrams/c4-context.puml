@@ -1,0 +1,32 @@
+@startuml
+skinparam componentStyle rectangle
+skinparam sequenceMessageAlign center
+
+skinparam rectangle {
+    BackgroundColor<<Person>> #438DD5
+    BackgroundColor<<System>> #438DD5
+    BackgroundColor<<Database>> #7B61FF
+    BackgroundColor<<External>> #999999
+    BorderColor #FFFFFF
+}
+
+title System Context Diagram - Tfs.Portfolio API
+
+rectangle "API Consumer" as api_consumer <<Person>>
+rectangle "Developer" as developer <<Person>>
+
+rectangle "Tfs.Portfolio" {
+    rectangle "Tfs.Portfolio API\nRESTful portfolio management API" as api <<System>>
+}
+
+rectangle "PostgreSQL Database\nPersistent storage" as db <<Database>>
+rectangle "GHCR Container Registry\nStores Docker images" as ghcr <<External>>
+rectangle "GitHub Actions\nCI/CD pipeline" as github_actions <<External>>
+
+api_consumer --> api : Calls REST endpoints over HTTPS : HTTPS
+developer --> api : Deploys and maintains : SSH / Git
+api --> db : Reads and writes portfolio data : TCP/5432
+github_actions --> ghcr : Pushes Docker images : HTTPS
+github_actions --> api : Deploys to VPS : SSH
+
+@enduml
