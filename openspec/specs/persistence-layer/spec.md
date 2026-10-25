@@ -80,6 +80,12 @@ The system SHALL use `Npgsql` types (e.g., `uuid`, `jsonb`, `timestamp with time
 - **WHEN** the JSONB column contains `null`
 - **THEN** the property is `null` (default for nullable struct)
 
+#### Scenario: Nullable TfsWebUrl deserializes correctly from JSONB object format
+- **WHEN** an entity with a nullable `TfsWebUrl` property is loaded from a JSONB column containing a JSON object `{"value": "https://example.com", "isValid": true}`
+- **THEN** the property is populated with a valid `TfsWebUrl` instance with `Value` = `"https://example.com"` and `IsValid = true`
+- **WHEN** the JSONB column contains a JSON object `{"value": null, "isValid": false}`
+- **THEN** the property is `null`
+
 ### Requirement: Persistence layer compiles independently
 The system SHALL ensure `dotnet build` on `Tfs.Portfolio.Infrastructure.Persistence` succeeds with Domain and Application references.
 

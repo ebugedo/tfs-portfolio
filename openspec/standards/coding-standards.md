@@ -2,8 +2,8 @@
 
 ## Language
 - **Code identifiers** (classes, interfaces, methods, properties, variables, enums, parameters) MUST be in **English** (e.g., `Client`, `Project`, `GetByIdAsync`, `IsActive`).
-- **Comments & documentation** SHOULD be in English.
-- **Domain terms** in ubiquitous language may remain in Spanish in comments/docs, but code symbols use English equivalents.
+- **Comments & documentation** MUST be in **English**.
+- All identifiers, comments, and documentation MUST be in English; Spanish domain terms are not permitted.
 - **API contracts** (JSON properties, query params, headers) use camelCase English.
 
 ## Naming Conventions

@@ -8,6 +8,7 @@ namespace Tfs.Portfolio.Domain.Common.ValueObjects;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 /// <summary>
 /// Represents a validated URL.
@@ -94,6 +95,59 @@ public readonly struct TfsWebUrl : IEquatable<TfsWebUrl>
     public static TfsWebUrl FromString(string? value) => new(value);
 
     /// <summary>
+    /// Parses a JSON string (plain string or object {"value", "isValid"}) into a <see cref="TfsWebUrl"/>.
+    /// Used by EF Core value converters for JSONB columns.
+    /// </summary>
+    /// <param name="json">The JSON string from the database column.</param>
+    /// <returns>A <see cref="TfsWebUrl"/> instance, or null if the value is null/empty/invalid.</returns>
+    public static TfsWebUrl? FromJson(string? json)
+    {
+        if (string.IsNullOrWhiteSpace(json))
+        {
+            return null;
+        }
+
+        var token = JToken.Parse(json);
+
+        if (token.Type == JTokenType.String)
+        {
+            var value = token.Value<string>();
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                return null;
+            }
+            return TfsWebUrl.Create(value);
+        }
+
+        if (token.Type == JTokenType.Object)
+        {
+            var obj = (JObject)token;
+            var valueToken = obj["value"];
+            var isValidToken = obj["isValid"];
+
+            if (valueToken == null || valueToken.Type == JTokenType.Null)
+            {
+                return null;
+            }
+
+            if (isValidToken != null && isValidToken.Type == JTokenType.Boolean && !isValidToken.Value<bool>())
+            {
+                return null;
+            }
+
+            var value = valueToken.Value<string>();
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                return null;
+            }
+
+            return TfsWebUrl.Create(value);
+        }
+
+        return null;
+    }
+
+    /// <summary>
     /// Determines whether the current instance is equal to another instance.
     /// </summary>
     /// <param name="other">The other TfsWebUrl to compare.</param>
@@ -150,7 +204,12 @@ public sealed class TfsWebUrlJsonConverter : JsonConverter
             }
             else
             {
-                writer.WriteValue(url.Value);
+                var obj = new JObject
+                {
+                    ["value"] = url.Value,
+                    ["isValid"] = url.IsValid
+                };
+                obj.WriteTo(writer);
             }
         }
         else if (value == null)
@@ -171,17 +230,52 @@ public sealed class TfsWebUrlJsonConverter : JsonConverter
             return null;
         }
 
-        var value = reader.Value?.ToString();
-        if (string.IsNullOrWhiteSpace(value))
+        if (reader.TokenType == JsonToken.String)
         {
-            return null;
+            var value = reader.Value?.ToString();
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                return null;
+            }
+
+            var url = TfsWebUrl.Create(value);
+            return objectType == typeof(TfsWebUrl?) ? (TfsWebUrl?)url : url;
         }
 
-        var url = TfsWebUrl.Create(value);
-        if (objectType == typeof(TfsWebUrl?))
+        if (reader.TokenType == JsonToken.StartObject)
         {
-            return (TfsWebUrl?)url;
+            var obj = JObject.Load(reader);
+            var valueToken = obj["value"];
+            var isValidToken = obj["isValid"];
+
+            // Rechazar formato envuelto {"tfsWebUrl": {"value": ..., "isValid": ...}}
+            // como entrada de petición HTTP -> debe devolver Bad Request
+            if (valueToken == null && obj["tfsWebUrl"] != null)
+            {
+                throw new JsonSerializationException(
+                    "Formato JSON no válido para TfsWebUrl. Use un string plano o un objeto {\"value\": \"...\", \"isValid\": true}. No se admite el formato envuelto {\"tfsWebUrl\": {...}}.");
+            }
+
+            if (valueToken == null || valueToken.Type == JTokenType.Null)
+            {
+                return null;
+            }
+
+            if (isValidToken != null && isValidToken.Type == JTokenType.Boolean && !isValidToken.Value<bool>())
+            {
+                return null;
+            }
+
+            var value = valueToken.ToString();
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                return null;
+            }
+
+            var url = TfsWebUrl.Create(value);
+            return objectType == typeof(TfsWebUrl?) ? (TfsWebUrl?)url : url;
         }
-        return url;
+
+        return null;
     }
 }
