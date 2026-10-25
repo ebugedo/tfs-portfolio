@@ -46,7 +46,7 @@ public sealed class ClientConfiguration : IEntityTypeConfiguration<Client>
             .HasColumnType("jsonb")
             .HasConversion(
                 v => v != null ? JsonConvert.SerializeObject(v.Value.Value) : null,
-                v => string.IsNullOrEmpty(v) ? default : TfsWebUrl.FromString(JsonConvert.DeserializeObject<string>(v)));
+                v => string.IsNullOrEmpty(v) ? default : TfsWebUrl.FromJson(v));
 
         builder.Property(c => c.Phone)
             .HasColumnName("Phone")

@@ -51,7 +51,7 @@ public sealed class CompanyProfileConfiguration : IEntityTypeConfiguration<Compa
             .HasColumnType("jsonb")
             .HasConversion(
                 v => v != null ? JsonConvert.SerializeObject(v.Value.Value) : null,
-                v => string.IsNullOrEmpty(v) ? default : TfsWebUrl.FromString(JsonConvert.DeserializeObject<string>(v)));
+                v => string.IsNullOrEmpty(v) ? default : TfsWebUrl.FromJson(v));
 
         builder.Property(c => c.Address)
             .HasColumnName("Address")
@@ -66,7 +66,7 @@ public sealed class CompanyProfileConfiguration : IEntityTypeConfiguration<Compa
             .HasColumnType("jsonb")
             .HasConversion(
                 v => v != null ? JsonConvert.SerializeObject(v.Value.Value) : null,
-                v => string.IsNullOrEmpty(v) ? default : TfsWebUrl.FromString(JsonConvert.DeserializeObject<string>(v)));
+                v => string.IsNullOrEmpty(v) ? default : TfsWebUrl.FromJson(v));
 
         builder.Property(c => c.CreatedAt)
             .HasColumnName("CreatedAt")
