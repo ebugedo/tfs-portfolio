@@ -3,7 +3,7 @@
 ## Core Platform
 - **Runtime & Framework:** .NET 10 (ASP.NET Core Web API).
 - **Language:** C# (Latest language features enabled).
-- **JSON Serialization:** Newtonsoft.Json (Json.NET) - Required for all serialization, deserialization, configuration, and logging across the entire solution (domain, application, infrastructure, API, tests).
+- **JSON Serialization:** Newtonsoft.Json (Json.NET) - Use Newtonsoft.Json wherever possible for serialization, deserialization, configuration, and logging across the entire solution (domain, application, infrastructure, API, tests). Where a library does not expose a Newtonsoft.Json switch (e.g., Npgsql 10 driver-level JSONB serialization lacks `UseJsonNet`), the best available opt-in (such as Npgsql `EnableDynamicJson`) is used instead.
 
 ## Domain & Application Layer Libraries
 - **Dependency Injection:** Autofac (Used as the IoC/DI container for modular component registration).

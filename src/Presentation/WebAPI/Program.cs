@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using Npgsql;
 using Scalar.AspNetCore;
 using Serilog;
 using Serilog.Events;
@@ -130,6 +131,14 @@ public sealed class Program
         // Add health checks
         builder.Services.AddHealthChecks()
             .AddNpgSql(builder.Configuration.GetConnectionString("DefaultConnection") ?? string.Empty);
+
+        // Opt Npgsql into dynamic JSON serialization for JSONB columns
+        // (required to read/write List<T> properties such as Project.Technologies).
+        // Npgsql does not expose a Newtonsoft.Json switch for JSONB; dynamic JSON is the
+        // supported opt-in and matches test/IntegrationTests/CustomWebApplicationFactory.cs.
+#pragma warning disable CS0618 // Type or member is obsolete
+        NpgsqlConnection.GlobalTypeMapper.EnableDynamicJson();
+#pragma warning restore CS0618
 
         // Add ApplicationDbContext
         builder.Services.AddDbContext<ApplicationDbContext>(options =>
