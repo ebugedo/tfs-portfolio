@@ -27,4 +27,4 @@ This restriction applies to:
 
 ### Exceptions
 
-None. Any modification to the remote repository requires explicit manual intervention by the user.
+The `/tfs-git-flow` skill is authorized to execute `git commit`, `git push`, `gh pr create`, and `gh pr merge` as part of its remote Git update workflow (Branch → Commit → Push → PR). When invoked, `tfs-git-flow` sets the environment variable `TFS_GIT_FLOW_AUTHORIZED=1`, which the local `pre-commit` and `pre-push` hooks recognize to bypass the automatic block. Outside of `/tfs-git-flow`, any modification to the remote repository requires explicit manual intervention by the user.
